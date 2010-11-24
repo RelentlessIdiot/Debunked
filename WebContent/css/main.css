@@ -1,0 +1,201 @@
+@CHARSET "UTF-8";
+
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+a img {
+	border: none 0px;
+}
+
+h1 {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 28px;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+p.spacer {
+	height: 10px;
+}
+
+#main {
+	background-image: url(../images/background.png);
+	height: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	width: 978px;
+}
+
+#iphone {
+	background-image: url(../images/iphone.png);
+	height: 368px;
+	left: 25px;
+	position: absolute;
+	top: 135px;
+	width: 716px;
+}
+
+#iphone #iphone-screens {
+	height: 300px;
+	left: 118px;
+	top: 44px;
+	width: 480px;
+}
+#iphone #iphone-screens .iphone-screen {
+}
+
+#left {
+	background-image: url(../images/left.png);
+	cursor: pointer;
+	height: 16px;
+	left: 115px;
+	position: absolute;
+	top: 311px;
+	width: 16px;
+	z-index: 1002;
+}
+
+#right {
+	background-image: url(../images/right.png);
+	cursor: pointer;
+	height: 16px;
+	left: 635px;
+	position: absolute;
+	top: 311px;
+	width: 16px;
+	z-index: 1003;
+}
+
+#contact {
+	color: #ffffff;
+	left: 40px;
+	position: absolute;
+	top: 140px;
+	width: 660px;
+}
+
+#detail {
+	bottom: 44px;
+	color: #997e00;
+	height: 130px;
+	left: 35px;
+	position: absolute;
+	width: 545px;
+}
+
+#description {
+	background-color: #ffff66;
+	height: 114px;
+	font-size: 20px;
+	padding-top: 16px;
+	width: 545px;
+}
+
+.reviews {
+	background-color: #ffff66;
+	height: 122px;
+	padding-top: 12px;
+	width: 545px;
+}
+
+.reviews .review {
+	float: left;
+	font-size: 16px;
+}
+
+.reviews .review-0, .reviews .review-3 {
+	margin-right: 20px;
+}
+
+.reviews .review-1, .reviews .review-4 {
+	margin-right: 20px;
+}
+
+.reviews .review-2, .reviews .review-5 {
+}
+
+.byline {
+	font-style: italic;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.star {
+	background-image: url(../images/star.png);
+	height: 14px;
+	float: left;
+	width: 14px;
+}
+
+#up {
+	background-image: url(../images/up.png);
+	bottom: 155px;
+	cursor: pointer;
+	height: 14px;
+	left: 5px;
+	position: absolute;
+	width: 14px;
+	z-index: 1000;
+}
+
+#down {
+	background-image: url(../images/down.png);
+	bottom: 49px;
+	cursor: pointer;
+	height: 14px;
+	left: 5px;
+	position: absolute;
+	width: 14px;
+	z-index: 1001;
+}
+
+#badge {
+	bottom: 77px;
+	height: 64px;
+	position: absolute;
+	right: 210px;
+	width: 185px;
+}
+
+#footer {
+	bottom: 10px;
+	left: 0px;
+	padding: 0px 0px 0px 44px;
+	position: absolute;
+	width: 890px;
+}
+
+#home, #support, #facebook, #facebook-like {
+	float: left;
+	margin-right: 5px;
+	width: 120px;
+}
+
+#home, #support {
+	width: 100px;
+}
+
+#facebook, #facebook-like {
+	width: 120px;
+}
+
+#home a, #support a, #facebook a {
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#legal {
+	bottom: 10px;
+	color: #ffffff;
+	float: right;
+	font-size: 10px;
+}
