@@ -38,8 +38,31 @@ p.spacer {
 	height: 368px;
 	left: 25px;
 	position: absolute;
-	top: 135px;
+	top: 130px;
 	width: 716px;
+}
+
+#pager {
+	position: absolute;
+	top: 503px;
+	left: 340px;
+}
+
+#pager a {
+	background-image: url(../images/pager.png);
+	height: 14px;
+	width: 14px;
+	display: block;
+	float: left;
+	margin-left: 1px;
+}
+
+#pager a.activeSlide {
+	background-image: url(../images/pager-active.png);
+}
+
+#pager a span {
+	display: none;
 }
 
 #iphone #iphone-screens {
@@ -110,15 +133,15 @@ p.spacer {
 	font-size: 16px;
 }
 
-.reviews .review-0, .reviews .review-3 {
+.reviews .review-0, .reviews .review-3, .reviews .review-6 {
 	margin-right: 20px;
 }
 
-.reviews .review-1, .reviews .review-4 {
+.reviews .review-1, .reviews .review-4, .reviews .review-7 {
 	margin-right: 20px;
 }
 
-.reviews .review-2, .reviews .review-5 {
+.reviews .review-2, .reviews .review-5, .reviews .review-8 {
 }
 
 .byline {

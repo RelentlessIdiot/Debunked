@@ -28,16 +28,17 @@
 				fx : 'fade',
 				timeout : 5000,
 				pause : true,
-				next : '#right',
-				prev : '#left'
+				pager : '#pager',
+				pagerAnchorBuilder : function() {
+					return '<a href="#"><span></span></a>';
+				}
 			});
 		});
 		</script>
 	</head>
 	<body>
 		<div id="main">
-			<div id="left"></div>
-			<div id="right"></div>
+			<div id="pager"></div>
 			<div id="iphone">
 				<div id="iphone-screens">
 					<img class="iphone-screen" src="/images/iphone01.png"/>
@@ -46,11 +47,6 @@
 					<img class="iphone-screen" src="/images/iphone04.png"/>
 					<img class="iphone-screen" src="/images/iphone05.png"/>
 					<img class="iphone-screen" src="/images/iphone06.png"/>
-					<img class="iphone-screen" src="/images/iphone07.png"/>
-					<img class="iphone-screen" src="/images/iphone08.png"/>
-					<img class="iphone-screen" src="/images/iphone09.png"/>
-					<img class="iphone-screen" src="/images/iphone10.png"/>
-					<img class="iphone-screen" src="/images/iphone11.png"/>
 				</div>
 			</div>
 			<div id="badge">
@@ -64,10 +60,10 @@
 			<div id="down"></div>
 			<div id="detail">
 				<div id="description" class="detail-item" style="position: absolute; top: 0px; left: 0px; display: block; z-index: 2; opacity: 1; width: 545px; height: 114px;">
-					The first and only app to bring all of the rumors and <br/>
-					urban legends from Snopes to your iOS device.  Search, <br/>
-					browse by category, check out the top 25, or tap the <br/>
-					random button for hours of entertaining urban legends.
+					The first and only app for easily browsing all of the rumors <br/>
+					and urban legends from Snopes on your iOS device. <br/>
+					Search, browse by category, check out the top 25, or tap <br/>
+					the random button for hours of entertaining urban legends.
 				</div>
 				<div id="reviews-0" class="reviews detail-item" style="display: none; position: absolute; top: -130px; left: 0px; z-index: 3; opacity: 1; width: 545px; height: 122px;">
 					<div class="review review-0">
@@ -139,6 +135,39 @@
 						<div class="byline">by _Lilith</div>
 					</div>
 				</div>
+				<div id="reviews-2" class="reviews detail-item" style="display: none; position: absolute; top: -130px; left: 0px; z-index: 4; opacity: 1; width: 545px; height: 122px;">
+					<div class="review review-6">
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div><br/>
+						Love it! Great app for all<br/>
+						sorts of info you don't<br/>
+						want to fill your head with<br/>
+						<div class="byline">by disneywina</div>
+					</div>
+					<div class="review review-7">
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div><br/>
+						Great Snopes App!!! Great<br/>
+						interface, nice to have<br/>
+						Snopes on my phone!!!<br/>
+						<div class="byline">by Rpgmind</div>
+					</div>
+					<div class="review review-8">
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div>
+						<div class="star"></div><br/>
+						This app is perfect<br/>
+						<div class="byline">by ItonyTN</div>
+					</div>
+				</div>
 			</div>
 			<div id ="footer">
 				<div id="support">
@@ -151,7 +180,7 @@
 					<iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FDebunked-Urban-Legends-Revealed%2F155576697820588&amp;layout=button_count&amp;show_faces=true&amp;width=120&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
 				</div>
 				<div id="legal">
-					Copyright © 2010 Rob Ruana. All rights reserved.<br/>
+					Copyright © 2011 Debunked App, LLC. All rights reserved.<br/>
 					Snopes is a registered service mark of snopes.com.
 				</div>
 			</div>
