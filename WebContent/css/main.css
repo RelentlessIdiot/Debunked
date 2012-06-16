@@ -70,6 +70,7 @@ p.spacer {
 	left: 118px;
 	top: 44px;
 	width: 480px;
+	position: absolute;
 }
 #iphone #iphone-screens .iphone-screen {
 }
