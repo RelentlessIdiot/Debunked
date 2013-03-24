@@ -1,0 +1,31 @@
+//  Created by Matt Gallagher on 4/08/08.
+//  Copyright 2008 Matt Gallagher. All rights reserved.
+// 
+//  Permission is given to use this source code file, free of charge, in any
+//  project, commercial or otherwise, entirely at your risk, with the condition
+//  that any redistribution (in part or whole) of source code must retain
+//  this copyright and permission notice. Attribution in compiled projects is
+//  appreciated but not required.
+//
+//
+//  Modifications Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//
+//  This file is part of Debunked.
+//
+//  Debunked is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  Debunked is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
+
+NSArray *PerformHTMLXPathQuery(NSData *document, NSString *query);
+NSArray *PerformHTMLXPathQueryReturnChildren(NSData *document, NSString *query, BOOL children, BOOL recursive);
+NSArray *PerformXMLXPathQuery(NSData *document, NSString *query);
+NSArray *PerformXMLXPathQueryReturnChildren(NSData *document, NSString *query, BOOL children, BOOL recursive);
