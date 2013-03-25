@@ -25,7 +25,6 @@ static NSString *webViewUserAgentInstance;
     if(webViewUserAgentInstance == NULL) {
         UIWebView* webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         webViewUserAgentInstance = [NSString stringWithString:[webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"]];
-        webViewUserAgentInstance = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:9.0a2) Gecko/20111101 Firefox/9.0a2";
         [webViewUserAgentInstance retain];
         [webView release];
     }
