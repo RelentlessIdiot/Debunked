@@ -45,4 +45,7 @@
 
 - (void)loadRumorView:(Rumor *)theRumor;
 
+- (void)hideButtonClicked;
+- (void)resizeHideButton;
+
 @end

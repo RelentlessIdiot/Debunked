@@ -83,7 +83,7 @@
 	hideButton.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
 	hideButton.hidden = YES;
 	[hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-	[self.tableView addSubview:hideButton];
+	[self.view addSubview:hideButton];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -125,6 +125,13 @@
 - (void)hideButtonClicked
 {
 	[searchBar resignFirstResponder];
+}
+
+- (void)resizeHideButton
+{
+    CGRect frame = [hideButton frame];
+    frame.size.height = MAX(tableView.contentSize.height, tableView.frame.size.height);
+    [hideButton setFrame:frame];
 }
 
 - (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText
@@ -195,6 +202,7 @@
 			self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		}
 		[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(resizeHideButton) withObject:nil waitUntilDone:YES];
 	}
 	[self performSelectorOnMainThread:@selector(scrollToTop) withObject:nil waitUntilDone:NO];
 	[tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
