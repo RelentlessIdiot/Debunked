@@ -81,7 +81,11 @@
 	[self setupPortraitUserInterface];
 
 	splashView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	splashView.image = [UIImage imageNamed:@"Default.png"];
+	if([UIScreen mainScreen].bounds.size.height == 568.0f) {
+		splashView.image = [UIImage imageNamed:@"Default-568h.png"];
+	} else {
+		splashView.image = [UIImage imageNamed:@"Default.png"];
+	}
 	[mainWindow addSubview:splashView];
 	[mainWindow bringSubviewToFront:splashView];
 	[UIView beginAnimations:nil context:nil];
