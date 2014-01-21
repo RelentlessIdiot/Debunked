@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
 //
 //  This file is part of Debunked.
 //
@@ -69,9 +69,9 @@
 		NSArray *nodeSynopses = nil;
 		
 		label = [[labelEl content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		links = [parser search:@"//td[@class=\"contentColumn\"]//noindex/a[@href=\"newsletter.asp\"]/following-sibling::img[@src=\"/images/content-divider.gif\"]/following-sibling::a"];
-		imgs = [parser search:@"//td[@class=\"contentColumn\"]//noindex/a[@href=\"newsletter.asp\"]/following-sibling::img[@src=\"/images/content-divider.gif\"]/following-sibling::img"];
-		nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//noindex/a[@href=\"newsletter.asp\"]/following-sibling::img[@src=\"/images/content-divider.gif\"]/following-sibling::li"];
+		links = [parser search:@"//td[@class=\"contentColumn\"]//noindex/following-sibling::img[@src=\"/images/content-divider.gif\"]/following-sibling::a"];
+		imgs = [parser search:@"//td[@class=\"contentColumn\"]//noindex/following-sibling::img[@src=\"/images/content-divider.gif\"]/following-sibling::img"];
+		nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//noindex/following-sibling::img[@src=\"/images/content-divider.gif\"]/following-sibling::li"];
 		
 		NSMutableArray *rumorNodes = [NSMutableArray array];
 		@try {

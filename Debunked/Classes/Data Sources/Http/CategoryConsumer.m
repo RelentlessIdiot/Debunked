@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
 //
 //  This file is part of Debunked.
 //
@@ -345,11 +345,11 @@
 				descriptionEl = [parser at:@"//div[@id=\"main-content\"]/table//tr/td[2]/center/font/div/font/div"];
 				description = [[descriptionEl textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 				links = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table[2]//tr/td//a"];
-				imgs  = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table[2]//tr/td/img"];
+				imgs  = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table[2]//tr/td/img[@src != \"/images/search-hdr.gif\"]"];
 				nodeSynopses = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table[2]//tr/td/font"];
 				if ([links count] == 0 || [imgs count] == 0 || [nodeSynopses count] == 0) {
 					links = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table//tr/td//a"];
-					imgs  = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table//tr/td/img"];
+					imgs  = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table//tr/td/img[@src != \"/images/search-hdr.gif\"]"];
 					nodeSynopses = [parser search:@"//div[@id=\"main-content\"]/table//tr/td[2]/center//table//tr/td/font"];					
 				}
 			} else if (newStyle) {
@@ -358,11 +358,11 @@
 				description = [[descriptionEl textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 				links = [parser search:@"//td[@class=\"contentColumn\"]/table//tr/td[not(@colspan)]//a[string-length(@href)>0]"];
 				if ([links count] > 0) {
-					imgs = [parser search:@"//td[@class=\"contentColumn\"]/table//tr/td[not(@colspan)]/img"];
+					imgs = [parser search:@"//td[@class=\"contentColumn\"]/table//tr/td[not(@colspan)]/img[@src != \"/images/search-hdr.gif\"]"];
 					nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]/table//tr/td[not(@colspan)]/font"];
 				} else {
 					links = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]//a[string-length(@href)>0]"];
-					imgs = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]/img"];
+					imgs = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]/img[@src != \"/images/search-hdr.gif\"]"];
 					nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]/text()[normalize-space()]"];
 				}
 			}

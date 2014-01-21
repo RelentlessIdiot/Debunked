@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
 //
 //  This file is part of Debunked.
 //
@@ -280,7 +280,7 @@
 }
 
 - (void)updateWebView {
-	if (!self.isRendered && self.rumor != nil && ![self.rumor isEqual:@""]) {
+	if (self.webView && !self.isRendered && self.rumor != nil && ![self.rumor isEqual:@""]) {
 		if (self.rumor.rawHtml != nil && ![self.rumor.rawHtml isEqual:@""]) {
 			self.isRendered = YES;
 			NSURL *baseUrl = [NSURL URLWithString:self.rumor.url];

@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
 //
 //  This file is part of Debunked.
 //
@@ -181,7 +181,10 @@
 			@"</style>";
 		} else if (newStyle) {
 			label = labelEl.content;
-			NSArray *rumorBodyEls = [parser search:@"//td[@class=\"contentColumn\"]/h1/following-sibling::*"];	
+			NSArray *rumorBodyEls = [parser search:@"//td[@class=\"contentColumn\"]/style/following-sibling::*"];
+            if (!rumorBodyEls || [rumorBodyEls count] == 0) {
+                rumorBodyEls = [parser search:@"//td[@class=\"contentColumn\"]/h1/following-sibling::*"];
+            }
 			
 			NSDictionary *tableTransform = [NSDictionary 
 											dictionaryWithObjects:[NSArray arrayWithObjects:self, [NSDictionary 
@@ -241,7 +244,7 @@
 			@"</style>";
 		}
 		
-		NSString *html = 
+		NSString *html = @""
 		@"<html><head>"
 		@"<meta name=\"viewport\" content=\"width = device-width,initial-scale = 1.0, user-scalable = yes\">";
 		html = [html stringByAppendingString:css];
@@ -251,7 +254,7 @@
 		html = [html stringByAppendingString:@"</h1></center>"];
 		html = [html stringByAppendingString:rumorBody];
 		html = [html stringByAppendingString:@"</body></html>"];
-		
+
 		Rumor *rumor = [[[Rumor alloc] init] autorelease];
 		rumor.rawHtml = html;
 		rumor.url = [[response URL] absoluteString];

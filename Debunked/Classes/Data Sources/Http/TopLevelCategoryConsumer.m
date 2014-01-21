@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
 //
 //  This file is part of Debunked.
 //
@@ -68,9 +68,9 @@
 	TFHpple *parser = nil;
 	@try {
 		parser = [[TFHpple alloc] initWithHTMLData:data];
-		NSArray *links  = [parser search:@"//td[@class=\"contentColumn\"]/table[2]//td[not(@colspan)]/a"];
-		NSArray *imgs  = [parser search:@"//td[@class=\"contentColumn\"]/table[2]//td[not(@colspan)]/a/img"];
-		NSArray *texts  = [parser search:@"//td[@class=\"contentColumn\"]/table[2]//td[not(@colspan)]/a/font/b"];
+		NSArray *links  = [parser search:@"//td[@class=\"contentColumn\"]/table[3]//td[not(@colspan)]/a"];
+		NSArray *imgs  = [parser search:@"//td[@class=\"contentColumn\"]/table[3]//td[not(@colspan)]/a/img"];
+		NSArray *texts  = [parser search:@"//td[@class=\"contentColumn\"]/table[3]//td[not(@colspan)]/a/font/b"];
 
 		NSMutableArray *categoryNodes = [NSMutableArray array];
 		

@@ -2,7 +2,7 @@
 //  Copyright 2009 David Golightly. All rights reserved.
 //
 //
-//  Modifications Copyright (c) 2009-2013 Robert Ruana <rob@relentlessidiot.com>
+//  Modifications Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
 //
 //  This file is part of Debunked.
 //
