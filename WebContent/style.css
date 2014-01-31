@@ -1,0 +1,352 @@
+@CHARSET "UTF-8";
+
+html,
+body {
+    font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    min-height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+html {
+    overflow: auto;
+
+    background: #ba9800; /* Old browsers */
+    background: -moz-linear-gradient(top,  #e5d600 0%, #ba9800 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5d600), color-stop(100%,#ba9800)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #e5d600 0%,#ba9800 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5d600', endColorstr='#ba9800',GradientType=0 ); /* IE6-9 */
+}
+
+body {
+    overflow: hidden;
+}
+
+.clear {
+    clear: both;
+}
+
+.background-image {
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+    display: block;
+}
+
+#main {
+    position: relative;
+    height: 24em;
+}
+
+#main,
+#detail,
+#footer {
+    width: 35.5em;
+    max-width: 1014px;
+    margin: 0 auto 0 auto;
+}
+
+#question-mark,
+#question-mark-shadow {
+    position: absolute;
+    top: -3.5em;
+    left: 21em;
+}
+
+#question-mark span,
+#question-mark-shadow span {
+    font-size: 30em;
+    font-weight: bold;
+    line-height: 1em;
+    height: 1em;
+}
+
+#question-mark {
+    z-index: -1;
+}
+
+#question-mark-shadow {
+    z-index: -2;
+    margin: 2px 0 0 2px;
+}
+
+#question-mark span {
+    text-shadow: 0 0 0.05em #b09000, 0 0 0.1em #b09000;
+}
+
+#question-mark-shadow span {
+    color: #b09000;
+}
+
+#title,
+#title-shadow {
+    position: absolute;
+    top: 1.5em;
+    left: 0.75em;
+}
+
+#title {
+    z-index: 4;
+}
+
+#title-shadow {
+    margin: 2px 0 0 2px;
+    color: #b09000;
+    z-index: 3;
+}
+
+#title h1,
+#title-shadow h1 {
+    font-size: 3.375em;
+    font-weight: bold;
+}
+
+#title h1 {
+    text-shadow: 0 0 0.1em #b09000, 0 0 0.2em #b09000;
+}
+
+#title h2,
+#title-shadow h2 {
+    font-size: 1.6875em;
+    margin: -0.375em 0 0 0.5em;
+}
+
+#title h2 {
+    text-shadow: 0 0 0.2em #b09000, 0 0 0.4em #b09000;
+}
+
+#iphone {
+    background-image: url(images/iphone.png);
+
+    position: absolute;
+    top: 9em;
+    left: 0.25em;
+
+    height: 13.414em;
+    width: 26.1em;
+    max-height: 368px;
+    max-width: 716px;
+
+    z-index: 5;
+}
+
+#pager-container {
+    position: absolute;
+    top: 22em;
+    left: 0.25em;
+    width: 26.1em;
+    z-index: 500;
+    text-align: center;
+}
+
+.ie #iphone {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/iphone.png', sizingMethod='scale' );
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/iphone.png', sizingMethod='scale' )";
+}
+
+#iphone #screens,
+#iphone #screens .screen,
+#iphone #screens .screen img {
+    position: absolute;
+    height: 11.637em; /*320px;*/
+    width: 17.462em; /*480px;*/
+}
+
+#iphone #screens {
+    left: 4.3014em; /*118px;*/
+    top: 0.87486em; /*24px;*/
+}
+
+#iphone #screens .screen,
+#iphone #screens .screen img {
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+#iphone #screens .screen .caption {
+    position: absolute;
+    width: 101%;
+    left: 0;
+    bottom: -1px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.5em 0 0.5em 0.5em;
+    text-align: left;
+    font-size: 1.1em;
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=66)"; /* IE 8 */
+    filter: alpha(opacity=66); /* IE 5-7 */
+    -moz-opacity: 0.66; /* Netscape */
+    -khtml-opacity: 0.66; /* Safari 1.x */
+    opacity: 0.66; /* Good browsers */
+}
+
+#screen01 { background-image: url(images/iphone01.png); }
+#screen02 { background-image: url(images/iphone02.png); }
+#screen03 { background-image: url(images/iphone03.png); }
+#screen04 { background-image: url(images/iphone04.png); }
+#screen05 { background-image: url(images/iphone05.png); }
+
+@media
+only screen and (-webkit-min-device-pixel-ratio:2),
+only screen and (-khtml-min-device-pixel-ratio:2),
+only screen and (min--moz-device-pixel-ratio:2),
+only screen and (-moz-min-device-pixel-ratio:2),
+only screen and (-o-min-device-pixel-ratio:2/1),
+only screen and (min-device-pixel-ratio:2),
+only screen and (min-resolution:192dpi),
+only screen and (min-resolution:2dppx) {
+    #screen01 { background-image: url(images/iphone01_2x.png); }
+    #screen02 { background-image: url(images/iphone02_2x.png); }
+    #screen03 { background-image: url(images/iphone03_2x.png); }
+    #screen04 { background-image: url(images/iphone04_2x.png); }
+    #screen05 { background-image: url(images/iphone05_2x.png); }
+}
+
+.ie #screen01 { background-image: none; }
+.ie #screen02 { background-image: none; }
+.ie #screen03 { background-image: none; }
+.ie #screen04 { background-image: none; }
+.ie #screen05 { background-image: none; }
+
+/* set border-box so that percents can be used for width, padding, etc (personal preference) */
+.cycle-slideshow,
+.cycle-slideshow * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.cycle-slideshow {
+    width: 45%;
+    margin: 0 auto 0 auto;
+    padding: 0;
+    position: relative;
+}
+
+.cycle-slideshow .screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    display: block;
+}
+
+/* in case script does not load */
+.cycle-slideshow .screen:first-child {
+    position: static;
+    z-index: 200;
+}
+
+/* pager */
+.cycle-pager {
+    width: 100%;
+    overflow: hidden;
+}
+
+.cycle-pager span {
+    font-family: arial;
+    font-size: 2em;
+    width: 0.5em;
+    display: inline-block;
+    /*color: #ffffff;*/
+    color: #997e00;
+    cursor: pointer;
+}
+
+.cycle-pager span.cycle-pager-active {
+    color: #ffff66;
+}
+
+.cycle-pager > * {
+    cursor: pointer;
+}
+
+.disabled {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+#stripe {
+    background-color: #ffff66;
+    width: 100%;
+}
+
+#detail {
+    position: relative;
+    /*color: #503800;*/
+    /*color: #997e00;*/
+    color: #745a00;
+    z-index: 50;
+
+    /*height: 6.0075 - 0.5 - 0.5 = 5.0075em;*/
+}
+
+#description {
+    font-size: 0.75em;
+    left: 2em;
+    position: absolute;
+    /*height: 5.0075 * 0.75 = 3.755625em;*/
+    /*top: (5.0075 - 3.755625) / 2 = 0.6259375em;*/
+    top: 0.6259375em;
+}
+
+#badge {
+    float: right;
+    position:relative;
+    margin: -0.5em 1.5em -0.5em 0;
+    z-index: 100;
+
+    height: 6.0075em;
+    width: 8.1em;
+    background-image: url(images/appstore-badge.png);
+}
+
+.ie #badge {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/appstore-badge.png', sizingMethod='scale' );
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/appstore-badge.png', sizingMethod='scale' )";
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio:2),
+only screen and (-khtml-min-device-pixel-ratio:2),
+only screen and (min--moz-device-pixel-ratio:2),
+only screen and (-moz-min-device-pixel-ratio:2),
+only screen and (-o-min-device-pixel-ratio:2/1),
+only screen and (min-device-pixel-ratio:2),
+only screen and (min-resolution:192dpi),
+only screen and (min-resolution:2dppx) {
+    #badge a div.background-image {
+        background-image: url(images/appstore-badge_2x.png);
+    }
+}
+
+#footer {
+    padding: 1em 0 1.5em 0;
+}
+
+#download {
+    float: left;
+    font-size: 1em;
+    padding-left: 1.5em;
+}
+
+#download a {
+    color: #ff0;
+}
+
+#legal {
+    font-size: 0.5em;
+    float: right;
+    margin-right: 3em;
+    text-align: right;
+}
