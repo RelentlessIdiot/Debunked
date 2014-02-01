@@ -153,8 +153,10 @@ body {
 #iphone #screens .screen,
 #iphone #screens .screen img {
     position: absolute;
-    height: 11.637em; /*320px;*/
-    width: 17.462em; /*480px;*/
+    height: 11.64em; /*320px;*/
+    width: 17.47em; /*480px;*/
+    max-width: 480px;
+    max-height: 320px;
 }
 
 #iphone #screens {
