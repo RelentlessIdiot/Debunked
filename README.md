@@ -1,4 +1,4 @@
 debunkedapp.com
 ===============
 
-Debunked App Website
+Source code for the Debunked App website
