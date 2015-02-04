@@ -4,20 +4,31 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Debunked is the first and only app to bring all the rumors and urban legends from Snopes to your iOS device." />
     <meta name="keywords" content="snopes,snopes.com,rumor,rumors,urban legend,myth,myths,hoax,hoaxes,debunk,fact,fiction,gossip" />
-    <meta name="google-site-verification" content="DsCsnuLpoSCVWLSaUN-TDyjJ0rs7Gb5xfju1F5_npC4" />
+
     <title>Debunked: Urban Legends Revealed</title>
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
     <link rel="stylesheet" type="text/css" href="reset.css" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="owl-carousel/owl.theme.css">
 
     <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="js/jquery.cycle2.min.js"></script>
-    <script type="text/javascript" src="js/jquery.cycle2.swipe.min.js"></script>
+    <script type="text/javascript" src="owl-carousel/owl.carousel.min.js"></script>
     <script type="text/javascript">
 var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 if (isIOS) {
     document.write('<script type="text/javascript" src="js/iosfix.js"><\/script>');
 }
+$(document).ready(function() {
+    $("#screens").owlCarousel({
+        items: 5,
+        singleItem: true,
+        autoPlay: true,
+        stopOnHover: true
+    });
+});
     </script>
 </head>
 <!--[if IE ]>
@@ -43,13 +54,7 @@ if (isIOS) {
             <h2>Urban Legends Revealed</h2>
         </div>
         <div id="iphone" class="background-image">
-            <div id="screens"
-                 class="cycle-slideshow"
-                 data-cycle-pause-on-hover="true"
-                 data-cycle-fx=scrollHorz
-                 data-cycle-swipe=true
-                 data-cycle-pager="#pager"
-                 data-cycle-slides="&gt; div.screen">
+            <div id="screens" class="owl-carousel">
 <!--[if IE ]>
   <![if lt IE 10]>
                 <div id="screen01" class="screen background-image">
@@ -110,20 +115,17 @@ if (isIOS) {
 <!--<![endif]-->
             </div>
         </div>
-        <div id="pager-container">
-            <div id="pager" class="cycle-pager"></div>
-        </div>
     </div>
     <div id="stripe">
         <div id="detail">
             <div id="description" class="detail-item">
-                The first and only app for easily browsing all of the rumors <br/>
-                and urban legends from Snopes on your iOS device. <br/>
-                Search, browse by category, check out the top 25, or tap <br/>
+                The first and only app for easily browsing all of the rumors
+                and urban legends from Snopes on your iOS device.
+                Search, browse by category, check out the top 25, or tap
                 the random button for hours of entertaining urban legends.
             </div>
-            <a href="https://github.com/RobRuana/Debunked">
-                <div id="badge" class="background-image"></div>
+            <a id="badge-link" href="https://github.com/RobRuana/Debunked">
+                <div id="badge" title="Download the source on GitHub" class="background-image"></div>
             </a>
             <div class="clear"></div>
         </div>

@@ -4,7 +4,6 @@ html,
 body {
     font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
     min-height: 100%;
-    /*width: 100%;*/
     margin: 0;
     padding: 0;
     color: #ffffff;
@@ -53,7 +52,6 @@ body {
 #detail,
 #footer {
     width: 1014px;
-    max-width: 1014px;
     margin: 0 auto 0 auto;
 }
 
@@ -146,15 +144,6 @@ body {
     z-index: 5;
 }
 
-#pager-container {
-    position: absolute;
-    top: 604px;
-    left: 7px;
-    width: 716px;
-    z-index: 500;
-    text-align: center;
-}
-
 .ie #iphone {
     background-image: none;
     -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/iphone.png', sizingMethod='scale' )";
@@ -164,11 +153,9 @@ body {
 #iphone #screens,
 #iphone #screens .screen,
 #iphone #screens .screen img {
-    position: absolute;
+    position: relative;
     height: 320px;
     width: 480px;
-    max-width: 480px;
-    max-height: 320px;
 }
 
 #iphone #screens {
@@ -185,8 +172,8 @@ body {
 
 #iphone #screens .screen .caption {
     position: absolute;
-    width: 101%;
-    left: 0;
+    left: -1px;
+    right: 0px;
     bottom: -1px;
     background-color: #000000;
     color: #ffffff;
@@ -229,53 +216,22 @@ only screen and (min-resolution:2dppx) {
 .ie #screen04 { background-image: none; }
 .ie #screen05 { background-image: none; }
 
-/* set border-box so that percents can be used for width, padding, etc (personal preference) */
-.cycle-slideshow,
-.cycle-slideshow * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+
+.owl-wrapper-outer {
+    height: 320px;
 }
 
-
-.cycle-slideshow {
-    width: 45%;
-    margin: 0 auto 0 auto;
-    padding: 0;
-    position: relative;
+#iphone .owl-controls {
+    margin-top: 32px;
+    z-index: 1000;
 }
 
-.cycle-slideshow .screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 0;
-    display: block;
+#iphone .owl-controls .owl-pagination span {
+    background-color: #997e00;
 }
 
-/* pager */
-.cycle-pager {
-    width: 100%;
-    overflow: hidden;
-}
-
-.cycle-pager span {
-    font-family: arial;
-    font-size: 55px;
-    width: 27px;
-    display: inline-block;
-    /*color: #ffffff;*/
-    color: #997e00;
-    cursor: pointer;
-}
-
-.cycle-pager span.cycle-pager-active {
-    color: #ffff66;
-}
-
-.cycle-pager > * {
-    cursor: pointer;
+#iphone .owl-controls .owl-pagination .active span {
+    background-color: #ffff66;
 }
 
 .disabled {
@@ -292,18 +248,21 @@ only screen and (min-resolution:2dppx) {
 }
 
 #description {
-    font-size: 22px;
-    left: 20px;
+    width: 600px;
+    font-size: 20px;
+    padding: 1em 0 1em 20px;
+    white-space: normal;
+}
+
+#badge-link {
     position: absolute;
-    top: 17px;
+    top: 50%;
+    right: 80px;
+    margin-top: -89px;
+    z-index: 100;
 }
 
 #badge {
-    float: right;
-    position:relative;
-    margin: -14px 80px -14px 0;
-    z-index: 100;
-
     height: 178px;
     width: 240px;
     background-image: url(images/appstore-badge.png);
@@ -330,13 +289,13 @@ only screen and (min-resolution:2dppx) {
 }
 
 #footer {
-    padding: 27px 0 41px 0;
+    padding: 40px 0 40px 0;
 }
 
 #download {
     float: left;
     font-size: 27px;
-    padding-left: 41px;
+    padding-left: 20px;
 }
 
 #download a {
@@ -346,6 +305,6 @@ only screen and (min-resolution:2dppx) {
 #legal {
     font-size: 14px;
     float: right;
-    margin-right: 82px;
+    margin-right: 80px;
     text-align: right;
 }
