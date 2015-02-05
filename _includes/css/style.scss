@@ -1,5 +1,7 @@
 @CHARSET "UTF-8";
 
+$images-path: "images/";
+
 html,
 body {
     font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
@@ -130,7 +132,7 @@ body {
 }
 
 #iphone {
-    background-image: url(images/iphone.png);
+    background-image: url(#{$images-path}iphone.png);
 
     position: absolute;
     top: 247px;
@@ -188,11 +190,11 @@ body {
     opacity: 0.66; /* Good browsers */
 }
 
-#screen01 { background-image: url(images/iphone01.png); }
-#screen02 { background-image: url(images/iphone02.png); }
-#screen03 { background-image: url(images/iphone03.png); }
-#screen04 { background-image: url(images/iphone04.png); }
-#screen05 { background-image: url(images/iphone05.png); }
+#screen01 { background-image: url(#{$images-path}iphone01.png); }
+#screen02 { background-image: url(#{$images-path}iphone02.png); }
+#screen03 { background-image: url(#{$images-path}iphone03.png); }
+#screen04 { background-image: url(#{$images-path}iphone04.png); }
+#screen05 { background-image: url(#{$images-path}iphone05.png); }
 
 @media
 only screen and (-webkit-min-device-pixel-ratio:2),
@@ -203,11 +205,11 @@ only screen and (-o-min-device-pixel-ratio:2/1),
 only screen and (min-device-pixel-ratio:2),
 only screen and (min-resolution:192dpi),
 only screen and (min-resolution:2dppx) {
-    #screen01 { background-image: url(images/iphone01_2x.png); }
-    #screen02 { background-image: url(images/iphone02_2x.png); }
-    #screen03 { background-image: url(images/iphone03_2x.png); }
-    #screen04 { background-image: url(images/iphone04_2x.png); }
-    #screen05 { background-image: url(images/iphone05_2x.png); }
+    #screen01 { background-image: url(#{$images-path}iphone01_2x.png); }
+    #screen02 { background-image: url(#{$images-path}iphone02_2x.png); }
+    #screen03 { background-image: url(#{$images-path}iphone03_2x.png); }
+    #screen04 { background-image: url(#{$images-path}iphone04_2x.png); }
+    #screen05 { background-image: url(#{$images-path}iphone05_2x.png); }
 }
 
 .ie #screen01 { background-image: none; }
@@ -265,13 +267,13 @@ only screen and (min-resolution:2dppx) {
 #badge {
     height: 178px;
     width: 240px;
-    background-image: url(images/appstore-badge.png);
+    background-image: url(#{$images-path}appstore-badge.png);
 }
 
 .ie #badge {
     background-image: none;
-    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/appstore-badge.png', sizingMethod='scale' )";
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/appstore-badge.png', sizingMethod='scale' );
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}appstore-badge.png', sizingMethod='scale' )";
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}appstore-badge.png', sizingMethod='scale' );
 }
 
 @media
@@ -284,7 +286,7 @@ only screen and (min-device-pixel-ratio:2),
 only screen and (min-resolution:192dpi),
 only screen and (min-resolution:2dppx) {
     #badge a div.background-image {
-        background-image: url(images/appstore-badge_2x.png);
+        background-image: url(#{$images-path}appstore-badge_2x.png);
     }
 }
 
