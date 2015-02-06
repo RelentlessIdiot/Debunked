@@ -1,0 +1,312 @@
+@CHARSET "UTF-8";
+
+$images-path: "images/";
+
+html,
+body {
+    font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+}
+
+html {
+    /*overflow: auto;*/
+
+    background: #ba9800; /* Old browsers */
+    background: -moz-linear-gradient(top,  #e5d600 0%, #ba9800 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5d600), color-stop(100%,#ba9800)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #e5d600 0%,#ba9800 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5d600', endColorstr='#ba9800',GradientType=0 ); /* IE6-9 */
+}
+
+body {
+    /*overflow: hidden;*/
+}
+
+.clear {
+    clear: both;
+}
+
+.background-image {
+    background-color: transparent;
+    background-position: 50% 50%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    color: transparent;
+    display: block;
+    text-shadow: none;
+    vertical-align: middle;
+}
+
+#main {
+    position: relative;
+    height: 658px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#main,
+#detail,
+#footer {
+    width: 1014px;
+    margin: 0 auto 0 auto;
+}
+
+#stripe {
+    background-color: #ffff66;
+    width: 100%;
+    min-width: 1014px;
+}
+
+#question-mark,
+#question-mark-shadow {
+    position: absolute;
+    top: -96px;
+    left: 586px;
+}
+
+#question-mark span,
+#question-mark-shadow span {
+    font-size: 786px;
+    font-weight: bold;
+    line-height: 1em;
+    height: 1em;
+}
+
+#question-mark {
+    z-index: -1;
+}
+
+#question-mark-shadow {
+    z-index: -2;
+}
+
+#question-mark span {
+    text-shadow: 0 0 0.025em #b09000;
+}
+
+#question-mark-shadow span {
+    color: #b09000;
+}
+
+#title,
+#title-shadow {
+    position: absolute;
+    top: 41px;
+    left: 21px;
+}
+
+#title {
+    z-index: 4;
+}
+
+#title-shadow {
+    margin: 2px 0 0 2px;
+    color: #b09000;
+    z-index: 3;
+}
+
+#title h1,
+#title-shadow h1 {
+    font-size: 93px;
+    font-weight: bold;
+}
+
+#title h1 {
+    text-shadow: 0 0 3px #b09000, 0 0 6px #b09000;
+}
+
+#title h2,
+#title-shadow h2 {
+    font-size: 46px;
+    margin: -10px 0 0 14px;
+}
+
+#title h2 {
+    text-shadow: 0 0 0.2em #b09000, 0 0 0.4em #b09000;
+}
+
+#iphone {
+    background-image: url(#{$images-path}iphone.png);
+
+    position: absolute;
+    top: 247px;
+    left: 7px;
+
+    height: 368px;
+    width: 716px;
+    max-height: 368px;
+    max-width: 716px;
+
+    z-index: 5;
+}
+
+.ie #iphone {
+    background-image: none;
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/iphone.png', sizingMethod='scale' )";
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='images/iphone.png', sizingMethod='scale' );
+}
+
+#iphone #screens,
+#iphone #screens .screen,
+#iphone #screens .screen img {
+    position: relative;
+    height: 320px;
+    width: 480px;
+}
+
+#iphone #screens {
+    left: 118px;
+    top: 24px;
+}
+
+#iphone #screens .screen,
+#iphone #screens .screen img {
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+#iphone #screens .screen .caption {
+    position: absolute;
+    left: -1px;
+    right: 0px;
+    bottom: -1px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 14px 0 14px 14px;
+    text-align: left;
+    font-size: 30px;
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=66)"; /* IE 8 */
+    filter: alpha(opacity=66); /* IE 5-7 */
+    -moz-opacity: 0.66; /* Netscape */
+    -khtml-opacity: 0.66; /* Safari 1.x */
+    opacity: 0.66; /* Good browsers */
+}
+
+#screen01 { background-image: url(#{$images-path}iphone01.png); }
+#screen02 { background-image: url(#{$images-path}iphone02.png); }
+#screen03 { background-image: url(#{$images-path}iphone03.png); }
+#screen04 { background-image: url(#{$images-path}iphone04.png); }
+#screen05 { background-image: url(#{$images-path}iphone05.png); }
+
+@media
+only screen and (-webkit-min-device-pixel-ratio:2),
+only screen and (-khtml-min-device-pixel-ratio:2),
+only screen and (min--moz-device-pixel-ratio:2),
+only screen and (-moz-min-device-pixel-ratio:2),
+only screen and (-o-min-device-pixel-ratio:2/1),
+only screen and (min-device-pixel-ratio:2),
+only screen and (min-resolution:192dpi),
+only screen and (min-resolution:2dppx) {
+    #screen01 { background-image: url(#{$images-path}iphone01_2x.png); }
+    #screen02 { background-image: url(#{$images-path}iphone02_2x.png); }
+    #screen03 { background-image: url(#{$images-path}iphone03_2x.png); }
+    #screen04 { background-image: url(#{$images-path}iphone04_2x.png); }
+    #screen05 { background-image: url(#{$images-path}iphone05_2x.png); }
+}
+
+.ie #screen01 { background-image: none; }
+.ie #screen02 { background-image: none; }
+.ie #screen03 { background-image: none; }
+.ie #screen04 { background-image: none; }
+.ie #screen05 { background-image: none; }
+
+
+.owl-wrapper-outer {
+    height: 320px;
+}
+
+#iphone .owl-controls {
+    margin-top: 32px;
+    z-index: 1000;
+}
+
+#iphone .owl-controls .owl-pagination span {
+    background-color: #997e00;
+}
+
+#iphone .owl-controls .owl-pagination .active span {
+    background-color: #ffff66;
+}
+
+.disabled {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+#detail {
+    position: relative;
+    /*color: #503800;*/
+    /*color: #997e00;*/
+    color: #745a00;
+    z-index: 50;
+}
+
+#description {
+    width: 600px;
+    font-size: 20px;
+    padding: 1em 0 1em 20px;
+    white-space: normal;
+}
+
+#badge-link {
+    position: absolute;
+    top: 50%;
+    right: 80px;
+    margin-top: -89px;
+    z-index: 100;
+}
+
+#badge {
+    height: 178px;
+    width: 240px;
+    background-image: url(#{$images-path}appstore-badge.png);
+}
+
+.ie #badge {
+    background-image: none;
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}appstore-badge.png', sizingMethod='scale' )";
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}appstore-badge.png', sizingMethod='scale' );
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio:2),
+only screen and (-khtml-min-device-pixel-ratio:2),
+only screen and (min--moz-device-pixel-ratio:2),
+only screen and (-moz-min-device-pixel-ratio:2),
+only screen and (-o-min-device-pixel-ratio:2/1),
+only screen and (min-device-pixel-ratio:2),
+only screen and (min-resolution:192dpi),
+only screen and (min-resolution:2dppx) {
+    #badge a div.background-image {
+        background-image: url(#{$images-path}appstore-badge_2x.png);
+    }
+}
+
+#footer {
+    padding: 40px 0 40px 0;
+}
+
+#download {
+    float: left;
+    font-size: 27px;
+    padding-left: 20px;
+}
+
+#download a {
+    color: #ff0;
+}
+
+#legal {
+    font-size: 14px;
+    float: right;
+    margin-right: 80px;
+    text-align: right;
+}

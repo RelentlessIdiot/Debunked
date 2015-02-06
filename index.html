@@ -1,0 +1,160 @@
+---
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Debunked is the first and only app to bring all the rumors and urban legends from Snopes to your iOS device." />
+    <meta name="keywords" content="snopes,snopes.com,rumor,rumors,urban legend,myth,myths,hoax,hoaxes,debunk,fact,fiction,gossip" />
+
+    <title>Debunked: Urban Legends Revealed</title>
+
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+
+    <style type="text/css">
+{% include css/reset.css %}
+    </style>
+    <style type="text/css">
+{% capture style_css %}{% include css/style.scss %}{% endcapture %}
+{{ style_css | scssify }}
+    </style>
+    <style type="text/css">
+{% include owl-carousel/owl.carousel.css %}
+    </style>
+    <style type="text/css">
+{% include owl-carousel/owl.theme.css %}
+    </style>
+
+    <script type="text/javascript">
+{% include js/jquery-1.11.0.min.js %}
+    </script>
+    <script type="text/javascript">
+{% include owl-carousel/owl.carousel.min.js %}
+    </script>
+    <script type="text/javascript">
+var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+if (isIOS) {
+    {% include js/iosfix.js %}
+}
+$(document).ready(function() {
+    $("#screens").owlCarousel({
+        items: 5,
+        singleItem: true,
+        autoPlay: true,
+        stopOnHover: true
+    });
+});
+    </script>
+</head>
+<!--[if IE ]>
+  <![if lt IE 10]>
+    <body class="ie">
+  <![endif]>
+  <![if gte IE 10]>
+    <body>
+  <![endif]>
+<![endif]-->
+<!--[if !IE]>-->
+  <body>
+<!--<![endif]-->
+    <div id="main">
+        <div id="question-mark-shadow"><span>?</span></div>
+        <div id="question-mark"><span>?</span></div>
+        <div id="title-shadow">
+            <h1>Debunked</h1>
+            <h2>Urban Legends Revealed</h2>
+        </div>
+        <div id="title">
+            <h1>Debunked</h1>
+            <h2>Urban Legends Revealed</h2>
+        </div>
+        <div id="iphone" class="background-image">
+            <div id="screens" class="owl-carousel">
+<!--[if IE ]>
+  <![if lt IE 10]>
+                <div id="screen01" class="screen background-image">
+                    <img src="images/iphone01.png"/>
+                    <div class="caption">Hundreds of categories!</div>
+                </div>
+                <div id="screen02" class="screen background-image">
+                    <img src="images/iphone02.png"/>
+                    <div class="caption">Check out the top 25<br>and latest rumors!</div>
+                </div>
+                <div id="screen03" class="screen background-image">
+                    <img src="images/iphone03.png"/>
+                    <div class="caption">Search for your favorite<br>topics and celebrities!</div>
+                </div>
+                <div id="screen04" class="screen background-image">
+                    <img src="images/iphone04.png"/>
+                    <div class="caption">Crazy photos!</div>
+                </div>
+                <div id="screen05" class="screen background-image">
+                    <img src="images/iphone05.png"/>
+                    <div class="caption">Random rumors!</div>
+                </div>
+  <![endif]>
+  <![if gte IE 10]>
+                <div id="screen01" class="screen background-image">
+                    <div class="caption">Hundreds of categories!</div>
+                </div>
+                <div id="screen02" class="screen background-image">
+                    <div class="caption">Check out the top 25<br>and latest rumors!</div>
+                </div>
+                <div id="screen03" class="screen background-image">
+                    <div class="caption">Search for your favorite<br>topics and celebrities!</div>
+                </div>
+                <div id="screen04" class="screen background-image">
+                    <div class="caption">Crazy photos!</div>
+                </div>
+                <div id="screen05" class="screen background-image">
+                    <div class="caption">Random rumors!</div>
+                </div>
+  <![endif]>
+<![endif]-->
+<!--[if !IE]>-->
+                <div id="screen01" class="screen background-image">
+                    <div class="caption">Hundreds of categories!</div>
+                </div>
+                <div id="screen02" class="screen background-image">
+                    <div class="caption">Check out the top 25<br>and latest rumors!</div>
+                </div>
+                <div id="screen03" class="screen background-image">
+                    <div class="caption">Search for your favorite<br>topics and celebrities!</div>
+                </div>
+                <div id="screen04" class="screen background-image">
+                    <div class="caption">Crazy photos!</div>
+                </div>
+                <div id="screen05" class="screen background-image">
+                    <div class="caption">Random rumors!</div>
+                </div>
+<!--<![endif]-->
+            </div>
+        </div>
+    </div>
+    <div id="stripe">
+        <div id="detail">
+            <div id="description" class="detail-item">
+                The first and only app for easily browsing all of the rumors
+                and urban legends from Snopes on your iOS device.
+                Search, browse by category, check out the top 25, or tap
+                the random button for hours of entertaining urban legends.
+            </div>
+            <a id="badge-link" href="https://github.com/RobRuana/Debunked">
+                <div id="badge" title="Download the source on GitHub" class="background-image"></div>
+            </a>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id ="footer">
+        <div id="download">
+            Download the source on <a href="https://github.com/RobRuana/Debunked">GitHub!</a>
+        </div>
+        <div id="legal">
+            Copyright © 2014 Rob Ruana. All rights reserved.<br/>
+            Snopes is a registered service mark of snopes.com.
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>
