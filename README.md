@@ -7,8 +7,8 @@ Debunked was hastily thrown together during a week of furious coding. It was my 
 
 Debunked is no longer available on the Apple App Store. However, you are free to download a copy of the source, compile, and run it for yourself. It compiles on Xcode 5.0.2. Other versions of Xcode may or may not work.
 
-* Homepage: http://www.debunkedapp.com
-* Source: https://github.com/relentlessidiot/debunked
+* Homepage: http://robruana.com/Debunked/
+* Source: https://github.com/RobRuana/Debunked
 
 This software is licensed under the GPLv3 (or later).
 
@@ -16,7 +16,7 @@ Screenshots
 -----------
 #### Check out what's new or the top 25
 ![What's New](https://raw.github.com/RelentlessIdiot/Debunked/master/Project%20Support/Images/Screenshots/whats-new.png "What's New")
- 
+
 #### Browse by category
 ![Categories](https://raw.github.com/RelentlessIdiot/Debunked/master/Project%20Support/Images/Screenshots/categories.png "Categories")
 
