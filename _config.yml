@@ -1,3 +1,4 @@
 exclude: [LICENSE, Resources, Gemfile, Gemfile.lock]
+baseurl: /Debunked
 sass:
     style: :compressed
