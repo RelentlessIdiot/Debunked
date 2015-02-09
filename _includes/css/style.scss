@@ -262,6 +262,14 @@ only screen and (min-resolution:2dppx) {
     right: 80px;
     margin-top: -89px;
     z-index: 100;
+
+    .accessibility-text {
+        height: 1px;
+        width: 1px;
+        position: absolute;
+        overflow: hidden;
+        top: -10px;
+    }
 }
 
 #badge {
