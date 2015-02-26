@@ -45,7 +45,7 @@ body {
 
 #main {
     position: relative;
-    height: 658px;
+    height: 634px;
     z-index: 1;
     overflow: hidden;
 }
@@ -66,7 +66,7 @@ body {
 #question-mark,
 #question-mark-shadow {
     position: absolute;
-    top: -96px;
+    top: -108px;
     left: 586px;
 }
 
@@ -97,7 +97,7 @@ body {
 #title,
 #title-shadow {
     position: absolute;
-    top: 41px;
+    top: 19px;
     left: 21px;
 }
 
@@ -135,7 +135,7 @@ body {
     background-image: url(#{$images-path}iphone.png);
 
     position: absolute;
-    top: 247px;
+    top: 223px;
     left: 7px;
 
     height: 368px;
@@ -260,7 +260,7 @@ only screen and (min-resolution:2dppx) {
     position: absolute;
     top: 50%;
     right: 80px;
-    margin-top: -89px;
+    margin-top: -36px;
     z-index: 100;
 
     .accessibility-text {
@@ -273,15 +273,15 @@ only screen and (min-resolution:2dppx) {
 }
 
 #badge {
-    height: 178px;
+    height: 71px;
     width: 240px;
-    background-image: url(#{$images-path}appstore-badge.png);
+    background-image: url(#{$images-path}github-badge.png);
 }
 
 .ie #badge {
     background-image: none;
-    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}appstore-badge.png', sizingMethod='scale' )";
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}appstore-badge.png', sizingMethod='scale' );
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}github-badge.png', sizingMethod='scale' )";
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}github-badge.png', sizingMethod='scale' );
 }
 
 @media
@@ -294,7 +294,7 @@ only screen and (min-device-pixel-ratio:2),
 only screen and (min-resolution:192dpi),
 only screen and (min-resolution:2dppx) {
     #badge a div.background-image {
-        background-image: url(#{$images-path}appstore-badge_2x.png);
+        background-image: url(#{$images-path}github-badge_2x.png);
     }
 }
 
@@ -304,12 +304,6 @@ only screen and (min-resolution:2dppx) {
 
 #footer a {
     color: #ff0;
-}
-
-#download {
-    float: left;
-    font-size: 27px;
-    padding-left: 20px;
 }
 
 #legal {
