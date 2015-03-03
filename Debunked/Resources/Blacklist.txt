@@ -1,26 +1,27 @@
 ##
 # This is a list of categories which Apple considers innappropriate.
+# Since Debunked is no longer on the App Store, everything is commented out.
 ##
 
 ###########################################################
 # Wild Card Matches
 ###########################################################
-disney
-risque
-daily/archive
-holidays/presidents
-holidays/flagday
-holidays/fathersday
-holidays/christmas/xmasquiz.asp
-inboxer/classaction/classaction.asp
-info/inthenews.asp
-inboxer/hoaxes/joejobs
-fraud/phishing/ebay.asp
-fraud/phishing/ebay02.asp
-fraud/phishing/fdic.asp
-fraud/phishing/usbank.asp
-fraud/phishing/usbank2.asp
-crime/fraud/fraud.asp
+# disney
+# risque
+# daily/archive
+# holidays/presidents
+# holidays/flagday
+# holidays/fathersday
+# holidays/christmas/xmasquiz.asp
+# inboxer/classaction/classaction.asp
+# info/inthenews.asp
+# inboxer/hoaxes/joejobs
+# fraud/phishing/ebay.asp
+# fraud/phishing/ebay02.asp
+# fraud/phishing/fdic.asp
+# fraud/phishing/usbank.asp
+# fraud/phishing/usbank2.asp
+# crime/fraud/fraud.asp
 
 ###########################################################
 # Categories
