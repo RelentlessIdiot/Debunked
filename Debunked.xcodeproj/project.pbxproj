@@ -661,7 +661,7 @@
 			name = DebunkedTests;
 			productName = DebunkedTests;
 			productReference = DAA2115416FD7E5500F2CAC0 /* DebunkedTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -670,7 +670,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Debunked;
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0610;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Rob Ruana";
 			};
 			buildConfigurationList = DAA2112F16FD7E5500F2CAC0 /* Build configuration list for PBXProject "Debunked" */;
