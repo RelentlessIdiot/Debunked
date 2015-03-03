@@ -69,9 +69,9 @@
 		NSArray *nodeSynopses = nil;
 		
 		label = [[labelEl content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		links = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div/a"];
-		imgs = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div/img"];
-		nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div/li"];
+		links = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div//a"];
+		imgs = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div//img"];
+		nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div//li"];
 		
 		NSMutableArray *rumorNodes = [NSMutableArray array];
 		@try {
