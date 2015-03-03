@@ -27,8 +27,8 @@
 		withDataSource:(NSObject<CategoryDataSource> *)theDataSource
 {
 	if(self = [super init]) {
-		self.url = @"http://www.snopes.com/";
-		self.targetUrl = @"http://www.snopes.com/";
+		self.url = @"http://www.snopes.com/info/whatsnew.asp";
+		self.targetUrl = @"http://www.snopes.com/info/whatsnew.asp";
 		self.delegate = theDelegate;
 		self.dataSource = theDataSource;
 	}
@@ -37,7 +37,7 @@
 
 - (NSWebViewURLRequest *)request
 {
-	NSString *urlString = @"http://www.snopes.com/";
+	NSString *urlString = self.url;
 	NSURL *urlObject = [NSURL URLWithString:urlString];
 	return [NSWebViewURLRequest requestWithURL:urlObject cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60.0];
 }
@@ -68,26 +68,20 @@
 	TFHpple *parser = nil;
 	@try {
 		parser = [[TFHpple alloc] initWithHTMLData:data];
-		NSArray *links  = [parser search:@"//td[@class=\"contentColumn\"]/table[3]//td[not(@colspan)]/a"];
-		NSArray *imgs  = [parser search:@"//td[@class=\"contentColumn\"]/table[3]//td[not(@colspan)]/a/img"];
-		NSArray *texts  = [parser search:@"//td[@class=\"contentColumn\"]/table[3]//td[not(@colspan)]/a/font/b"];
+		NSArray *links  = [parser search:@"//td[@class=\"navColumn\"]//div[@class=\"navHeader\"]/following-sibling::ul//a"];
 
 		NSMutableArray *categoryNodes = [NSMutableArray array];
 		
 		@try {
-			for (int i = 0; i < [links count]; i+=2) {
+			for (int i = 0; i < [links count]; i+=1) {
 				TFHppleElement *link = [links objectAtIndex:i];
-				TFHppleElement *img = [imgs objectAtIndex:(i/2)];
-				TFHppleElement *text = [texts objectAtIndex:(i/2)];
 				NSString *href = [self resolveUrl:[link objectForKey:@"href"]];
-				NSString *imgSrc = [self resolveUrl:[img objectForKey:@"src"]];
-				NSString *label = [text content];
+				NSString *label = [link content];
 
 				if (![Blacklist isBlacklisted:href]) {
 					CategoryNode *categoryNode = [[CategoryNode alloc] initWithUrl:href
 																		 withLabel:label
-																	  withSynopsis:@"" 
-																	  withImageUrl:imgSrc];
+																	  withSynopsis:@""];
 
 					[categoryNodes addObject:categoryNode];
 					[categoryNode release];

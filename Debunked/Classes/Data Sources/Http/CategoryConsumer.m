@@ -364,6 +364,9 @@
 					links = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]//a[string-length(@href)>0]"];
 					imgs = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]/img[@src != \"/images/search-hdr.gif\"]"];
 					nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]/text()[normalize-space()]"];
+                    if (![nodeSynopses count]) {
+                        nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//div[@class=\"article_text\"]//table//tr/td[not(@colspan)]/font/text()[normalize-space()]"];
+                    }
 				}
 			}
 			Category *category = [[Category alloc] initWithUrl:[[response URL] absoluteString]

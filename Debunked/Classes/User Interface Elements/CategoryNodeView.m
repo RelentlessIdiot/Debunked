@@ -141,7 +141,7 @@
 	point = CGPointMake(IMAGE_X, IMAGE_Y);
 	if (self.nodeImage != nil) {
 		[self.nodeImage drawAtPoint:point];
-	} else {
+	} else if(categoryNode.imageUrl != nil) {
 		// Draw a placeholder image
 		UIImage* placeholderImage = [UIImage imageNamed:@"placeholder.png"];
 		[placeholderImage drawAtPoint:point];
