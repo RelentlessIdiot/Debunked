@@ -5,7 +5,7 @@ The first and only app for easily browsing all of the rumors and urban legends f
 
 Debunked was hastily thrown together during a week of furious coding. It was my guinea pig project to learn Objective-C and Cocoa on iOS. I cannot in good conscience recommend this project as an example of how to do _anything_.
 
-Debunked is no longer available on the Apple App Store. However, you are free to download a copy of the source, compile, and run it for yourself. It has been tested on Xcode 6.1.1. Other versions of Xcode should work fine.
+Debunked is no longer available on the Apple App Store. However, you are free to download a copy of the source, compile, and run it for yourself. It has been tested on Xcode 6.1.1 and almost every version of iOS. Other versions of Xcode should work fine.
 
 * Homepage: http://robruana.com/Debunked/
 * Source: https://github.com/RobRuana/Debunked
