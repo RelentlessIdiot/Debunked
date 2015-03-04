@@ -20,10 +20,12 @@
 {{ style_css | scssify }}
     </style>
     <style type="text/css">
-{% include owl-carousel/owl.carousel.css %}
+{% capture style_css %}{% include owl-carousel/owl.carousel.css %}{% endcapture %}
+{{ style_css | scssify }}
     </style>
     <style type="text/css">
-{% include owl-carousel/owl.theme.css %}
+{% capture style_css %}{% include owl-carousel/owl.theme.css %}{% endcapture %}
+{{ style_css | scssify }}
     </style>
 
 </head>
