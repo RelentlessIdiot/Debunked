@@ -2,6 +2,14 @@
 
 $images-path: "images/";
 
+@mixin gradient-vertical($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+  background-image: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);  // Safari 5.1-6, Chrome 10+
+  background-image: -o-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);  // Opera 12
+  background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0); // IE9 and down
+}
+
 html,
 body {
     font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
@@ -13,19 +21,13 @@ body {
 
 html {
     /*overflow: auto;*/
-
-    background: #ba9800; /* Old browsers */
-    background: -moz-linear-gradient(top,  #e5d600 0%, #ba9800 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e5d600), color-stop(100%,#ba9800)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #e5d600 0%,#ba9800 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #e5d600 0%,#ba9800 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5d600', endColorstr='#ba9800',GradientType=0 ); /* IE6-9 */
 }
 
 body {
     /*overflow: hidden;*/
+
+    background-color: #ba9800; /* Old browsers */
+    @include gradient-vertical($start-color: #e5d600, $end-color: #ba9800);
 }
 
 .clear {
@@ -282,6 +284,63 @@ only screen and (min-resolution:2dppx) {
     background-image: none;
     -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}github-badge.png', sizingMethod='scale' )";
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader( src='#{$images-path}github-badge.png', sizingMethod='scale' );
+}
+
+#forkongithub {
+    position: fixed;
+    display: block;
+    top: 0;
+    right: 0;
+    width: 200px;
+    overflow: hidden;
+    height: 200px;
+    z-index: 9999;
+}
+
+#forkongithub a {
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    font-family: "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 40px;
+    font-size: 0.9rem;
+    line-height: 1.8rem;
+    transition: 0.3s;
+    white-space: nowrap;
+
+    width: 200px;
+    position: absolute;
+    top: 50px;
+    right: -70px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+}
+
+#forkongithub a:hover {
+    background: #c11;
+    color: #fff;
+}
+
+#forkongithub a::before, #forkongithub a::after {
+    content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    height: 1px;
+    background: #fff;
+}
+
+#forkongithub a::after {
+    bottom: 1px;
+    top: auto;
 }
 
 @media
