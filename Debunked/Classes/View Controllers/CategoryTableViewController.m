@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -40,7 +40,7 @@
 		[localDataSource release];
 	}
 	
-	UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBrowseButton)];
+	UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
 	self.navigationItem.rightBarButtonItem = browseButtonItem;
 	
 	[super loadView];
@@ -96,7 +96,7 @@
 			
 			categoryTableViewController.title = [theCategory label];
 			categoryTableViewController.category = theCategory;
-			
+
 			[self performSelectorOnMainThread:@selector(pushViewControllerAnimated:) withObject:categoryTableViewController waitUntilDone:YES];
 			[categoryTableViewController release];
 		} else {

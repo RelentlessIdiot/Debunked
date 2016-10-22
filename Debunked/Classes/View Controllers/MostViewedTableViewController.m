@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -25,45 +25,20 @@
 - (void)loadView {
 	[super loadView];
 	[tableView setDelegate:self];
-	
+
 	NSArray *segmentTextContent = [NSArray arrayWithObjects:@"What's New", @"Top 25", nil];
 	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentTextContent];
 	segmentedControl.selectedSegmentIndex = selectedSegmentIndex;
 	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-	
-	int x = (self.tableView.frame.size.width - 170) / 2;
-	int height = 30;
-	if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
-		height = 24;
-	}
-	[segmentedControl setFrame:CGRectMake(x, 0, 170, height)];
+
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	
+
 	self.navigationItem.titleView = segmentedControl;
 	[segmentedControl release];
 }
 
-- (void)viewDidLoad
-{
-	[super viewDidLoad];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
-	int x = (self.tableView.frame.size.width - 170) / 2;
-	int y = self.navigationItem.titleView.frame.origin.y;
-	int height = 24;
-	if (self.interfaceOrientation == UIInterfaceOrientationPortrait) {
-		height = 30;
-	}
-	[self.navigationItem.titleView setFrame:CGRectMake(x, y, 170, height)];
-	
 	@synchronized(self) {
 		if ([[(HttpRumorDataSource *)dataSource rumorNodes] count] == 0) {
 			tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -82,7 +57,7 @@
 			}
 		}
 	}
-	
+
 	[super viewWillAppear:animated];
 }
 
@@ -114,7 +89,7 @@
 	@synchronized(self) {
 		[dataSource cancelRequest:lastRequestId];
 		self.loadingCell = nil;
-		
+
 		if (tableView.dragging || tableView.decelerating) {
 			needsLoadingView = YES;
 		} else {
@@ -123,7 +98,7 @@
 				loadingView = [LoadingView loadingViewInView:tableView withBorder:NO];
 			}
 		}
-		
+
 		UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
 		selectedSegmentIndex = segmentedControl.selectedSegmentIndex;
 		if (segmentedControl.selectedSegmentIndex == 0) {

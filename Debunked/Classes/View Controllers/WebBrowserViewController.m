@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -57,7 +57,7 @@
 	view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
 	self.view = view;
 	[view release];
-	
+
 	CGRect webFrame = [self.view frame];
 	webFrame.origin.x = 0;
 	webFrame.origin.y = 0;
@@ -68,16 +68,16 @@
 	webView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
 	webView.backgroundColor = [UIColor whiteColor];
 	[self.view addSubview:webView];
-	
+
 	UIView *hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	UIBarButtonItem *hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];      
+	UIBarButtonItem *hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
 	self.navigationItem.backBarButtonItem = hackItem;
 	[hackView release];
 	[hackItem release];
 	self.navigationItem.hidesBackButton = YES;
-	
+
 	hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];      
+	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
 	self.navigationItem.rightBarButtonItem = hackItem;
 	[hackView release];
 	[hackItem release];
@@ -95,29 +95,28 @@
 	self.addressBar.autocorrectionType = UITextAutocorrectionTypeNo;
 	self.addressBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	self.navigationItem.titleView = self.addressBar;
-	
+
 	if (self.url != nil) {
 		[webView loadRequest:[NSWebViewURLRequest requestWithURL:[NSURL URLWithString:self.url]]];
 		self.addressBar.text = self.url;
 	}
-	
+
 	NSArray *segmentContent = [NSArray arrayWithObjects:
 							   [UIImage imageNamed:@"back.png"],
-							   [UIImage imageNamed:@"forward.png"], 
+							   [UIImage imageNamed:@"forward.png"],
 							   nil];
 	self.navBar = [[UISegmentedControl alloc] initWithItems:segmentContent];
 	self.navBar.momentary = YES;
 	self.navBar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	self.navBar.segmentedControlStyle = UISegmentedControlStyleBar;
 	self.navBar.frame = CGRectMake(0, 0, 58, 32);
 	[self.navBar addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-	
+
 	[self.navBar setEnabled:webView.canGoBack forSegmentAtIndex:0];
 	[self.navBar setEnabled:webView.canGoForward forSegmentAtIndex:1];
-	
+
 	UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:self.navBar] autorelease];
 	self.navigationItem.leftBarButtonItem = buttons;
-	
+
 	CGRect fullscreenFrame = [view frame];
 	hideButton = [[[UIButton alloc] initWithFrame:fullscreenFrame] autorelease];
 	hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
@@ -127,29 +126,12 @@
 	[[self view] addSubview:hideButton];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
-		self.navBar.frame = CGRectMake(5, 5, 58, 32);
-	} else {
-		self.navBar.frame = CGRectMake(5, 5, 58, 24);
-	}
-	
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	if (self.receivedMemoryWarning) {
 		self.receivedMemoryWarning = NO;
 	}
-	
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait) {
-		self.navBar.frame = CGRectMake(5, 5, 58, 32);
-	} else {
-		self.navBar.frame = CGRectMake(5, 5, 58, 24);
-	}
-	
+
 	[super viewWillAppear:animated];
 }
 
@@ -178,7 +160,7 @@
 	}
 	[self.navBar setEnabled:theWebView.canGoBack forSegmentAtIndex:0];
 	[self.navBar setEnabled:theWebView.canGoForward forSegmentAtIndex:1];
-	
+
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
@@ -186,7 +168,7 @@
 {
 	[self.navBar setEnabled:theWebView.canGoBack forSegmentAtIndex:0];
 	[self.navBar setEnabled:theWebView.canGoForward forSegmentAtIndex:1];
-	
+
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 }
 
@@ -241,7 +223,7 @@
 - (void)dealloc {
 	webView.delegate = nil;
 	[webView release];
-	
+
     [super dealloc];
 }
 

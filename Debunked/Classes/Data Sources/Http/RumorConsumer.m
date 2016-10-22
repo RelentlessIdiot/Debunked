@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -68,7 +68,7 @@
 					if (heightString != nil) {
 						NSInteger height = [heightString intValue];
 						NSInteger newHeight = ((height * (290.0/width)) + 0.5);
-						NSString *newHeightString = [NSString stringWithFormat:@"%d", newHeight];
+						NSString *newHeightString = [NSString stringWithFormat:@"%ld", (long)newHeight];
 						[element setValue:newHeightString forKey:@"height"];
 					}
 					[element setValue:@"290" forKey:@"width"];

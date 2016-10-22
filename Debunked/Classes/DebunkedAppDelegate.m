@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -27,40 +27,40 @@
 #import "DebunkedAppDelegate.h"
 
 
-// UITabBarController+Rotation.h
-@interface UITabBarController (rotation)
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-@end
-
-// UITabBarController+Rotation.m
-// #import "UITabBarController+Rotation.h"
-
-@implementation UITabBarController (rotation)
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-						 interfaceOrientation == UIInterfaceOrientationPortrait);
-	return shouldRotate;
-}
-@end
-
-
-// UINavigationController+Rotation.h
-@interface UINavigationController (rotation)
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-@end
-
-// UINavigationController+Rotation.m
-// #import "UINavigationController+Rotation.h"
-
-@implementation UINavigationController (rotation)
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-						 interfaceOrientation == UIInterfaceOrientationPortrait);
-	return shouldRotate;
-}
-@end
+//// UITabBarController+Rotation.h
+//@interface UITabBarController (rotation)
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+//@end
+//
+//// UITabBarController+Rotation.m
+//// #import "UITabBarController+Rotation.h"
+//
+//@implementation UITabBarController (rotation)
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+//	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
+//						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+//						 interfaceOrientation == UIInterfaceOrientationPortrait);
+//	return shouldRotate;
+//}
+//@end
+//
+//
+//// UINavigationController+Rotation.h
+//@interface UINavigationController (rotation)
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+//@end
+//
+//// UINavigationController+Rotation.m
+//// #import "UINavigationController+Rotation.h"
+//
+//@implementation UINavigationController (rotation)
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+//    BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
+//                         interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+//                         interfaceOrientation == UIInterfaceOrientationPortrait);
+//    return shouldRotate;
+//}
+//@end
 
 
 @implementation DebunkedAppDelegate
@@ -78,31 +78,11 @@
 }
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
-	[self setupPortraitUserInterface];
-
-	splashView = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	if([UIScreen mainScreen].bounds.size.height == 568.0f) {
-		splashView.image = [UIImage imageNamed:@"Default-568h.png"];
-	} else {
-		splashView.image = [UIImage imageNamed:@"Default.png"];
-	}
-	[mainWindow addSubview:splashView];
-	[mainWindow bringSubviewToFront:splashView];
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.5];
-	[UIView setAnimationTransition:UIViewAnimationTransitionNone forView:mainWindow cache:YES];
-	[UIView setAnimationDelegate:self]; 
-	[UIView setAnimationDidStopSelector:@selector(startupAnimationDone:finished:context:)];
-	splashView.alpha = 0.0;
-	[UIView commitAnimations];
+    [self setupUserInterface];
+	[mainWindow makeKeyAndVisible];
 }
 
-- (void)startupAnimationDone:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
-	[splashView removeFromSuperview];
-	[splashView release];
-}
-
-- (void)setupPortraitUserInterface {
+- (void)setupUserInterface {
 	mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	tabBarController = [[UITabBarController alloc] init];
 	
@@ -136,18 +116,19 @@
 	[localViewController release];
 	
 	localNavigationController.tabBarItem.image = [UIImage imageNamed:@"categories_tabitem.png"];
+	localNavigationController.tabBarItem.title = @"Categories";
 	[localViewControllers addObject:localNavigationController];
 	[localNavigationController release];
 	
 	
 	//======== Browse =========
 	localViewController = [[WebBrowserViewController alloc] initWithUrl:@"http://www.snopes.com"];
-	localViewController.title = @"Browse";
 	
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
 	[localViewController release];
 	
 	localNavigationController.tabBarItem.image = [UIImage imageNamed:@"browse_tabitem.png"];
+	localNavigationController.tabBarItem.title = @"Browse";
 	[localViewControllers addObject:localNavigationController];
 	[localNavigationController release];
 	
@@ -169,12 +150,12 @@
 	localDataSource = [[[DataSourceFactory rumorDataSourceClass] alloc] init];
 	localViewController = [[RandomViewController alloc] initWithDataSource:(NSObject<RumorDataSource> *)localDataSource];
 	[localDataSource release];
-	localViewController.title = @"Random";
 	
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
 	[localViewController release];
 	
 	localNavigationController.tabBarItem.image = [UIImage imageNamed:@"random_tabitem.png"];
+	localNavigationController.tabBarItem.title = @"Random";
 	[localViewControllers addObject:localNavigationController];
 	[localNavigationController release];
 	
@@ -182,14 +163,13 @@
 	tabBarController.viewControllers = localViewControllers;
 	[localViewControllers release];
 	
-    mainWindow.rootViewController = tabBarController;
-	[mainWindow makeKeyAndVisible];
+	mainWindow.rootViewController = tabBarController;
 }
 
 - (void)dealloc {
     [tabBarController release];
     [mainWindow release];
-	
+
     [super dealloc];
 }
 

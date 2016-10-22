@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -21,13 +21,11 @@
 @interface DebunkedAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *mainWindow;
     UITabBarController *tabBarController;
-	UIImageView *splashView;
 }
 
 @property (nonatomic, retain) UITabBarController *tabBarController;
 @property (nonatomic, retain) UIWindow *mainWindow;
 
-- (void)setupPortraitUserInterface;
-- (void)startupAnimationDone:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
+- (void)setupUserInterface;
 
 @end

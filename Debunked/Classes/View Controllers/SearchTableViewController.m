@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -33,48 +33,42 @@
 
 - (void)loadView {
 	[super loadView];
-	
+
 	[tableView setDelegate:self];
-	
+
 	if ([self.dataSource tableView:self.tableView numberOfRowsInSection:0] == 0) {
 		tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	} else {
 		tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	}
-	
+
 	UIView *hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	UIBarButtonItem *hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];      
+	UIBarButtonItem *hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
 	self.navigationItem.backBarButtonItem = hackItem;
 	[hackView release];
 	[hackItem release];
 	self.navigationItem.hidesBackButton = YES;
-	
+
 	hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];      
+	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
 	self.navigationItem.leftBarButtonItem = hackItem;
 	[hackView release];
 	[hackItem release];
-	
+
 	hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];      
+	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
 	self.navigationItem.rightBarButtonItem = hackItem;
 	[hackView release];
 	[hackItem release];
-	
-	CGRect frame = [tableView frame];
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait) {
-		frame.size.height = 44.0;
-	} else {
-		frame.size.height = 32.0;
-	}
-	searchBar = [[[UISearchBar alloc] initWithFrame:frame] autorelease];
+
+	searchBar = [[[UISearchBar alloc] init] autorelease];
 	searchBar.delegate = self;
 	searchBar.showsCancelButton = NO;
 	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
 	self.navigationItem.titleView = searchBar;
-	
+
 	CGRect fullscreenFrame = [[UIScreen mainScreen] applicationFrame];
 	fullscreenFrame.origin.x = 0;
 	fullscreenFrame.origin.y = 0;
@@ -86,29 +80,8 @@
 	[self.view addSubview:hideButton];
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	CGRect frame = [tableView frame];
-	if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
-		frame.size.height = 44.0;
-	} else {
-		frame.size.height = 32.0;
-	}
-	[searchBar setFrame:frame];
-	
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
-	CGRect frame = [tableView frame];
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait) {
-		frame.size.height = 44.0;
-	} else {
-		frame.size.height = 32.0;
-	}
-	[searchBar setFrame:frame];
-	
 	[super viewWillAppear:animated];
 }
 
@@ -136,7 +109,7 @@
 
 - (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText
 {
-	
+
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)theSearchBar
@@ -161,7 +134,7 @@
 
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)theSearchBar
 {
-	
+
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)theSearchBar
@@ -172,7 +145,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)theSearchBar
 {
 	[searchBar resignFirstResponder];
-	
+
 	@synchronized(self) {
 		tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		if (tableView.dragging || tableView.decelerating) {
@@ -183,14 +156,14 @@
 				loadingView = [LoadingView loadingViewInView:[self view] withBorder:NO];
 			}
 		}
-		
+
 		lastRequestId = [(HttpSearchDataSource *)dataSource requestSearchResults:[searchBar text] notifyDelegate:self];
 	}
 }
 
 - (void)searchBar:(UISearchBar *)theSearchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
-	
+
 }
 
 - (void)receiveSearchResults:(NSArray *)theSearchResults withResult:(NSInteger)theResult
@@ -214,7 +187,7 @@
 	{
 		[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
 		self.loadingCell = nil;
-		
+
 		if (theItem == nil) {
 			return;
 		}

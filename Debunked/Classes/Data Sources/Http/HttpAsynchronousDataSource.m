@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -34,7 +34,7 @@
 	NSNumber *requestId = nil;
 	@synchronized(self) {
 		lastRequestId++;
-		requestId = [NSNumber numberWithInt:lastRequestId];
+		requestId = [NSNumber numberWithInteger:lastRequestId];
 		NSArray *theRequest = [NSArray arrayWithObjects:
 							   NSStringFromSelector(@selector(doRequestItemForIndexPath:notifyDelegate:)), 
 							   theIndexPath, 
@@ -54,7 +54,7 @@
 - (void)cancelRequest:(NSInteger)theRequestId
 {
 	@synchronized(self) {
-		[activeRequests removeObjectForKey:[NSNumber numberWithInt:theRequestId]];
+		[activeRequests removeObjectForKey:[NSNumber numberWithInteger:theRequestId]];
 	}
 }
 

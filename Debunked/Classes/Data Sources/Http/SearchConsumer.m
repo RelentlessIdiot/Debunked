@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -59,7 +59,7 @@
 			while([children count] > 0) {
 				TFHppleElement *el = [children objectAtIndex:0];
 				[children removeObjectAtIndex:0];
-				int childCount = [[el children] count];
+				NSUInteger childCount = [[el children] count];
 				if ([@"a" isEqual:[el tagName]] && [el objectForKey:@"href"] != nil) {
 					rumorUrl = [el objectForKey:@"href"];
 					rumorLabel = [el content];

@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -42,7 +42,7 @@
 	if (rumor != theRumor) {
 		[rumor release];
 		rumor = [theRumor retain];
-		
+
 		if (self.rumor != nil && ![self.rumor isEqual:@""]) {
 			[self.navigationItem performSelectorOnMainThread:@selector(setTitle:) withObject:self.rumor.title waitUntilDone:NO];
 			[self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
@@ -76,39 +76,38 @@
 {
 	if (self = [super init]) {
 		self.rumor = theRumor;
-		
+
 		if (self.rumor != nil && ![self.rumor isEqual:@""]) {
 			self.title = self.rumor.title;
 		}
-		
+
 		Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
 		BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
-		
+
 		Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
 		BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
-		
+
 		if (canPrint || canEmail) {
 			NSArray *segmentContent = [NSArray arrayWithObjects:
 									   [UIImage imageNamed:@"share.png"],
-									   [UIImage imageNamed:@"browse.png"], 
+									   [UIImage imageNamed:@"browse.png"],
 									   nil];
 			UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentContent];
 			segmentedControl.momentary = YES;
 			segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-			segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
 			segmentedControl.frame = CGRectMake(0, 0, 70, 32);
 			[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
 			self.toolbar = segmentedControl;
-			
+
 			UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:self.toolbar] autorelease];
 			self.navigationItem.rightBarButtonItem = buttons;
 		} else {
-			UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBrowseButton)];
+			UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
 			self.toolbar = browseButtonItem.customView;
 			self.navigationItem.rightBarButtonItem = browseButtonItem;
 		}
 		self.dataSource = theDataSource;
-		
+
 	}
 	return self;
 }
@@ -125,13 +124,13 @@
 	NSInteger cancelIndex = 2;
 	NSInteger printIndex = 1;
 	NSInteger emailIndex = 0;
-	
+
 	Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
 	BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
-	
+
 	Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
 	BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
-	
+
 	if (canEmail) {
 		if (canPrint) {
 			cancelIndex = 2;
@@ -147,7 +146,7 @@
 		printIndex = 0;
 		emailIndex = -1;
 	}
-	
+
 	if (buttonIndex == printIndex) {
 		UIPrintInteractionController *printer = [printClass sharedPrintController];
 		Class printInfoClass = (NSClassFromString(@"UIPrintInfo"));
@@ -155,21 +154,21 @@
 		printInfo.jobName = self.rumor.title;
 		printer.printInfo = printInfo;
 		printer.delegate = self;
-		
+
 		printer.printFormatter = [self.webView viewPrintFormatter];
-		
+
 		[printer presentAnimated:YES completionHandler:nil];
-		
+
 	} else if (buttonIndex == emailIndex) {
 		MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
 		picker.mailComposeDelegate = self;
-		
+
 		[picker setSubject:self.rumor.title];
 
 		NSString *emailBody = @"Check out this story I found on \"Debunked: Urban Legends Revealed\":\n\n";
 		emailBody = [emailBody stringByAppendingString:self.rumor.url];
 		[picker setMessageBody:emailBody isHTML:NO];
-		
+
 		[self presentViewController:picker animated:YES completion:nil];
 		[picker release];
 	}
@@ -197,7 +196,7 @@
 	self.view = view;
 	[view release];
 
-	
+
 	CGRect webFrame = [self.view frame];
 	webFrame.origin.x = 0;
 	webFrame.origin.y = 0;
@@ -233,41 +232,41 @@
 - (void)handleShareButton
 {
 	UIActionSheet *actionSheet;
-	
+
 	Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
 	BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
-	
+
 	Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
 	BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
-	
+
 	if (canEmail) {
 		if (canPrint) {
-			actionSheet = [[UIActionSheet alloc] initWithTitle: nil 
-													  delegate: self 
-											 cancelButtonTitle: @"Cancel" 
-										destructiveButtonTitle: nil 
+			actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+													  delegate: self
+											 cancelButtonTitle: @"Cancel"
+										destructiveButtonTitle: nil
 											 otherButtonTitles: @"Email Article", @"Print", nil];
 		} else {
-			actionSheet = [[UIActionSheet alloc] initWithTitle: nil 
-													  delegate: self 
-											 cancelButtonTitle: @"Cancel" 
-										destructiveButtonTitle: nil 
+			actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+													  delegate: self
+											 cancelButtonTitle: @"Cancel"
+										destructiveButtonTitle: nil
 											 otherButtonTitles: @"Email Article", nil];
 		}
 	} else if (canPrint) {
-		actionSheet = [[UIActionSheet alloc] initWithTitle: nil 
-												  delegate: self 
-										 cancelButtonTitle: @"Cancel" 
-									destructiveButtonTitle: nil 
+		actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+												  delegate: self
+										 cancelButtonTitle: @"Cancel"
+									destructiveButtonTitle: nil
 										 otherButtonTitles: @"Print Article", nil];
 	} else {
-		actionSheet = [[UIActionSheet alloc] initWithTitle: nil 
-												  delegate: self 
-										 cancelButtonTitle: @"Cancel" 
-									destructiveButtonTitle: nil 
+		actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+												  delegate: self
+										 cancelButtonTitle: @"Cancel"
+									destructiveButtonTitle: nil
 										 otherButtonTitles: nil];
     }
-	
+
 	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 	[actionSheet showInView:self.parentViewController.tabBarController.view];
 	[actionSheet release];
@@ -289,35 +288,16 @@
 	}
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	CGRect frame = [self.toolbar frame];
-	if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
-		frame.size.height = 32;
-	} else {
-		frame.size.height = 24;
-	}
-	[self.toolbar setFrame:frame];
-	
-	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
 	@synchronized(self) {
 		if (hasRumor && rumor == nil && loadingView == nil) {
 			loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 		}
 	}
-	
-	CGRect frame = [self.toolbar frame];
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait) {
-		frame.size.height = 32;
-	} else {
-		frame.size.height = 24;
-	}
-	[self.toolbar setFrame:frame];
-	
+
 	[self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
+
+	[super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -339,30 +319,30 @@
 		NSString *absoluteString = [[request URL] absoluteString];
 		if ([absoluteString hasPrefix:@"http://"] ||
 			[absoluteString hasPrefix:@"https://"]) {
-			
+
 			if ([absoluteString hasPrefix:@"http://www.snopes.com"] ||
 				[absoluteString hasPrefix:@"https://www.snopes.com"] ||
 				[absoluteString hasPrefix:@"http://snopes.com"] ||
 				[absoluteString hasPrefix:@"https://snopes.com"]) {
-				
+
 				NSString *path = [[request URL] path];
 				if (![path hasPrefix:@"/sources/"] && ![path hasPrefix:@"sources/"] &&
 					([path hasSuffix:@"asp"] || [path hasSuffix:@"htm"] || [path hasSuffix:@"html"])) {
-					
+
 					isRumor = YES;
 				}
 			}
-			
+
 		}
 		if (isRumor) {
 			Class rumorDataSourceClass = [DataSourceFactory rumorDataSourceClass];
 			NSObject<RumorDataSource> *rumorDataSource = [[[rumorDataSourceClass alloc] init] autorelease];
-			
+
 			RumorViewController *rumorViewController = [[[self class] alloc] initWithDataSource:rumorDataSource];
 			rumorViewController.hasRumor = YES;
 			[[self navigationController] pushViewController:rumorViewController animated:YES];
 			[rumorDataSource requestRumor:absoluteString notifyDelegate:(NSObject<RumorDelegate> *)rumorViewController];
-			
+
 			[rumorViewController release];
 		} else {
 			WebViewController *webViewController = [[WebViewController alloc] init];
@@ -385,7 +365,7 @@
 	[rumor release];
 	webView.delegate = nil;
 	[webView release];
-	
+
     [super dealloc];
 }
 

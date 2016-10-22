@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -72,7 +72,7 @@ static CachedDataLoader *sharedInstance;
         [client receiveData:cachedData withResponse:response];
     } else {
 		[_dataDownloadQueue setSuspended:NO];
-		NSArray *args = [NSArray arrayWithObjects:client, [NSNumber numberWithInt:expiration], nil];
+		NSArray *args = [NSArray arrayWithObjects:client, [NSNumber numberWithInteger:expiration], nil];
 		NSOperation *dataDownloadOp = [[[NSInvocationOperation alloc] initWithTarget:self 
 																			 selector:@selector(loadDataForClient:) 
 																			   object:args] autorelease];

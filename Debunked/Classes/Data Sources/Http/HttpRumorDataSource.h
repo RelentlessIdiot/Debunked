@@ -1,4 +1,4 @@
-//  Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
@@ -32,7 +32,7 @@
 @property (nonatomic,retain) NSMutableArray *rumorNodes;
 
 - (id)init;
-- (id)initWithRumorNodes:(NSMutableArray *)theRumorNodes;
+- (id)initWithRumorNodes:(NSMutableArray *)theRumorNodes NS_DESIGNATED_INITIALIZER;
 
 - (void)loadRumorNodes:(NSMutableArray *)theRumorNodes;
 - (NSInteger)requestTop25RumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;

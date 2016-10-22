@@ -8,7 +8,7 @@
 //  appreciated but not required.
 //
 //
-//  Modifications Copyright (c) 2009-2014 Robert Ruana <rob@relentlessidiot.com>
+//  Modifications Copyright (c) 2009-2016 Robert Ruana <rob@robruana.com>
 //
 //  This file is part of Debunked.
 //
