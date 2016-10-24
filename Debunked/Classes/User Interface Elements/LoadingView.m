@@ -105,10 +105,8 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 
  + (id)loadingViewInView:(UIView *)aSuperview withBorder:(BOOL)hasBorder
 {
-	LoadingView *loadingView =
-		[[[LoadingView alloc] initWithFrame:[aSuperview bounds]] autorelease];
-	if (!loadingView)
-	{
+	LoadingView *loadingView = [[[LoadingView alloc] initWithFrame:[aSuperview bounds]] autorelease];
+	if (!loadingView) {
 		return nil;
 	}
 	
@@ -116,78 +114,60 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	
 	[aSuperview setUserInteractionEnabled:NO];
 	
-	loadingView.opaque = NO;	
-	loadingView.autoresizingMask =
-		UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	loadingView.opaque = NO;
+    loadingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+	loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	[aSuperview addSubview:loadingView];
 	[aSuperview bringSubviewToFront:loadingView];
 
-	const CGFloat DEFAULT_LABEL_WIDTH = 128.0;
-	const CGFloat DEFAULT_LABEL_HEIGHT = 24;
-	CGRect labelFrame = CGRectMake(0, 0, DEFAULT_LABEL_WIDTH, DEFAULT_LABEL_HEIGHT);
-	UILabel *loadingLabel =
-		[[[UILabel alloc]
-			initWithFrame:labelFrame]
-		autorelease];
-	loadingLabel.text = NSLocalizedString(@"Loading...", nil);
-	loadingLabel.textColor = [UIColor darkGrayColor];
-	loadingLabel.backgroundColor = [UIColor clearColor];
-	loadingLabel.textAlignment = NSTextAlignmentCenter;
-	loadingLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
-	loadingLabel.autoresizingMask =
-		UIViewAutoresizingFlexibleLeftMargin |
-		UIViewAutoresizingFlexibleRightMargin |
-		UIViewAutoresizingFlexibleTopMargin |
-		UIViewAutoresizingFlexibleBottomMargin;
-	
-	[loadingView addSubview:loadingLabel];
-	
-	
-	UILabel *loadingLabelText =
-		[[[UILabel alloc]
-		  initWithFrame:labelFrame]
-		 autorelease];
+	UILabel *loadingLabelShadow = [[[UILabel alloc] init] autorelease];
+	loadingLabelShadow.text = NSLocalizedString(@"Loading...", nil);
+	loadingLabelShadow.textColor = [UIColor darkGrayColor];
+	loadingLabelShadow.backgroundColor = [UIColor clearColor];
+	loadingLabelShadow.textAlignment = NSTextAlignmentCenter;
+	loadingLabelShadow.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
+    [loadingLabelShadow sizeToFit];
+
+	UILabel *loadingLabelText = [[[UILabel alloc] init] autorelease];
 	loadingLabelText.text = NSLocalizedString(@"Loading...", nil);
 	loadingLabelText.textColor = [UIColor whiteColor];
 	loadingLabelText.backgroundColor = [UIColor clearColor];
 	loadingLabelText.textAlignment = NSTextAlignmentCenter;
 	loadingLabelText.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
-	loadingLabelText.autoresizingMask =
-		UIViewAutoresizingFlexibleLeftMargin |
-		UIViewAutoresizingFlexibleRightMargin |
-		UIViewAutoresizingFlexibleTopMargin |
-		UIViewAutoresizingFlexibleBottomMargin;
-	
-	[loadingView addSubview:loadingLabelText];
-	
+    [loadingLabelText sizeToFit];
+
 	UIActivityIndicatorView *activityIndicatorView =
 		[[[UIActivityIndicatorView alloc]
 			initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
 		autorelease];
-	[loadingView addSubview:activityIndicatorView];
-	activityIndicatorView.autoresizingMask =
-		UIViewAutoresizingFlexibleLeftMargin |
-		UIViewAutoresizingFlexibleRightMargin |
-		UIViewAutoresizingFlexibleTopMargin |
-		UIViewAutoresizingFlexibleBottomMargin;
+
+    CGSize labelSize = [loadingLabelShadow sizeThatFits:aSuperview.bounds.size];
+    CGSize activitySize = [activityIndicatorView sizeThatFits:aSuperview.bounds.size];
+    CGSize containerSize = CGSizeMake(activitySize.width + 8 + labelSize.width + 1,
+                                      MAX(activitySize.height, labelSize.height));
+    CGRect containerFrame = CGRectMake((loadingView.bounds.size.width - containerSize.width) / 2.0f,
+                                       (loadingView.bounds.size.height - containerSize.height) / 2.0f,
+                                       containerSize.width,
+                                       containerSize.height);
+    UIView *container = [[[UIView alloc] initWithFrame:containerFrame] autorelease];
+    container.autoresizingMask = (UIViewAutoresizingFlexibleTopMargin |
+                                  UIViewAutoresizingFlexibleRightMargin |
+                                  UIViewAutoresizingFlexibleBottomMargin |
+                                  UIViewAutoresizingFlexibleLeftMargin);
+
+    [container addSubview:loadingLabelShadow];
+    [container addSubview:loadingLabelText];
+	[container addSubview:activityIndicatorView];
+
+    [loadingView addSubview:container];
+
+    loadingLabelText.center = CGPointMake(containerSize.width - (labelSize.width / 2.0f) - 1.0f,
+                                          (containerSize.height / 2.0f) - 1.0f);
+    loadingLabelShadow.center = CGPointMake(containerSize.width - (labelSize.width / 2.0f),
+                                            containerSize.height / 2.0f);
+    activityIndicatorView.center = CGPointMake(activitySize.width / 2.0f, containerSize.height / 2.0f);
+
 	[activityIndicatorView startAnimating];
-	
-	CGFloat totalHeight =
-		loadingLabel.frame.size.height +
-		activityIndicatorView.frame.size.height;
-	labelFrame.origin.x = floor(0.5 * (loadingView.frame.size.width - DEFAULT_LABEL_WIDTH));
-	labelFrame.origin.y = floor(0.5 * (loadingView.frame.size.height - totalHeight));
-	loadingLabel.frame = labelFrame;
-	
-	labelFrame.origin.y -= 1;
-	loadingLabelText.frame = labelFrame;
-	
-	CGRect activityIndicatorRect = activityIndicatorView.frame;
-	//	activityIndicatorRect.origin.x = 0.5 * (loadingView.frame.size.width - activityIndicatorRect.size.width);
-	activityIndicatorRect.origin.x = loadingLabel.frame.origin.x;
-	//	activityIndicatorRect.origin.y = loadingLabel.frame.origin.y + loadingLabel.frame.size.height;
-	activityIndicatorRect.origin.y = loadingLabel.frame.origin.y + 4;
-	activityIndicatorView.frame = activityIndicatorRect;
 	
 	// Set up the fade-in animation
 	CATransition *animation = [CATransition animation];
@@ -215,36 +195,6 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	[animation setType:kCATransitionFade];
 	
 	[[aSuperview layer] addAnimation:animation forKey:@"layerAnimation"];
-}
-
-//
-// drawRect:
-//
-// Draw the view.
-//
-- (void)drawRect:(CGRect)rect
-{
-	const CGFloat BACKGROUND_OPACITY = 0.5;
-	
-	CGContextRef context = UIGraphicsGetCurrentContext();
-	CGContextSetRGBFillColor(context, 0, 0, 0, BACKGROUND_OPACITY);
-	
-	if (self.hasBorder) {
-		rect.size.height -= 1;
-		rect.size.width -= 1;
-		
-		const CGFloat RECT_PADDING = 8.0;
-		CGRect insetRect = CGRectInset(rect, RECT_PADDING, RECT_PADDING);
-		
-		const CGFloat ROUND_RECT_CORNER_RADIUS = 5.0;
-		CGPathRef roundRectPath = NewPathWithRoundRect(insetRect, ROUND_RECT_CORNER_RADIUS);
-		CGContextAddPath(context, roundRectPath);
-		CGContextFillPath(context);
-		
-		CGPathRelease(roundRectPath);
-	} else {
-		CGContextFillRect(context, rect);
-	}
 }
 
 //

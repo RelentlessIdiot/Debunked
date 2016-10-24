@@ -35,7 +35,6 @@
 - (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
 		withDataSource:(NSObject<RumorDataSource> *)theDataSource
 			   withUrl:(NSString *)theUrl;
-- (NSString *)resolveUrl:(NSString *)urlString;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 - (TFHppleElement *)transform:(TFHppleElement *)element;
 

@@ -36,78 +36,16 @@
 	return self;
 }
 
-- (NSString *)resolveUrl:(NSString *)urlString
-{
-	if([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
-		return urlString;
-	} else if([urlString hasPrefix:@"/"]) {
-		return [@"http://www.snopes.com" stringByAppendingString:urlString];
-	} else {
-		NSURL *urlObject = [NSURL URLWithString:[self targetUrl]];
-		NSString *absoluteUrl = [urlObject absoluteString];
-		NSString *pathComponent = [[absoluteUrl componentsSeparatedByString:@"/"] lastObject];
-		absoluteUrl = [absoluteUrl substringToIndex:[absoluteUrl length] - [pathComponent length]];
-		absoluteUrl = [absoluteUrl stringByAppendingString:urlString];
-		return absoluteUrl;
-	}	
-}
-
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	if (data == nil) {
 		[self.delegate receive:nil withResult:0];
 		return;
 	}
-	
-	TFHpple *parser = nil;
-	@try {
-		parser = [[TFHpple alloc] initWithHTMLData:data];
-		TFHppleElement *labelEl = [parser at:@"//td[@class=\"contentColumn\"]/h1"];
-		NSString *label = nil;
-		NSArray *links = nil;
-		NSArray *imgs  = nil;
-		NSArray *nodeSynopses = nil;
-		
-		label = [[labelEl content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-		links = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div//a"];
-		imgs = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div//img"];
-		nodeSynopses = [parser search:@"//td[@class=\"contentColumn\"]//noindex//ol/div//li"];
-		
-		NSMutableArray *rumorNodes = [NSMutableArray array];
-		@try {
-			for (int i = 0; i < [links count]; i++) {
-				TFHppleElement *link = [links objectAtIndex:i];
-				TFHppleElement *img = [imgs objectAtIndex:(i)];
-				TFHppleElement *syn = [nodeSynopses objectAtIndex:(i)];
-				NSString *nodeUrl = [self resolveUrl:[link objectForKey:@"href"]];
-				NSString *nodeImageUrl = [self resolveUrl:[img objectForKey:@"src"]];
-				NSString *nodeSynopsis = [[syn content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-				NSString *nodeLabel = [[link textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-				
-				if (![Blacklist isBlacklisted:nodeUrl]) {
-					RumorNode *rumorNode = [[RumorNode alloc] initWithUrl:nodeUrl
-																withLabel:nodeLabel
-															 withSynopsis:nodeSynopsis 
-															 withVeracity:@""
-															 withImageUrl:nodeImageUrl];
-					[rumorNodes addObject:rumorNode];
-					[rumorNode release];
-				}
-			}
-			
-			[self.dataSource loadRumorNodes:rumorNodes];
-			[self.delegate receiveRumorNodes:rumorNodes withResult:0];
-		}
-		@catch (NSException *exception) {
-			[self.delegate receiveRumorNodes:rumorNodes withResult:1];
-		}
-	}
-	@catch (NSException *exception) {
-		[self.delegate receiveRumorNodes:nil withResult:1];
-	}
-	@finally {
-		[parser release];
-	}
+
+    NSArray *rumorNodes = [self parseRumorNodes:data];
+    [self.dataSource loadRumorNodes:rumorNodes];
+    [self.delegate receiveRumorNodes:rumorNodes withResult:0];
 }
 
 - (void)dealloc {

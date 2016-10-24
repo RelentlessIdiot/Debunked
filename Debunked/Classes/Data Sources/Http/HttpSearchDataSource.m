@@ -77,7 +77,7 @@
 		[activeRequests setObject:theRequest forKey:requestId];
 		
 		CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 4)]; // 4 hours
+		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
 		[consumer release];
 	}
 	return [requestId intValue];
@@ -102,7 +102,7 @@
 													   withDataSource:(NSObject<RumorDataSource> *)self
 															  withUrl:aSearchResult.url];	
 	CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
 	[consumer release];
 }
 

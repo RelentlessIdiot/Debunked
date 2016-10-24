@@ -29,10 +29,10 @@
 
 - (id) init
 {
-	return [self initWithRumorNodes:[[[NSMutableArray alloc] init] autorelease]];
+	return [self initWithRumorNodes:[NSArray array]];
 }
 
-- (id) initWithRumorNodes:(NSMutableArray *)theRumorNodes
+- (id) initWithRumorNodes:(NSArray *)theRumorNodes
 {
 	if(self = [super init]) {
 		[self loadRumorNodes: theRumorNodes];
@@ -42,7 +42,7 @@
 	
 }
 
-- (void)loadRumorNodes:(NSMutableArray *)theRumorNodes
+- (void)loadRumorNodes:(NSArray *)theRumorNodes
 {
 	self.rumorNodes = theRumorNodes;
 }
@@ -73,7 +73,8 @@
 		[activeRequests setObject:theRequest forKey:requestId];
 		
 		CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 4)]; // 4 hours
+//		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
+        [dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24)]; // 1 day
 		[consumer release];
 	}
 	return [requestId intValue];
@@ -97,7 +98,8 @@
 		[activeRequests setObject:theRequest forKey:requestId];
 		
 		CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 4)]; // 4 hours
+//		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
+        [dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24)]; // 1 day
 		[consumer release];
 	}
 	return [requestId intValue];
@@ -143,7 +145,8 @@
 		[activeRequests setObject:theRequest forKey:requestId];
 		
 		CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+//		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
+        [dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24)]; // 1 day
 		[consumer release];
 	}
 	return [requestId intValue];
@@ -168,7 +171,8 @@
 													   withDataSource:self
 															  withUrl:aRumorNode.url];	
 	CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+//	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
+    [dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24)]; // 1 day
 	[consumer release];
 }
 

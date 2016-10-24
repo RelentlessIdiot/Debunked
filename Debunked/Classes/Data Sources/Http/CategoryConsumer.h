@@ -35,8 +35,6 @@
 - (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
 		withDataSource:(NSObject<CategoryDataSource> *)theDataSource
 			   withUrl:(NSString *)theUrl;
-- (NSString *)resolveUrl:(NSString *)urlString;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
-- (NSArray *)parseRumorNodes:(TFHpple *)parser newStyle:(BOOL)newStyle;
 
 @end

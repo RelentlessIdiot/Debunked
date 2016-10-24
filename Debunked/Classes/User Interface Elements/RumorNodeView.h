@@ -26,9 +26,12 @@
 	UIImage *nodeImage;
 }
 
-@property (nonatomic,retain) RumorNode *rumorNode;
-@property (nonatomic,retain) UIImage *nodeImage;
-@property(nonatomic, getter=isSelected) BOOL selected;
+@property (nonatomic, retain) RumorNode *rumorNode;
+@property (nonatomic, retain) UIImage *nodeImage;
+@property (nonatomic, getter=isSelected) BOOL selected;
+
++ (CGSize) imageSize;
++ (UIEdgeInsets) padding;
 
 + (NSInteger)preferredHeight;
 - (id)initWithRumorNode:(RumorNode *)theRumorNode withFrame:(CGRect)frame;

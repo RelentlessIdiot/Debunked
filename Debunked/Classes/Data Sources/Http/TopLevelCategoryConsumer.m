@@ -24,11 +24,12 @@
 @synthesize dataSource;
 
 - (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
-		withDataSource:(NSObject<CategoryDataSource> *)theDataSource
+        withDataSource:(NSObject<CategoryDataSource> *)theDataSource
+               withUrl:(NSString *)theUrl
 {
 	if(self = [super init]) {
-		self.url = @"http://www.snopes.com/info/whatsnew.asp";
-		self.targetUrl = @"http://www.snopes.com/info/whatsnew.asp";
+		self.url = theUrl;
+		self.targetUrl = theUrl;
 		self.delegate = theDelegate;
 		self.dataSource = theDataSource;
 	}
@@ -47,17 +48,6 @@
 	return [self request];
 }
 
-- (NSString *)resolveUrl:(NSString *)urlString
-{
-	if([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) {
-		return urlString;
-	} else if([urlString hasPrefix:@"/"]) {
-		return [@"http://www.snopes.com" stringByAppendingString:urlString];
-	} else {
-		return [@"http://www.snopes.com/" stringByAppendingString:urlString];
-	}	
-}
-
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	if (data == nil) {
@@ -68,7 +58,7 @@
 	TFHpple *parser = nil;
 	@try {
 		parser = [[TFHpple alloc] initWithHTMLData:data];
-		NSArray *links  = [parser search:@"//td[@class=\"navColumn\"]//div[@class=\"navHeader\"]/following-sibling::ul//a"];
+		NSArray *links  = [parser search:@"//a[starts-with(@href, '/category/')]"];
 
 		NSMutableArray *categoryNodes = [NSMutableArray array];
 		
@@ -76,7 +66,7 @@
 			for (int i = 0; i < [links count]; i+=1) {
 				TFHppleElement *link = [links objectAtIndex:i];
 				NSString *href = [self resolveUrl:[link objectForKey:@"href"]];
-				NSString *label = [link content];
+				NSString *label = [link textContent];
 
 				if (![Blacklist isBlacklisted:href]) {
 					CategoryNode *categoryNode = [[CategoryNode alloc] initWithUrl:href
@@ -87,8 +77,21 @@
 					[categoryNode release];
 				}
 			}
-			[self.dataSource loadCategoryNodes:categoryNodes];
-			[self.delegate receiveCategoryNodes:categoryNodes withResult:0];
+
+            NSMutableArray *uniqueCategoryNodes = [NSMutableArray array];
+            NSMutableSet *processed = [NSMutableSet set];
+            for (CategoryNode *categoryNode in categoryNodes) {
+                if ([processed containsObject:categoryNode.label] == NO) {
+                    [uniqueCategoryNodes addObject:categoryNode];
+                    [processed addObject:categoryNode.label];
+                }
+            }
+
+            NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES] autorelease];
+            [uniqueCategoryNodes sortUsingDescriptors: @[sortDescriptor]];
+
+			[self.dataSource loadCategoryNodes:uniqueCategoryNodes];
+			[self.delegate receiveCategoryNodes:uniqueCategoryNodes withResult:0];
 		}
 		@catch (NSException *exception) {
 			[self.delegate receiveCategoryNodes:categoryNodes withResult:1];
@@ -100,8 +103,6 @@
 	@finally {
 		[parser release];
 	}
-		
-
 }
 
 - (void)dealloc {

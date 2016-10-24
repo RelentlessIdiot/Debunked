@@ -33,8 +33,8 @@
 @property (nonatomic,retain) NSObject<CategoryDataSource> *dataSource;
 
 - (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
-		withDataSource:(NSObject<CategoryDataSource> *)theDataSource;
-- (NSString *)resolveUrl:(NSString *)urlString;
+        withDataSource:(NSObject<CategoryDataSource> *)theDataSource
+               withUrl:(NSString *)theUrl;
 - (NSWebViewURLRequest *)request;
 - (NSWebViewURLRequest *)targetRequest;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;

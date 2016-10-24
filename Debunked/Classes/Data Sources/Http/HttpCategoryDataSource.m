@@ -60,7 +60,8 @@
 															 withDataSource:self
 																	withUrl:aCategoryNode.url];	
 	CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+//	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
+    [dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24)]; // 1 day
 	[consumer release];
 }
 
@@ -77,7 +78,8 @@
 		requestId = [NSNumber numberWithInteger:lastRequestId];
 		
 		TopLevelCategoryConsumer *consumer = [[TopLevelCategoryConsumer alloc] initWithDelegate:theDelegate 
-																				 withDataSource:self];
+                                                                                 withDataSource:self
+                                                                                        withUrl:@"http://www.snopes.com/"];
 		NSArray *theRequest = [NSArray arrayWithObjects:
 							   consumer, 
 							   theDelegate, 

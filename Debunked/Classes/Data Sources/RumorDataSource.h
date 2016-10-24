@@ -34,12 +34,12 @@
 
 @required
 
-@property (nonatomic,retain) NSMutableArray *rumorNodes;
+@property (nonatomic,retain) NSArray *rumorNodes;
 
 - (id)init;
-- (id)initWithRumorNodes:(NSMutableArray *)theRumorNodes;
+- (id)initWithRumorNodes:(NSArray *)theRumorNodes;
 
-- (void)loadRumorNodes:(NSMutableArray *)theRumorNodes;
+- (void)loadRumorNodes:(NSArray *)theRumorNodes;
 
 - (NSInteger)requestTop25RumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
 - (NSInteger)requestWhatsNewRumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;

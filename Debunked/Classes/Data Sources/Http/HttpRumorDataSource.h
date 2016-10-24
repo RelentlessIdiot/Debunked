@@ -26,15 +26,15 @@
 
 
 @interface HttpRumorDataSource : HttpAsynchronousDataSource<RumorDataSource> {
-	NSMutableArray *rumorNodes;
+	NSArray *rumorNodes;
 }
 
-@property (nonatomic,retain) NSMutableArray *rumorNodes;
+@property (nonatomic,retain) NSArray *rumorNodes;
 
 - (id)init;
-- (id)initWithRumorNodes:(NSMutableArray *)theRumorNodes NS_DESIGNATED_INITIALIZER;
+- (id)initWithRumorNodes:(NSArray *)theRumorNodes NS_DESIGNATED_INITIALIZER;
 
-- (void)loadRumorNodes:(NSMutableArray *)theRumorNodes;
+- (void)loadRumorNodes:(NSArray *)theRumorNodes;
 - (NSInteger)requestTop25RumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
 - (NSInteger)requestWhatsNewRumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
 - (NSInteger)requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;

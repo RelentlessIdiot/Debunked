@@ -30,8 +30,6 @@
 
 #define PREFERRED_HEIGHT 122
 
-#define ACCESSORY_WIDTH 14
-
 
 @implementation SearchResultView
 
@@ -93,43 +91,43 @@
 		synopsisTextColor = [UIColor whiteColor];
 	}
 	
-	CGRect contentRect = rect;
-	contentRect.size.width -= ACCESSORY_WIDTH;
-	contentRect.size.height = PREFERRED_HEIGHT;
-	CGRect synopsisRect = contentRect;
-	CGRect headlineRect = contentRect;
-	CGPoint point;
-	
-	NSString *title = [NSString string];
+    CGRect contentRect = rect;
+    contentRect.origin.x = MARGIN_X;
+    contentRect.origin.y = MARGIN_Y;
+	contentRect.size.width -= MARGIN_X * 2;
+	contentRect.size.height -= MARGIN_Y * 2;
+
+    NSMutableAttributedString *text = [[[NSMutableAttributedString alloc] init] autorelease];
+
+    NSAttributedString *newlineCharacter = [[[NSAttributedString alloc] initWithString: @"\n"
+                                                                            attributes: @{NSFontAttributeName: titleFont,
+                                                                                          NSForegroundColorAttributeName: titleTextColor}] autorelease];
+
 	if (searchResult.title != nil && ![searchResult.title isEqual:@""]) {
-		title = searchResult.title;
-	} else if (searchResult.synopsis != nil && ![searchResult.synopsis isEqual:@""]) {
-		title = searchResult.rumorHeadline;
-		title = [title capitalizedString];
-	}
-	[titleTextColor set];
-	point = CGPointMake(MARGIN_X, MARGIN_Y);
-	[title drawAtPoint:point forWidth:synopsisRect.size.width withFont:titleFont minFontSize:TITLE_MIN_FONT_SIZE actualFontSize:NULL lineBreakMode:NSLineBreakByTruncatingTail baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-	
-	int synopsisY = HEADLINE_Y;
-	if (searchResult.rumorHeadline != nil && ![searchResult.rumorHeadline isEqual:@""]) {
-		headlineRect.origin.x = MARGIN_X;
-		headlineRect.origin.y = HEADLINE_Y;
-		headlineRect.size.height = 44;
-		synopsisY = HEADLINE_Y + 44;
-		
-		[rumorHeadlineTextColor set];
-		[searchResult.rumorHeadline drawInRect:headlineRect withFont:rumorHeadlineFont];
-	}
-	
-	if (searchResult.synopsis != nil && ![searchResult.synopsis isEqual:@""]) {
-		synopsisRect.origin.x = MARGIN_X;
-		synopsisRect.origin.y = synopsisY;
-		synopsisRect.size.height = synopsisRect.size.height - synopsisY;
-		
-		[synopsisTextColor set];
-		[searchResult.synopsis drawInRect:synopsisRect withFont:synopsisFont];
-	}
+        NSAttributedString *title = [[[NSAttributedString alloc] initWithString: searchResult.title
+                                                                     attributes: @{NSFontAttributeName: titleFont,
+                                                                                   NSForegroundColorAttributeName: titleTextColor}] autorelease];
+        [text appendAttributedString:title];
+        [text appendAttributedString:newlineCharacter];
+    }
+
+    if (searchResult.rumorHeadline != nil && ![searchResult.rumorHeadline isEqual:@""]) {
+        NSAttributedString *headline = [[[NSAttributedString alloc] initWithString: searchResult.rumorHeadline
+                                                                     attributes: @{NSFontAttributeName: rumorHeadlineFont,
+                                                                                   NSForegroundColorAttributeName: rumorHeadlineTextColor}] autorelease];
+        [text appendAttributedString:headline];
+        [text appendAttributedString:newlineCharacter];
+    }
+
+    if (searchResult.synopsis != nil && ![searchResult.synopsis isEqual:@""]) {
+        NSAttributedString *synopsis = [[[NSAttributedString alloc] initWithString: searchResult.synopsis
+                                                                        attributes: @{NSFontAttributeName: synopsisFont,
+                                                                                      NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
+        [text appendAttributedString:synopsis];
+        [text appendAttributedString:newlineCharacter];
+    }
+
+    [text drawInRect:contentRect];
 }
 
 - (void)dealloc

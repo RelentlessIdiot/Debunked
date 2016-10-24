@@ -40,8 +40,6 @@
 
 #define PREFERRED_HEIGHT 57
 
-#define ACCESSORY_WIDTH 14
-
 
 @implementation CategoryNodeView
 
@@ -108,7 +106,7 @@
 	}
 	
 	CGRect contentRect = rect;
-	contentRect.size.width -= (ACCESSORY_WIDTH + SYNOPSIS_X);
+	contentRect.size.width -= SYNOPSIS_X;
 	CGRect synopsisRect = contentRect;
 	CGPoint point;
 	
@@ -129,13 +127,15 @@
 	} else {
 		point = CGPointMake(leftMargin, TOP_ROW_NO_SYNOPSIS_Y);
 	}
-	[title drawAtPoint:point forWidth:contentRect.size.width withFont:labelFont minFontSize:LABEL_MIN_FONT_SIZE actualFontSize:NULL lineBreakMode:NSLineBreakByTruncatingTail baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+
+    CGRect titleRect = CGRectMake(point.x, point.y, contentRect.size.width, contentRect.size.height - point.y);
+    [title drawInRect:titleRect withAttributes:@{NSFontAttributeName: labelFont}];
 	
 	if (categoryNode.synopsis != nil && ![categoryNode.synopsis isEqual:@""]) {
 		synopsisRect.origin.x = leftMargin;
 		synopsisRect.origin.y = BOTTOM_ROW_Y;
 		[synopsisTextColor set];
-		[categoryNode.synopsis drawInRect:synopsisRect withFont:synopsisFont];
+        [categoryNode.synopsis drawInRect:synopsisRect withAttributes:@{NSFontAttributeName:synopsisFont}];
 	}
 	
 	point = CGPointMake(IMAGE_X, IMAGE_Y);

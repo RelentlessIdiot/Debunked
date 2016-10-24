@@ -60,17 +60,6 @@
 		loadingCell = nil;
 	}
 	if (theLoadingCell != nil) {
-		CGRect frame = CGRectMake(265.0, 12.0, 40.0, 40.0);
-		UIActivityIndicatorView *progressInd = [[[UIActivityIndicatorView alloc] initWithFrame:frame] autorelease];
-		[progressInd startAnimating];
-		progressInd.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-		[progressInd sizeToFit];
-		progressInd.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
-										UIViewAutoresizingFlexibleRightMargin |
-										UIViewAutoresizingFlexibleTopMargin |
-										UIViewAutoresizingFlexibleBottomMargin);
-		
-		[theLoadingCell setAccessoryView:progressInd];
 		loadingCell = theLoadingCell;
 	}
 }
@@ -116,6 +105,7 @@
 	} else {
 		newTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 	}
+    newTableView.separatorInset = UIEdgeInsetsZero;
 	
 	// set the tableview delegate to this object and the datasource to the datasource which has already been set
 	newTableView.delegate = self;

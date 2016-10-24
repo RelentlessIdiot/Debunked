@@ -63,7 +63,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         categoryNode = nil;
 		self.selectionStyle = UITableViewCellSelectionStyleBlue;
-		self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+		self.accessoryType = UITableViewCellAccessoryNone;
 		
 		CGRect frame = CGRectMake(0.0, 0.0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
 		categoryNodeView = [[CategoryNodeView alloc] initWithFrame:frame];

@@ -16,7 +16,10 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
+#import "Blacklist.h"
 #import "NSWebViewURLRequest.h"
+#import "RumorNode.h"
+#import "TFHpple.h"
 
 
 @interface DataConsumer : NSObject {
@@ -30,5 +33,7 @@
 - (NSWebViewURLRequest *)request;
 - (NSWebViewURLRequest *)targetRequest;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
+- (NSString *)resolveUrl:(NSString *)urlString;
+- (NSArray *)parseRumorNodes:(NSData *)data;
 
 @end

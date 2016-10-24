@@ -18,37 +18,36 @@
 #import "RumorNodeView.h"
 
 
-#define TOP_ROW_Y 6
+#define PADDING 6
 
-#define VERACITY_IMAGE_X 6
+#define IMAGE_WIDTH 72
+#define IMAGE_HEIGHT 72
+
 #define VERACITY_IMAGE_WIDTH 16
 #define VERACITY_IMAGE_HEIGHT 16
 
-#define LABEL_X 28 // 6 + 16 + 6 // VERACITY_IMAGE_X + VERACITY_IMAGE_WIDTH + 6
-
-#define BOTTOM_ROW_Y 23 // 6 + 16 + 1 // TOP_ROW_Y + VERACITY_IMAGE_HEIGHT + 1
-
-#define IMAGE_X 6
-#define IMAGE_Y 29
-#define IMAGE_WIDTH 32
-#define IMAGE_HEIGHT 32
-
-#define SYNOPSIS_X 47 // 6 + 32 + 9 // IMAGE_X + IMAGE_WIDTH + 9
-
-#define LABEL_FONT_SIZE 14
-#define LABEL_MIN_FONT_SIZE 14
+#define LABEL_FONT_SIZE 16
+#define LABEL_MIN_FONT_SIZE 10
 #define SYNOPSIS_FONT_SIZE 12
 #define SYNOPSIS_MIN_FONT_SIZE 10
-
-#define PREFERRED_HEIGHT 82
-
-#define ACCESSORY_WIDTH 14
-
 
 @implementation RumorNodeView
 
 @synthesize nodeImage;
 @synthesize selected;
+
++ (UIEdgeInsets) padding
+{
+    return UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
+}
+
++ (CGSize) imageSize
+{
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    CGFloat minDimension = MIN(screenSize.width, screenSize.height);
+    CGFloat imageDimension = MIN(minDimension / 4.0f, 150.0f);
+    return CGSizeMake(imageDimension, imageDimension);
+}
 
 - (RumorNode *)rumorNode
 {
@@ -72,7 +71,9 @@
 
 + (NSInteger)preferredHeight
 {
-	return PREFERRED_HEIGHT;
+    CGSize imageSize = self.imageSize;
+    UIEdgeInsets padding = self.padding;
+	return padding.top + imageSize.height + padding.bottom;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -99,71 +100,66 @@
 	}
 	
 	UIColor *labelTextColor = [UIColor blackColor];
-	UIFont *labelFont = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+	UIFont *labelFont = [UIFont boldSystemFontOfSize: LABEL_FONT_SIZE];
 	
 	UIColor *synopsisTextColor = [UIColor darkGrayColor];
-	UIFont *synopsisFont = [UIFont systemFontOfSize:SYNOPSIS_FONT_SIZE];
+	UIFont *synopsisFont = [UIFont systemFontOfSize: SYNOPSIS_FONT_SIZE];
 	
 	if ([self isSelected]) {
 		labelTextColor = [UIColor whiteColor];
 		synopsisTextColor = [UIColor whiteColor];
 	}
-	
-	CGRect contentRect = rect;
-	contentRect.size.width -= ACCESSORY_WIDTH;
-	CGRect synopsisRect = contentRect;
-	CGPoint point;
-	
-	if (rumorNode.veracityImage != nil) {
-		point = CGPointMake(VERACITY_IMAGE_X, TOP_ROW_Y);
-		[rumorNode.veracityImage drawAtPoint:point];
-	}
-	
-	NSInteger leftMargin = SYNOPSIS_X;
-	if (rumorNode.imageUrl == nil || [rumorNode.imageUrl isEqual:@""]) {
-		leftMargin = LABEL_X;
-	}
-	synopsisRect.size.width = synopsisRect.size.width - leftMargin;
-	
-	NSString *title = [NSString string];
-	if (rumorNode.label != nil && ![rumorNode.label isEqual:@""]) {
-		title = rumorNode.label;
-	} else if (rumorNode.synopsis != nil && ![rumorNode.synopsis isEqual:@""]) {
-		title = [rumorNode.synopsis capitalizedString];
-	}
-	[labelTextColor set];
-	point = CGPointMake(leftMargin, TOP_ROW_Y - 2);
-	[title drawAtPoint:point forWidth:synopsisRect.size.width withFont:labelFont minFontSize:LABEL_MIN_FONT_SIZE actualFontSize:NULL lineBreakMode:NSLineBreakByTruncatingTail baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
-	
-	
-	NSString *synopsis = [NSString string];
-	if (rumorNode.synopsis != nil && ![rumorNode.synopsis isEqual:@""]) {
-		synopsis = rumorNode.synopsis;
-	} else if (rumorNode.label != nil && ![rumorNode.label isEqual:@""]) {
-		synopsis = rumorNode.label;
-	}
-	synopsisRect.origin.x = leftMargin;
-	synopsisRect.origin.y = BOTTOM_ROW_Y - 2;
-	synopsisRect.size.width = synopsisRect.size.width;
-	synopsisRect.size.height = synopsisRect.size.height - BOTTOM_ROW_Y;
-	
-	[synopsisTextColor set];
-	[synopsis drawInRect:synopsisRect withFont:synopsisFont];
-	
-	
-	if (rumorNode.veracityImage != nil) {
-		point = CGPointMake(IMAGE_X, IMAGE_Y);
-	} else {
-		point = CGPointMake(VERACITY_IMAGE_X, TOP_ROW_Y);
-	}
+
+    UIEdgeInsets padding = RumorNodeView.padding;
+    CGFloat contentHeight = rect.size.height - padding.top - padding.bottom;
+    CGRect imageRect = CGRectMake(padding.left, padding.top, contentHeight, contentHeight);
+
+    CGFloat textX = imageRect.origin.x + imageRect.size.width + padding.left;
+    CGRect textRect = CGRectMake(
+        textX,
+        padding.top,
+        rect.size.width - textX - padding.right,
+        contentHeight);
+
+    NSAttributedString *label = [[[NSAttributedString alloc] initWithString: rumorNode.label
+                                                                attributes: @{NSFontAttributeName: labelFont,
+                                                                              NSForegroundColorAttributeName: labelTextColor}] autorelease];
+
+    NSAttributedString *newlineCharacter = [[[NSAttributedString alloc] initWithString: @"\n"
+                                                                           attributes: @{NSFontAttributeName: synopsisFont,
+                                                                                         NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
+
+    NSString *synopsisString;
+    if (rumorNode.synopsis != nil && ![rumorNode.synopsis isEqual:@""]) {
+        synopsisString = rumorNode.synopsis;
+    } else if (rumorNode.label != nil && ![rumorNode.label isEqual:@""]) {
+        synopsisString = rumorNode.label;
+    } else {
+        synopsisString = [NSString string];
+    }
+
+    NSAttributedString *synopsis = [[[NSAttributedString alloc] initWithString: synopsisString
+                                                                   attributes: @{NSFontAttributeName: synopsisFont,
+                                                                                 NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
+
+    NSMutableAttributedString *text = [[[NSMutableAttributedString alloc] init] autorelease];
+    [text appendAttributedString:label];
+    [text appendAttributedString:newlineCharacter];
+    [text appendAttributedString:synopsis];
+
+    [text drawInRect:textRect];
+
 	if (self.nodeImage != nil) {
-		[self.nodeImage drawAtPoint:point];
-	} else {
+        [self.nodeImage drawInRect:imageRect];
+	} else if (rumorNode.imageUrl != nil && ![@"" isEqual:rumorNode.imageUrl]) {
 		// Draw a placeholder image
-		if (rumorNode.imageUrl != nil && ![@"" isEqual:rumorNode.imageUrl]) {
-			UIImage* placeholderImage = [UIImage imageNamed:@"placeholder.png"];
-			[placeholderImage drawAtPoint:point];
-		}
+        UIImage* placeholderImage = [UIImage imageNamed:@"placeholder.png"];
+        CGSize placeholderSize = placeholderImage.size;
+        CGRect placeholderRect = CGRectMake(imageRect.origin.x + (imageRect.size.width - placeholderSize.width) / 2.0f,
+                                            imageRect.origin.y + (imageRect.size.height - placeholderSize.height) / 2.0f,
+                                            placeholderSize.width,
+                                            placeholderSize.height);
+        [placeholderImage drawInRect:placeholderRect];
 	}
 }
 
