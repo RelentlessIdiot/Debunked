@@ -27,42 +27,6 @@
 #import "DebunkedAppDelegate.h"
 
 
-//// UITabBarController+Rotation.h
-//@interface UITabBarController (rotation)
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-//@end
-//
-//// UITabBarController+Rotation.m
-//// #import "UITabBarController+Rotation.h"
-//
-//@implementation UITabBarController (rotation)
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-//	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-//						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-//						 interfaceOrientation == UIInterfaceOrientationPortrait);
-//	return shouldRotate;
-//}
-//@end
-//
-//
-//// UINavigationController+Rotation.h
-//@interface UINavigationController (rotation)
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
-//@end
-//
-//// UINavigationController+Rotation.m
-//// #import "UINavigationController+Rotation.h"
-//
-//@implementation UINavigationController (rotation)
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-//    BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-//                         interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-//                         interfaceOrientation == UIInterfaceOrientationPortrait);
-//    return shouldRotate;
-//}
-//@end
-
-
 @implementation DebunkedAppDelegate
 
 @synthesize tabBarController;
@@ -122,15 +86,17 @@
 	
 	
 	//======== Browse =========
-	localViewController = [[WebBrowserViewController alloc] initWithUrl:@"http://www.snopes.com"];
-	
-	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
-	[localViewController release];
-	
-	localNavigationController.tabBarItem.image = [UIImage imageNamed:@"browse_tabitem.png"];
-	localNavigationController.tabBarItem.title = @"Browse";
-	[localViewControllers addObject:localNavigationController];
-	[localNavigationController release];
+    if (ENABLE_BROWSE_TAB) {
+        localViewController = [[WebBrowserViewController alloc] initWithUrl:@"http://www.snopes.com"];
+
+        localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
+        [localViewController release];
+
+        localNavigationController.tabBarItem.image = [UIImage imageNamed:@"browse_tabitem.png"];
+        localNavigationController.tabBarItem.title = @"Browse";
+        [localViewControllers addObject:localNavigationController];
+        [localNavigationController release];
+    }
 	
 	
 	//======== Search =========

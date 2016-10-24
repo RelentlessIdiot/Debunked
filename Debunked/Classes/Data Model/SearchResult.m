@@ -35,7 +35,7 @@
 	   withSynopsis:(NSString *)theSynopsis
   withRumorHeadline:(NSString *)theRumorHeadline
 {
-	if(self == [super init]) {
+	if(self = [super init]) {
 		self.title = theTitle;
 		self.url = theUrl;
 		self.synopsis = theSynopsis;
@@ -43,7 +43,6 @@
 	}
 	return self;
 }
-
 
 - (void)dealloc {
 	[title release];
@@ -53,4 +52,5 @@
 
 	[super dealloc];
 }
+
 @end

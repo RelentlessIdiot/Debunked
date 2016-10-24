@@ -48,7 +48,7 @@
 	 withSynopsis:(NSString *)theSynopsis
 	 withImageUrl:(NSString *)theImageUrl
 {
-	if(self == [super init]) {
+	if(self = [super init]) {
 		self.url = theUrl;
 		self.label = theLabel;
 		self.synopsis = theSynopsis;

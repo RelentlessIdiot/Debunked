@@ -43,35 +43,47 @@
 		BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
 
 		if (canPrint || canEmail) {
-			NSArray *segmentContent = [NSArray arrayWithObjects:
-									   [UIImage imageNamed:@"share.png"],
-									   [UIImage imageNamed:@"browse.png"],
-									   nil];
-			UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentContent];
-			segmentedControl.momentary = YES;
-			segmentedControl.frame = CGRectMake(0, 0, 72, 32);
-			[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+            UIBarButtonItem *shareButtonItem;
+            CGRect toolbarRect;
+            if (ENABLE_BROWSE_TAB) {
+                toolbarRect = CGRectMake(0, 0, 154, 44);
+                NSArray *segmentContent = [NSArray arrayWithObjects:
+                                           [UIImage imageNamed:@"share.png"],
+                                           [UIImage imageNamed:@"browse.png"],
+                                           nil];
+                UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentContent];
+                segmentedControl.momentary = YES;
+                segmentedControl.frame = CGRectMake(0, 0, 72, 32);
+                [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
 
-			UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
+                shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
+            } else {
+                toolbarRect = CGRectMake(0, 0, 106, 44);
+                shareButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleShareButton)];
+            }
 
-			self.toolbar = [[TransparentToolbar alloc] initWithFrame:CGRectMake(0, 0, 154, 44)];
-			self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+            self.toolbar = [[TransparentToolbar alloc] initWithFrame:toolbarRect];
+            self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 
-			NSMutableArray* buttons = [[NSMutableArray alloc] init];
-			[buttons addObject:shareButtonItem];
-			[buttons addObject:nextButton];
-			[(TransparentToolbar *)self.toolbar setItems:buttons animated:NO];
+            NSMutableArray* buttons = [[NSMutableArray alloc] init];
+            [buttons addObject:shareButtonItem];
+            [buttons addObject:nextButton];
+            [(TransparentToolbar *)self.toolbar setItems:buttons animated:NO];
 
-			self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.toolbar];
+            self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.toolbar];
 		} else {
-			UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
-
-			self.toolbar = [[TransparentToolbar alloc] initWithFrame:CGRectMake(0, 0, 130, 44)];
-			self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-
-			NSMutableArray* buttons = [[NSMutableArray alloc] init];
-			[buttons addObject:shareButtonItem];
-			[buttons addObject:nextButton];
+            CGRect toolbarRect;
+            NSMutableArray* buttons = [NSMutableArray array];
+            if (ENABLE_BROWSE_TAB) {
+                toolbarRect = CGRectMake(0, 0, 130, 44);
+                UIBarButtonItem *browseButtonItem = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)] autorelease];
+                [buttons addObject:browseButtonItem];
+            } else {
+                toolbarRect = CGRectMake(0, 0, 106, 44);
+            }
+            [buttons addObject:nextButton];
+            self.toolbar = [[TransparentToolbar alloc] initWithFrame:toolbarRect];
+            self.toolbar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 			[(TransparentToolbar *)self.toolbar setItems:buttons animated:NO];
 
 			self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.toolbar];

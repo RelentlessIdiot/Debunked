@@ -18,6 +18,10 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+
+#define ENABLE_BROWSE_TAB NO
+
+
 @interface DebunkedAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *mainWindow;
     UITabBarController *tabBarController;

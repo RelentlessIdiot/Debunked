@@ -89,7 +89,7 @@
 	 withVeracity:(NSString *)theVeracity 
 	 withImageUrl:(NSString *)theImageUrl
 {
-	if(self == [super init]) {
+	if(self = [super init]) {
 		self.url = theUrl;
 		self.synopsis = theSynopsis;
 		self.veracity = theVeracity;

@@ -42,12 +42,12 @@
 		withLabel:(NSString *)theLabel 
   withDescription:(NSString *)theDescription
 {
-	if(self == [super init]) {
+	if(self = [super init]) {
 		self.url = theUrl;
 		self.label = theLabel;
 		self.description = theDescription;
-		categoryNodes = [[NSMutableArray alloc] init];
-		rumorNodes = [[NSMutableArray alloc] init];
+		self.categoryNodes = [[NSMutableArray alloc] init];
+		self.rumorNodes = [[NSMutableArray alloc] init];
 	}
 	return self;
 }

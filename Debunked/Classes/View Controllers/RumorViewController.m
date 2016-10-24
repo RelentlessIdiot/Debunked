@@ -88,20 +88,26 @@
 		BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
 
 		if (canPrint || canEmail) {
-			NSArray *segmentContent = [NSArray arrayWithObjects:
-									   [UIImage imageNamed:@"share.png"],
-									   [UIImage imageNamed:@"browse.png"],
-									   nil];
-			UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentContent];
-			segmentedControl.momentary = YES;
-			segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-			segmentedControl.frame = CGRectMake(0, 0, 70, 32);
-			[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-			self.toolbar = segmentedControl;
+            if (ENABLE_BROWSE_TAB) {
+                NSArray *segmentContent = [NSArray arrayWithObjects:
+                                           [UIImage imageNamed:@"share.png"],
+                                           [UIImage imageNamed:@"browse.png"],
+                                           nil];
+                UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentContent];
+                segmentedControl.momentary = YES;
+                segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+                segmentedControl.frame = CGRectMake(0, 0, 70, 32);
+                [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+                self.toolbar = segmentedControl;
 
-			UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:self.toolbar] autorelease];
-			self.navigationItem.rightBarButtonItem = buttons;
-		} else {
+                UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:self.toolbar] autorelease];
+                self.navigationItem.rightBarButtonItem = buttons;
+            } else {
+                UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleShareButton)];
+                self.toolbar = shareButtonItem.customView;
+                self.navigationItem.rightBarButtonItem = shareButtonItem;
+            }
+		} else if (ENABLE_BROWSE_TAB) {
 			UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
 			self.toolbar = browseButtonItem.customView;
 			self.navigationItem.rightBarButtonItem = browseButtonItem;
@@ -355,16 +361,11 @@
     return YES;
 }
 
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
-
-
 - (void)dealloc {
 	[rumor release];
 	webView.delegate = nil;
 	[webView release];
+    [toolbar release];
 
     [super dealloc];
 }

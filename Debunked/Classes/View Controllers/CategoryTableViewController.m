@@ -39,9 +39,11 @@
 		self.dataSource = localDataSource;
 		[localDataSource release];
 	}
-	
-	UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
-	self.navigationItem.rightBarButtonItem = browseButtonItem;
+
+    if (ENABLE_BROWSE_TAB) {
+        UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
+        self.navigationItem.rightBarButtonItem = browseButtonItem;
+    }
 	
 	[super loadView];
 }
@@ -125,6 +127,12 @@
 		}
 		[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	}
+}
+
+- (void)dealloc {
+    [category release];
+
+    [super dealloc];
 }
 
 @end

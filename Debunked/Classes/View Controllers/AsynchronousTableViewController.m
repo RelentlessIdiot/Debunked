@@ -76,7 +76,7 @@
 
 - (id)initWithDataSource:(NSObject<AsynchronousDataSource> *)theDataSource
 {
-	if ([self init]) {
+	if (self = [self init]) {
 		tableView = nil;
 		lastRequestId = 0;
 		
@@ -136,6 +136,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+    [super viewWillAppear:animated];
 }
 
 - (void)scrollToTop {
