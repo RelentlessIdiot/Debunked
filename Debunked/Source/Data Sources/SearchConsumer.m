@@ -54,7 +54,7 @@
 	TFHpple *parser = nil;
 	@try {
 		parser = [[TFHpple alloc] initWithHTMLData:data];
-//		NSArray *resultEls = [parser search:@"/html/body/table//tr[2]/td[2]/table[2]//tr/td/font/p"];
+
 		NSArray *resultEls = [parser search:@"/html/body/font"];
 		
 		NSMutableArray *results = [NSMutableArray array];

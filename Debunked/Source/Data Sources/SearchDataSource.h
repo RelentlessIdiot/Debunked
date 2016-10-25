@@ -37,10 +37,7 @@
 @property (nonatomic,retain) NSMutableArray *searchResults;
 
 - (id)init;
-- (id)initWithSearchResults:(NSMutableArray *)theSearchResults NS_DESIGNATED_INITIALIZER;
-
 - (void)loadSearchResults:(NSMutableArray *)theSearchResults;
-
 - (NSInteger)requestSearchResults:(NSString *)query notifyDelegate:(NSObject<SearchDelegate> *)theDelegate;
 
 @end

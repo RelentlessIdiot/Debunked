@@ -44,18 +44,6 @@
 	return self;
 }
 
-- (NSWebViewURLRequest *)request
-{
-	NSString *urlString = self.url;
-	NSURL *urlObject = [NSURL URLWithString:urlString];
-	return [NSWebViewURLRequest requestWithURL:urlObject cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60.0];
-}
-
-- (NSWebViewURLRequest *)targetRequest
-{
-	return [self request];
-}
-
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	if (data == nil) {

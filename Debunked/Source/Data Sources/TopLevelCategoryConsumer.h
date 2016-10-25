@@ -32,8 +32,6 @@
 - (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
         withDataSource:(CategoryDataSource *)theDataSource
                withUrl:(NSString *)theUrl;
-- (NSWebViewURLRequest *)request;
-- (NSWebViewURLRequest *)targetRequest;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 
 @end

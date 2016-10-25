@@ -37,17 +37,10 @@
 
 - (id) init
 {
-	return [self initWithSearchResults:[[[NSMutableArray alloc] init] autorelease]];
-}
-
-- (id) initWithSearchResults:(NSMutableArray *)theSearchResults
-{
-	if(self = [super init]) {
-		[self loadSearchResults: theSearchResults];
-		lastRequestId = 0;
-	}
-	return self;
-	
+    if(self = [super init]) {
+        lastRequestId = 0;
+    }
+    return self;
 }
 
 - (void)loadSearchResults:(NSMutableArray *)theSearchResults
