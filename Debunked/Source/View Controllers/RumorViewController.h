@@ -46,7 +46,6 @@
 @property (nonatomic,retain) UIWebView *webView;
 @property (nonatomic,assign) BOOL hasRumor;
 @property (nonatomic,assign) BOOL isRendered;
-@property (nonatomic,assign) BOOL receivedMemoryWarning;
 
 - (id)init;
 - (id)initWithRumor:(Rumor *)theRumor;

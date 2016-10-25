@@ -24,8 +24,8 @@
 
 @interface DebunkedAppDelegate : NSObject<UIApplicationDelegate>
 
-@property (nonatomic, retain) UITabBarController *tabBarController;
-@property (nonatomic, retain) UIWindow *mainWindow;
+@property (nonatomic,retain) UITabBarController *tabBarController;
+@property (nonatomic,retain) UIWindow *mainWindow;
 
 - (void)setupUserInterface;
 

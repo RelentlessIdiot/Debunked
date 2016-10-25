@@ -29,7 +29,6 @@
 @property (nonatomic,retain) UISegmentedControl *navBar;
 @property (nonatomic,retain) NSString *url;
 @property (nonatomic,retain) UIButton *hideButton;
-@property (nonatomic,assign) BOOL receivedMemoryWarning;
 
 - (id)init;
 - (id)initWithUrl:(NSString *)url;

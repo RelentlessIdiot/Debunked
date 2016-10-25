@@ -18,15 +18,6 @@
 #import "RumorViewController.h"
 
 
-#define SECTION_VERACITY 0
-#define SECTION_CLAIM 1
-#define SECTION_ORIGIN 2
-#define SECTION_SIGHTINGS 3
-#define SECTION_EXAMPLES 4
-#define SECTION_VARIATIONS 5
-#define SECTION_LASTUPDATED 6
-#define SECTION_SOURCES 7
-
 @implementation RumorViewController
 
 @synthesize rumor;
@@ -35,7 +26,6 @@
 @synthesize loadingView;
 @synthesize hasRumor;
 @synthesize isRendered;
-@synthesize receivedMemoryWarning;
 
 - (void)dealloc
 {
@@ -60,11 +50,6 @@
 	}
 	self.hasRumor = (rumor != nil);
 	[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-}
-
-- (Rumor *) rumor
-{
-	return rumor;
 }
 
 - (id)init
@@ -115,6 +100,38 @@
         [self.navigationItem setRightBarButtonItems:buttons];
 	}
 	return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.webView = [[[UIWebView alloc] initWithFrame:self.view.bounds] autorelease];
+    self.webView.delegate = self;
+    self.webView.scalesPageToFit = YES;
+    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
+    self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    self.webView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.webView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    @synchronized(self) {
+        if (hasRumor && rumor == nil && loadingView == nil) {
+            loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+        }
+    }
+
+    [self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
+
+    [super viewWillAppear:animated];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    self.isRendered = NO;
+    [super didReceiveMemoryWarning];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -177,30 +194,6 @@
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
 	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)loadView
-{
-	// Create a custom view hierarchy.
-	CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-	appFrame.origin.x = 0;
-	appFrame.origin.y = 0;
-	UIView *view = [[UIView alloc] initWithFrame:appFrame];
-	view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	self.view = view;
-	[view release];
-
-
-	CGRect webFrame = [self.view frame];
-	webFrame.origin.x = 0;
-	webFrame.origin.y = 0;
-	webView = [[UIWebView alloc] initWithFrame:webFrame];
-	webView.delegate = self;
-	webView.scalesPageToFit = YES;
-	webView.dataDetectorTypes = UIDataDetectorTypeNone;
-	webView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	webView.backgroundColor = [UIColor whiteColor];
-	[self.view addSubview:webView];
 }
 
 - (void)segmentAction:(id)sender
@@ -281,26 +274,6 @@
 			[self.webView loadHTMLString:self.rumor.rawHtml baseURL:baseUrl];
 		}
 	}
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	@synchronized(self) {
-		if (hasRumor && rumor == nil && loadingView == nil) {
-			loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-		}
-	}
-
-	[self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
-
-	[super viewWillAppear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-	self.receivedMemoryWarning = YES;
-	self.isRendered = NO;
-	[super didReceiveMemoryWarning];
 }
 
 - (void)receive:(id)theItem withResult:(NSInteger)theResult

@@ -111,7 +111,7 @@ CGPathRef CreatePathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 
  + (id)loadingViewInView:(UIView *)aSuperview withBorder:(BOOL)hasBorder
 {
-	LoadingView *loadingView = [[[LoadingView alloc] initWithFrame:[aSuperview bounds]] autorelease];
+	LoadingView *loadingView = [[[LoadingView alloc] initWithFrame:aSuperview.bounds] autorelease];
 	if (!loadingView) {
 		return nil;
 	}

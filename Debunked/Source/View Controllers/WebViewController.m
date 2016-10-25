@@ -38,33 +38,23 @@
 	return self;
 }
 
-- (void)loadRequest:(NSWebViewURLRequest *)request
+- (void)viewDidLoad
 {
-	self.title = @"Loading...";
-	[webView loadRequest:request];
+    [super viewDidLoad];
+
+	self.webView = [[[UIWebView alloc] initWithFrame:self.view.bounds] autorelease];
+	self.webView.delegate = self;
+	self.webView.scalesPageToFit = YES;
+	self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
+	self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	self.webView.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:self.webView];
 }
 
-- (void)loadView
+- (void)loadRequest:(NSWebViewURLRequest *)request
 {
-	// Create a custom view hierarchy.
-	CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-	appFrame.origin.x = 0;
-	appFrame.origin.y = 0;
-	UIView *view = [[UIView alloc] initWithFrame:appFrame];
-	view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	self.view = view;
-	[view release];
-	
-	CGRect webFrame = [self.view frame];
-	webFrame.origin.x = 0;
-	webFrame.origin.y = 0;
-	webView = [[UIWebView alloc] initWithFrame:webFrame];
-	webView.delegate = self;
-	webView.scalesPageToFit = YES;
-	webView.dataDetectorTypes = UIDataDetectorTypeNone;
-	webView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	webView.backgroundColor = [UIColor whiteColor];
-	[self.view addSubview:webView];
+    self.title = @"Loading...";
+    [webView loadRequest:request];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
@@ -89,16 +79,6 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	
 	self.title = @"";
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
 }
 
 @end

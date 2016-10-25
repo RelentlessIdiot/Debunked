@@ -25,7 +25,7 @@
 
 @property (nonatomic,retain) CategoryNode *categoryNode;
 @property (nonatomic,retain) UIImage *nodeImage;
-@property(nonatomic, getter=isSelected) BOOL selected;
+@property(nonatomic,getter=isSelected) BOOL selected;
 
 + (NSInteger)preferredHeight;
 - (id)initWithCategoryNode:(CategoryNode *)theCategoryNode withFrame:(CGRect)frame;

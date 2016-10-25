@@ -25,7 +25,6 @@
 @synthesize navBar;
 @synthesize url;
 @synthesize hideButton;
-@synthesize receivedMemoryWarning;
 
 - (void)dealloc
 {
@@ -52,48 +51,33 @@
 	return self;
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
-	// Create a custom view hierarchy.
-	CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-	appFrame.origin.x = 0;
-	appFrame.origin.y = 0;
-	UIView *view = [[UIView alloc] initWithFrame:appFrame];
-	view.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	self.view = view;
-	[view release];
+    [super viewDidLoad];
 
-	CGRect webFrame = [self.view frame];
-	webFrame.origin.x = 0;
-	webFrame.origin.y = 0;
-	webView = [[[UIWebView alloc] initWithFrame:webFrame] autorelease];
-	webView.delegate = self;
-	webView.scalesPageToFit = YES;
-	webView.dataDetectorTypes = UIDataDetectorTypeNone;
-	webView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
-	webView.backgroundColor = [UIColor whiteColor];
-	[self.view addSubview:webView];
+	self.webView = [[[UIWebView alloc] initWithFrame:self.view.bounds] autorelease];
+	self.webView.delegate = self;
+	self.webView.scalesPageToFit = YES;
+	self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
+	self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+	self.webView.backgroundColor = [UIColor whiteColor];
+	[self.view addSubview:self.webView];
 
-	UIView *hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	UIBarButtonItem *hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
+	UIView *hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	UIBarButtonItem *hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
 	self.navigationItem.backBarButtonItem = hackItem;
-	[hackView release];
-	[hackItem release];
 	self.navigationItem.hidesBackButton = YES;
 
-	hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
+	hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
 	self.navigationItem.rightBarButtonItem = hackItem;
-	[hackView release];
-	[hackItem release];
 
-	self.addressBar = [[[UITextField alloc] init] autorelease];
-	self.addressBar.frame = CGRectMake(0, 0, 480, 32);
+	self.addressBar = [[[UITextField alloc] initWithFrame:CGRectMake(0, 0, 480, 32)] autorelease];
 	self.addressBar.delegate = self;
 	self.addressBar.textAlignment = NSTextAlignmentLeft;
 	self.addressBar.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	self.addressBar.borderStyle = UITextBorderStyleRoundedRect;
-	self.addressBar.autoresizingMask = (UIViewAutoresizingFlexibleWidth);
+	self.addressBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	self.addressBar.returnKeyType = UIReturnKeyGo;
 	self.addressBar.keyboardType = UIKeyboardTypeURL;
 	self.addressBar.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -106,11 +90,7 @@
 		self.addressBar.text = self.url;
 	}
 
-	NSArray *segmentContent = [NSArray arrayWithObjects:
-							   [UIImage imageNamed:@"back.png"],
-							   [UIImage imageNamed:@"forward.png"],
-							   nil];
-	self.navBar = [[[UISegmentedControl alloc] initWithItems:segmentContent] autorelease];
+	self.navBar = [[[UISegmentedControl alloc] initWithItems:@[[UIImage imageNamed:@"back.png"], [UIImage imageNamed:@"forward.png"]]] autorelease];
 	self.navBar.momentary = YES;
 	self.navBar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	self.navBar.frame = CGRectMake(0, 0, 58, 32);
@@ -122,22 +102,12 @@
 	UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:self.navBar] autorelease];
 	self.navigationItem.leftBarButtonItem = buttons;
 
-	CGRect fullscreenFrame = [view frame];
-	hideButton = [[[UIButton alloc] initWithFrame:fullscreenFrame] autorelease];
-	hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-	hideButton.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
-	hideButton.hidden = YES;
-	[hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-	[[self view] addSubview:hideButton];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	if (self.receivedMemoryWarning) {
-		self.receivedMemoryWarning = NO;
-	}
-
-	[super viewWillAppear:animated];
+	self.hideButton = [[[UIButton alloc] initWithFrame:self.view.bounds] autorelease];
+	self.hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+	self.hideButton.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+	self.hideButton.hidden = YES;
+	[self.hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+	[self.view addSubview:self.hideButton];
 }
 
 - (void)loadUrl:(NSString *)theUrl
@@ -217,12 +187,6 @@
 - (void)hideButtonClicked
 {
 	[self.addressBar resignFirstResponder];
-}
-
-- (void)didReceiveMemoryWarning
-{
-	self.receivedMemoryWarning = YES;
-	[super didReceiveMemoryWarning];
 }
 
 @end

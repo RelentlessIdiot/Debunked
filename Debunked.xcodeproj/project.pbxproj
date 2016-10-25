@@ -51,7 +51,6 @@
 		DAA2127416FD83A800F2CAC0 /* Category.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120516FD83A800F2CAC0 /* Category.m */; };
 		DAA2127516FD83A800F2CAC0 /* CategoryNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120716FD83A800F2CAC0 /* CategoryNode.m */; };
 		DAA2127616FD83A800F2CAC0 /* Rumor.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120A16FD83A800F2CAC0 /* Rumor.m */; };
-		DAA2127716FD83A800F2CAC0 /* RumorExample.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120C16FD83A800F2CAC0 /* RumorExample.m */; };
 		DAA2127816FD83A800F2CAC0 /* RumorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120E16FD83A800F2CAC0 /* RumorNode.m */; };
 		DAA2127916FD83A800F2CAC0 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121016FD83A800F2CAC0 /* SearchResult.m */; };
 		DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2123116FD83A800F2CAC0 /* DebunkedAppDelegate.m */; };
@@ -205,11 +204,8 @@
 		DAA2120516FD83A800F2CAC0 /* Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Category.m; sourceTree = "<group>"; };
 		DAA2120616FD83A800F2CAC0 /* CategoryNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryNode.h; sourceTree = "<group>"; };
 		DAA2120716FD83A800F2CAC0 /* CategoryNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryNode.m; sourceTree = "<group>"; };
-		DAA2120816FD83A800F2CAC0 /* IdentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentObject.h; sourceTree = "<group>"; };
 		DAA2120916FD83A800F2CAC0 /* Rumor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rumor.h; sourceTree = "<group>"; };
 		DAA2120A16FD83A800F2CAC0 /* Rumor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rumor.m; sourceTree = "<group>"; };
-		DAA2120B16FD83A800F2CAC0 /* RumorExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorExample.h; sourceTree = "<group>"; };
-		DAA2120C16FD83A800F2CAC0 /* RumorExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorExample.m; sourceTree = "<group>"; };
 		DAA2120D16FD83A800F2CAC0 /* RumorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorNode.h; sourceTree = "<group>"; };
 		DAA2120E16FD83A800F2CAC0 /* RumorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorNode.m; sourceTree = "<group>"; };
 		DAA2120F16FD83A800F2CAC0 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
@@ -476,11 +472,8 @@
 				DAA2120516FD83A800F2CAC0 /* Category.m */,
 				DAA2120616FD83A800F2CAC0 /* CategoryNode.h */,
 				DAA2120716FD83A800F2CAC0 /* CategoryNode.m */,
-				DAA2120816FD83A800F2CAC0 /* IdentObject.h */,
 				DAA2120916FD83A800F2CAC0 /* Rumor.h */,
 				DAA2120A16FD83A800F2CAC0 /* Rumor.m */,
-				DAA2120B16FD83A800F2CAC0 /* RumorExample.h */,
-				DAA2120C16FD83A800F2CAC0 /* RumorExample.m */,
 				DAA2120D16FD83A800F2CAC0 /* RumorNode.h */,
 				DAA2120E16FD83A800F2CAC0 /* RumorNode.m */,
 				DAA2120F16FD83A800F2CAC0 /* SearchResult.h */,
@@ -779,7 +772,6 @@
 				DAA2127416FD83A800F2CAC0 /* Category.m in Sources */,
 				DAA2127516FD83A800F2CAC0 /* CategoryNode.m in Sources */,
 				DAA2127616FD83A800F2CAC0 /* Rumor.m in Sources */,
-				DAA2127716FD83A800F2CAC0 /* RumorExample.m in Sources */,
 				DAA2127816FD83A800F2CAC0 /* RumorNode.m in Sources */,
 				DA146F581DBFE921006BAC25 /* NSString+SBJSON.m in Sources */,
 				DAA2127916FD83A800F2CAC0 /* SearchResult.m in Sources */,

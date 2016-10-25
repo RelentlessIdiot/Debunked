@@ -29,14 +29,14 @@
     [super dealloc];
 }
 
-- (void)loadView
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     if (ENABLE_BROWSE_TAB) {
         UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
         self.navigationItem.rightBarButtonItem = browseButtonItem;
     }
-	
-	[super loadView];
 }
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

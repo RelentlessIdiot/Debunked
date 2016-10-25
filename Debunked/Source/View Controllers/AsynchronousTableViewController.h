@@ -20,19 +20,15 @@
 #import "LoadingView.h"
 
 
-@interface AsynchronousTableViewController : UIViewController<UITableViewDelegate,AsynchronousDelegate>
+@interface AsynchronousTableViewController: UIViewController<UITableViewDelegate, AsynchronousDelegate>
 {
-	UITableView *tableView;
-	UITableViewCell *loadingCell;
 	NSInteger lastRequestId;
-	AsynchronousDataSource *dataSource;
-	LoadingView *loadingView;
 }
 
+@property (nonatomic,retain) AsynchronousDataSource *dataSource;
+@property (nonatomic,assign) UITableViewCell *loadingCell;
 @property (nonatomic,assign) LoadingView *loadingView;
 @property (nonatomic,retain) UITableView *tableView;
-@property (assign) UITableViewCell *loadingCell;
-@property (nonatomic,retain) AsynchronousDataSource *dataSource;
 
 - (id)initWithDataSource:(AsynchronousDataSource *)theDataSource;
 - (void)pushViewControllerAnimated:(UIViewController *)viewController;

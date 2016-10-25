@@ -43,49 +43,43 @@
     return self;
 }
 
-- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)viewDidLoad
 {
-    return [CategoryNodeView preferredHeight];
-}
-
-- (void)loadView {
-	if (dataSource == nil) {
+	if (self.dataSource == nil) {
 		isTopLevel = YES;
-		CategoryDataSource *localDataSource = [[CategoryDataSource alloc] init];
-		self.dataSource = localDataSource;
-		[localDataSource release];
-	}
+		self.dataSource = [[[CategoryDataSource alloc] init] autorelease];
+    }
+
+    [super viewDidLoad];
 
     if (ENABLE_BROWSE_TAB) {
         UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
         self.navigationItem.rightBarButtonItem = browseButtonItem;
     }
-	
-	[super loadView];
-}
-
-- (void)viewDidLoad
-{
-	[super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	@synchronized(self) {
-		if (isTopLevel && [[(CategoryDataSource *)dataSource categoryNodes] count] == 0) {
+		if (isTopLevel && [[(CategoryDataSource *)self.dataSource categoryNodes] count] == 0) {
 			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-			if (loadingView == nil) {
-				loadingView = [LoadingView loadingViewInView:tableView withBorder:NO];
+			if (self.loadingView == nil) {
+				self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 			}
             if (url == nil) {
-                lastRequestId = [(CategoryDataSource *)dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
+                lastRequestId = [(CategoryDataSource *)self.dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
             } else {
-                lastRequestId = [(CategoryDataSource *)dataSource requestCategoryNodes:url notifyDelegate:self];
+                lastRequestId = [(CategoryDataSource *)self.dataSource requestCategoryNodes:url notifyDelegate:self];
             }
 		}
 	}
 	
 	[super viewWillAppear:animated];
+}
+
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [CategoryNodeView preferredHeight];
 }
 
 - (void)handleBrowseButton
@@ -148,7 +142,7 @@
 		} else {
 			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		}
-		[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	}
 }
 

@@ -23,9 +23,9 @@
 
 @interface RumorNodeView : UIView<ImageConsumer> 
 
-@property (nonatomic, retain) RumorNode *rumorNode;
-@property (nonatomic, retain) UIImage *nodeImage;
-@property (nonatomic, getter=isSelected) BOOL selected;
+@property (nonatomic,retain) RumorNode *rumorNode;
+@property (nonatomic,retain) UIImage *nodeImage;
+@property (nonatomic,getter=isSelected) BOOL selected;
 
 + (CGSize) imageSize;
 + (UIEdgeInsets) padding;

@@ -59,7 +59,7 @@
 	mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	tabBarController = [[UITabBarController alloc] init];
 
-	NSMutableArray *localViewControllers = [[NSMutableArray alloc] initWithCapacity:4];
+	NSMutableArray *localViewControllers = [[NSMutableArray alloc] init];
 	
 	UINavigationController *localNavigationController;
 	UIViewController *localViewController;

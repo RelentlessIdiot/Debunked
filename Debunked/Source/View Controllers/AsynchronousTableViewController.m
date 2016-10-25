@@ -20,9 +20,10 @@
 
 @implementation AsynchronousTableViewController
 
+@synthesize dataSource;
+@synthesize loadingCell;
 @synthesize loadingView;
 @synthesize tableView;
-@synthesize dataSource;
 
 - (UITableViewCell *)loadingCell { return loadingCell; }
 
@@ -36,9 +37,32 @@
     [super dealloc];
 }
 
+- (id)initWithDataSource:(AsynchronousDataSource *)theDataSource
+{
+    if (self = [self init]) {
+        lastRequestId = 0;
+        self.dataSource = theDataSource;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+    self.tableView = [[[UITableView alloc] initWithFrame:self.view.bounds] autorelease];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.tableView.separatorInset = UIEdgeInsetsZero;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = dataSource;
+
+    if (self.dataSource != nil && [self.dataSource tableView:self.tableView numberOfRowsInSection:0]) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    } else {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+
+    [self.view addSubview:self.tableView];
 }
 
 - (void)removeLoadingView
@@ -77,46 +101,9 @@
 	[[self navigationController] pushViewController:viewController animated:YES];
 }
 
-- (id)initWithDataSource:(AsynchronousDataSource *)theDataSource
-{
-	if (self = [self init]) {
-		self.tableView = nil;
-		lastRequestId = 0;
-		self.dataSource = theDataSource;
-	}
-	return self;
-}
-
 - (void)receive:(id)theItem withResult:(NSInteger)theResult
 {
 	
-}
-
-- (void)loadView
-{
-	// create a new table using the full application frame
-	// we'll ask the datasource which type of table to use (plain or grouped)
-	UITableView *newTableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
-	
-	// set the autoresizing mask so that the table will always fill the view
-	newTableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-	
-	// set the cell separator to a single straight line.
-	if (self.dataSource != nil && [self.dataSource tableView:newTableView numberOfRowsInSection:0]) {
-		newTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-	} else {
-		newTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	}
-    newTableView.separatorInset = UIEdgeInsetsZero;
-	
-	// set the tableview delegate to this object and the datasource to the datasource which has already been set
-	newTableView.delegate = self;
-	newTableView.dataSource = dataSource;
-	
-	// set the tableview as the controller view
-    self.tableView = newTableView;
-	self.view = newTableView;
-	[newTableView release];
 }
 
 - (void)tableView:(UITableView *)theTableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)theIndexPath

@@ -37,8 +37,8 @@
 	NSUInteger _cacheSize;
 }
 
-@property (nonatomic, readonly) NSUInteger sizeOfCache;
-@property (nonatomic, readonly) NSString *cacheDir;
+@property (nonatomic,readonly) NSUInteger sizeOfCache;
+@property (nonatomic,readonly) NSString *cacheDir;
 
 + (DiskCache *)sharedCache;
 

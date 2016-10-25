@@ -26,7 +26,7 @@
 
 @interface RumorTableViewController : AsynchronousTableViewController<RumorDelegate> 
 
-@property (nonatomic, retain) Category *category;
+@property (nonatomic,retain) Category *category;
 
 - (void)receiveRumorNodes:(NSArray *)theRumorNodes withResult:(NSInteger)theResult;
 - (void)loadRumorView:(Rumor *)theRumor;

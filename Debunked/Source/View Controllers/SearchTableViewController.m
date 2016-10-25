@@ -34,72 +34,50 @@
     [super dealloc];
 }
 
-- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)viewDidLoad
 {
-    return [SearchResultView preferredHeight];
-}
+    [super viewDidLoad];
 
-- (void)loadView
-{
-	[super loadView];
-
-	[tableView setDelegate:self];
-
-	if ([self.dataSource tableView:self.tableView numberOfRowsInSection:0] == 0) {
-		tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	} else {
-		tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-	}
-
-	UIView *hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	UIBarButtonItem *hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
+	UIView *hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	UIBarButtonItem *hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
 	self.navigationItem.backBarButtonItem = hackItem;
-	[hackView release];
-	[hackItem release];
 	self.navigationItem.hidesBackButton = YES;
 
-	hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
+	hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
 	self.navigationItem.leftBarButtonItem = hackItem;
-	[hackView release];
-	[hackItem release];
 
-	hackView = [[UIView alloc] initWithFrame:CGRectZero];
-	hackItem = [[UIBarButtonItem alloc] initWithCustomView:hackView];
+	hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+	hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
 	self.navigationItem.rightBarButtonItem = hackItem;
-	[hackView release];
-	[hackItem release];
 
-	searchBar = [[[UISearchBar alloc] init] autorelease];
-	searchBar.delegate = self;
-	searchBar.showsCancelButton = NO;
-	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-	searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
+	self.searchBar = [[[UISearchBar alloc] init] autorelease];
+	self.searchBar.delegate = self;
+	self.searchBar.showsCancelButton = NO;
+	self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	self.searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
 	self.navigationItem.titleView = searchBar;
 
-	CGRect fullscreenFrame = [[UIScreen mainScreen] applicationFrame];
-	fullscreenFrame.origin.x = 0;
-	fullscreenFrame.origin.y = 0;
-	hideButton = [[[UIButton alloc] initWithFrame:fullscreenFrame] autorelease];
-	hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-	hideButton.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
-	hideButton.hidden = YES;
-	[hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+	self.hideButton = [[[UIButton alloc] initWithFrame:self.view.bounds] autorelease];
+	self.hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+	self.hideButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	self.hideButton.hidden = YES;
+	[self.hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:hideButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[super viewWillAppear:animated];
+    return [SearchResultView preferredHeight];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 	if (needsLoadingView == YES) {
 		needsLoadingView = NO;
-		if (loadingView == nil) {
-			loadingView = [LoadingView loadingViewInView:[self view] withBorder:NO];
+		if (self.loadingView == nil) {
+			self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 		}
 	}
 }
@@ -112,7 +90,7 @@
 - (void)resizeHideButton
 {
     CGRect frame = [hideButton frame];
-    frame.size.height = MAX(tableView.contentSize.height, tableView.frame.size.height);
+    frame.size.height = MAX(self.tableView.contentSize.height, self.tableView.frame.size.height);
     [hideButton setFrame:frame];
 }
 
@@ -156,17 +134,17 @@
 	[searchBar resignFirstResponder];
 
 	@synchronized(self) {
-		tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		if (tableView.dragging || tableView.decelerating) {
+		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+		if (self.tableView.dragging || self.tableView.decelerating) {
 			needsLoadingView = YES;
 		} else {
-			if (loadingView == nil) {
+			if (self.loadingView == nil) {
 				needsLoadingView = NO;
-				loadingView = [LoadingView loadingViewInView:[self view] withBorder:NO];
+				self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 			}
 		}
 
-		lastRequestId = [(SearchDataSource *)dataSource requestSearchResults:[searchBar text] notifyDelegate:self];
+		lastRequestId = [(SearchDataSource *)self.dataSource requestSearchResults:searchBar.text notifyDelegate:self];
 	}
 }
 
@@ -183,11 +161,11 @@
 		if (theSearchResults != nil && [theSearchResults count] > 0) {
 			self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 		}
-		[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
         [self performSelectorOnMainThread:@selector(resizeHideButton) withObject:nil waitUntilDone:YES];
 	}
 	[self performSelectorOnMainThread:@selector(scrollToTop) withObject:nil waitUntilDone:NO];
-	[tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
+	[self.tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
 
 - (void)receive:(id)theItem withResult:(NSInteger)theResult

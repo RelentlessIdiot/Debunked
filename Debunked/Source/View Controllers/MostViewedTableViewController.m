@@ -22,38 +22,37 @@
 
 @implementation MostViewedTableViewController
 
-- (void)loadView {
-	[super loadView];
-	[tableView setDelegate:self];
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 
-	NSArray *segmentTextContent = [NSArray arrayWithObjects:@"What's New", @"Top 25", nil];
-	UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentTextContent];
+	self.tableView.delegate = self;
+
+	UISegmentedControl *segmentedControl = [[[UISegmentedControl alloc] initWithItems:@[@"What's New", @"Top 25"]] autorelease];
 	segmentedControl.selectedSegmentIndex = selectedSegmentIndex;
 	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-
 	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
 
 	self.navigationItem.titleView = segmentedControl;
-	[segmentedControl release];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	@synchronized(self) {
-		if ([[(RumorDataSource *)dataSource rumorNodes] count] == 0) {
-			tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-			if (tableView.dragging || tableView.decelerating) {
+		if ([[(RumorDataSource *)self.dataSource rumorNodes] count] == 0) {
+			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+			if (self.tableView.dragging || self.tableView.decelerating) {
 				needsLoadingView = YES;
 			} else {
-				if (loadingView == nil) {
+				if (self.loadingView == nil) {
 					needsLoadingView = NO;
-					loadingView = [LoadingView loadingViewInView:[self view] withBorder:NO];
+					self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 				}
 			}
 			if ([(UISegmentedControl *)self.navigationItem.titleView selectedSegmentIndex] == 0) {
-				lastRequestId = [(RumorDataSource *)dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
+				lastRequestId = [(RumorDataSource *)self.dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
 			} else {
-				lastRequestId = [(RumorDataSource *)dataSource requestTop25RumorNodesNotifyDelegate:self];
+				lastRequestId = [(RumorDataSource *)self.dataSource requestTop25RumorNodesNotifyDelegate:self];
 			}
 		}
 	}
@@ -65,8 +64,8 @@
 {
 	if (needsLoadingView == YES) {
 		needsLoadingView = NO;
-		if (loadingView == nil) {
-			loadingView = [LoadingView loadingViewInView:[self view] withBorder:NO];
+		if (self.loadingView == nil) {
+			self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 		}
 	}
 }
@@ -87,24 +86,24 @@
 - (void)segmentAction:(id)sender
 {
 	@synchronized(self) {
-		[dataSource cancelRequest:lastRequestId];
+		[self.dataSource cancelRequest:lastRequestId];
 		self.loadingCell = nil;
 
-		if (tableView.dragging || tableView.decelerating) {
+		if (self.tableView.dragging || self.tableView.decelerating) {
 			needsLoadingView = YES;
 		} else {
-			if (loadingView == nil) {
+			if (self.loadingView == nil) {
 				needsLoadingView = NO;
-				loadingView = [LoadingView loadingViewInView:tableView withBorder:NO];
+				self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 			}
 		}
 
 		UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
 		selectedSegmentIndex = segmentedControl.selectedSegmentIndex;
 		if (segmentedControl.selectedSegmentIndex == 0) {
-			lastRequestId = [(RumorDataSource *)dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
+			lastRequestId = [(RumorDataSource *)self.dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
 		} else {
-			lastRequestId = [(RumorDataSource *)dataSource requestTop25RumorNodesNotifyDelegate:self];
+			lastRequestId = [(RumorDataSource *)self.dataSource requestTop25RumorNodesNotifyDelegate:self];
 		}
 	}
 }
@@ -119,10 +118,10 @@
 		} else {
 			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 		}
-		[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	}
 	[self performSelectorOnMainThread:@selector(scrollToTop) withObject:nil waitUntilDone:NO];
-	[tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
+	[self.tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
 
 @end

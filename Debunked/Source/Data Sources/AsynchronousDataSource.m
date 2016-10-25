@@ -98,7 +98,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
     [self doesNotRecognizeSelector:_cmd];
-    return nil;
+    @throw @"doesNotRecognizeSelector";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
