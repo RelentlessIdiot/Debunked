@@ -27,6 +27,9 @@
 	Category *category;
 }
 
+@property (nonatomic, retain) NSString *url;
 @property (nonatomic, retain) Category *category;
+
+- (id)initWithUrl:(NSString *)theUrl;
 
 @end

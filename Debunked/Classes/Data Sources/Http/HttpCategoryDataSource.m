@@ -70,6 +70,26 @@
 	self.categoryNodes = theCategoryNodes;
 }
 
+- (NSInteger)requestCategoryNodes:(NSString *)theUrl notifyDelegate:(NSObject<CategoryDelegate> *)theDelegate
+{
+    NSNumber *requestId = nil;
+    @synchronized(self) {
+        lastRequestId++;
+        requestId = [NSNumber numberWithInteger:lastRequestId];
+
+        CategoryConsumer *consumer = [[CategoryConsumer alloc] initWithDelegate:theDelegate
+                                                                 withDataSource:self
+                                                                        withUrl:theUrl];
+        NSArray *theRequest = [NSArray arrayWithObjects: consumer, theDelegate, nil];
+        [activeRequests setObject:theRequest forKey:requestId];
+
+        CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
+        [dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+        [consumer release];
+    }
+    return [requestId intValue];
+}
+
 - (NSInteger)requestTopLevelCategoryNodesNotifyDelegate:(NSObject<CategoryDelegate> *)theDelegate
 {
 	NSNumber *requestId = nil;
@@ -80,10 +100,7 @@
 		TopLevelCategoryConsumer *consumer = [[TopLevelCategoryConsumer alloc] initWithDelegate:theDelegate 
                                                                                  withDataSource:self
                                                                                         withUrl:@"http://www.snopes.com/"];
-		NSArray *theRequest = [NSArray arrayWithObjects:
-							   consumer, 
-							   theDelegate, 
-							   nil];
+		NSArray *theRequest = [NSArray arrayWithObjects: consumer, theDelegate, nil];
 		[activeRequests setObject:theRequest forKey:requestId];
 		
 		CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];

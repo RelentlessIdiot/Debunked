@@ -25,7 +25,16 @@
 
 @implementation CategoryTableViewController
 
+@synthesize url;
 @synthesize category;
+
+- (id)initWithUrl:(NSString *)theUrl
+{
+    if (self = [super init]) {
+        self.url = theUrl;
+    }
+    return self;
+}
 
 - (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -61,7 +70,11 @@
 			if (loadingView == nil) {
 				loadingView = [LoadingView loadingViewInView:tableView withBorder:NO];
 			}
-			lastRequestId = [(NSObject<CategoryDataSource> *)dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
+            if (url == nil) {
+                lastRequestId = [(NSObject<CategoryDataSource> *)dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
+            } else {
+                lastRequestId = [(NSObject<CategoryDataSource> *)dataSource requestCategoryNodes:url notifyDelegate:self];
+            }
 		}
 	}
 	
@@ -75,7 +88,11 @@
 	UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
 	WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
 	if (self.category == nil) {
-		[webBrowser loadUrl:@"http://www.snopes.com"];
+        if (self.url == nil) {
+            [webBrowser loadUrl:@"http://www.snopes.com"];
+        } else {
+            [webBrowser loadUrl:url];
+        }
 	} else {
 		[webBrowser loadUrl:self.category.url];
 	}
@@ -130,6 +147,7 @@
 }
 
 - (void)dealloc {
+    [url release];
     [category release];
 
     [super dealloc];

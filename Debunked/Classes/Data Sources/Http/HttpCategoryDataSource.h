@@ -38,6 +38,7 @@
 
 - (void)loadCategoryNodes:(NSMutableArray *)theCategoryNodes;
 
+- (NSInteger)requestCategoryNodes:(NSString *)theUrl notifyDelegate:(NSObject<CategoryDelegate> *)theDelegate;
 - (NSInteger)requestTopLevelCategoryNodesNotifyDelegate:(NSObject<CategoryDelegate> *)theDelegate;
 
 - (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;

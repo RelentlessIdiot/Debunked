@@ -24,7 +24,9 @@
 #import "LoadingView.h"
 #import "WebViewController.h"
 #import "DataSourceFactory.h"
+#import "CategoryDataSource.h"
 #import "RumorDataSource.h"
+#import "CategoryTableViewController.h"
 #import "WebBrowserViewController.h"
 #import "DebunkedAppDelegate.h"
 

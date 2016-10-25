@@ -299,21 +299,23 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSWebViewURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
 		BOOL isRumor = NO;
+        BOOL isCategory = NO;
 		NSString *absoluteString = [[request URL] absoluteString];
-		if ([absoluteString hasPrefix:@"http://"] ||
-			[absoluteString hasPrefix:@"https://"]) {
+		if ([absoluteString hasPrefix:@"http://"] || [absoluteString hasPrefix:@"https://"]) {
 
 			if ([absoluteString hasPrefix:@"http://www.snopes.com"] ||
 				[absoluteString hasPrefix:@"https://www.snopes.com"] ||
 				[absoluteString hasPrefix:@"http://snopes.com"] ||
-				[absoluteString hasPrefix:@"https://snopes.com"]) {
-
+				[absoluteString hasPrefix:@"https://snopes.com"])
+            {
 				NSString *path = [[request URL] path];
 				if (![path hasPrefix:@"/sources/"] && ![path hasPrefix:@"sources/"] &&
 					([path hasSuffix:@"asp"] || [path hasSuffix:@"htm"] || [path hasSuffix:@"html"])) {
 
 					isRumor = YES;
-				}
+                } else if ([path hasPrefix:@"/category/"] || [path hasPrefix:@"category/"]) {
+                    isCategory = YES;
+                }
 			}
 
 		}
@@ -327,7 +329,11 @@
 			[rumorDataSource requestRumor:absoluteString notifyDelegate:(NSObject<RumorDelegate> *)rumorViewController];
 
 			[rumorViewController release];
-		} else {
+        } else if (isCategory) {
+            CategoryTableViewController *categoryViewController = [[CategoryTableViewController alloc] initWithUrl:absoluteString];
+            [[self navigationController] pushViewController:categoryViewController animated:YES];
+            [categoryViewController release];
+        } else {
 			WebViewController *webViewController = [[WebViewController alloc] init];
 			[[self navigationController] pushViewController:webViewController animated:YES];
 			[webViewController loadRequest:request];

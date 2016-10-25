@@ -39,35 +39,6 @@
 
 - (TFHppleElement *)transform:(TFHppleElement *)element
 {
-	if ([@"img" isEqual:[element tagName]]) {
-		if ([[[element attributes] objectForKey:@"src"] hasSuffix:@"content-divider.gif"]) {
-			[element setValue:@"" forKey:@"width"];
-			[element setValue:@"width:100%;" forKey:@"style"];
-		} else {
-			NSString *widthString = [element objectForKey:@"width"];
-			if (widthString != nil) {
-				NSInteger width = [widthString intValue];
-				if (width > 290) {
-					NSString *heightString = [element objectForKey:@"height"];
-					if (heightString != nil) {
-						NSInteger height = [heightString intValue];
-						NSInteger newHeight = ((height * (290.0/width)) + 0.5);
-						NSString *newHeightString = [NSString stringWithFormat:@"%ld", (long)newHeight];
-						[element setValue:newHeightString forKey:@"height"];
-					}
-					[element setValue:@"290" forKey:@"width"];
-				}
-			}
-		}
-	}else if ([@"table" isEqual:[element tagName]]) {
-		NSString *widthString = [element objectForKey:@"width"];
-		if (widthString != nil) {
-			NSInteger width = [widthString intValue];
-			if (width > 290) {
-				[element setValue:@"290" forKey:@"width"];
-			}
-		}
-	}
 	return element;
 }
 
@@ -81,73 +52,31 @@
 	TFHpple *parser = nil;
 	@try {
         parser = [[TFHpple alloc] initWithHTMLData:data];
-        NSString *label = @"";
-        NSString *rumorBody = @"";
-        NSString *css = @"";
 
 		TFHppleElement *labelEl = [parser at:@"//article/div[@class=\"top-meta\"]/h1[@class=\"page-title\"]"];
+        NSString *label = labelEl.textContent;
 
-        label = labelEl.content;
         TFHppleElement *rumorBodyEl = [parser at:@"//article"];
+        NSString *rumorBody = [rumorBodyEl outerHtml];
 
-        if (rumorBodyEl) {
-            rumorBody = [rumorBodyEl innerHtml];
-        }
+        TFHppleElement *headEl = [parser at:@"//head"];
 
-        css = 
-            @"<style type=\"text/css\" media=\"all\">"
-            @"html, body {\n"
-            @"width:100%\n"
-            @"margin:0px;\n"
-            @"padding:0px;\n"
-            @"}\n"
-            @"* {\n"
-            @"font-family:helvetica !important;\n"
-            @"font-size:14px !important;\n"
-            @"white-space:normal !important;\n"
-            @"}\n"
-            @"p.br {\n"
-            @"height:0px !important;\n"
-            @"}\n"
-            @"table div {\n"
-            @"margin:3px !important;\n"
-            @"}\n"
-            @"div.quoteBlock {\n"
-            @"background: none no-repeat scroll 0 0 #EAF2E5;\n"
-            @"border: 2px solid black;\n"
-            @"padding: 3px;\n"
-            @"}\n"
-            @"iframe {\n"
-            @"margin-left: 3px;\n"
-            @"}\n"
-            @"div.quoteBlock iframe {\n"
-            @"margin-left: -3px;\n"
-            @"}\n"
-            @"h1.title {\n"
-            @"display: none;\n"
-            @"}\n"
-            @"</style>"
-            @"<style type=\"text/css\" media=\"print\">"
-            @"h1.title {\n"
-            @"color: #2D8F26;\n"
-            @"font-size: 18px !important;\n"
-            @"display: block !important;\n"
-            @"}\n"
-            @"iframe {\n"
-            @"display: none !important;\n"
-            @"}\n"
-            @"</style>";
-		
-		NSString *html = @""
-            @"<html><head>"
-            @"<meta name=\"viewport\" content=\"width = device-width,initial-scale = 1.0, user-scalable = yes\">";
-		html = [html stringByAppendingString:css];
-		html = [html stringByAppendingString:@"</head><body>"];
-		html = [html stringByAppendingString:@"<center><h1 class=\"title\">"];
-		html = [html stringByAppendingString:label];
-		html = [html stringByAppendingString:@"</h1></center>"];
-		html = [html stringByAppendingString:rumorBody];
-		html = [html stringByAppendingString:@"</body></html>"];
+		NSString *html = @"<!DOCTYPE html><html>";
+		html = [html stringByAppendingString:headEl.outerHtml];
+        html = [html stringByAppendingString:@"<body class=\"Safari page-article mobile iPhone retina\">"
+                @"<div class=​\"main-container\">​"
+                @"<div class=​\"content-wrapper-main\">​"
+                @"<div class=​\"container-wrapper container-wrapper-main\" style=​\"overflow:​ visible;​\">​"
+                @"<div id=​\"main-content-well\" class=​\"wordpress\">​"
+                @"<div class=​\"content-wrapper\">​"];
+        html = [html stringByAppendingString:rumorBody];
+        html = [html stringByAppendingString:@"</div>"
+                @"</div>"
+                @"</div>"
+                @"</div>"
+                @"</div>"
+                @"</body>"];
+		html = [html stringByAppendingString:@"</html>"];
 
 		Rumor *rumor = [[[Rumor alloc] init] autorelease];
 		rumor.rawHtml = html;
