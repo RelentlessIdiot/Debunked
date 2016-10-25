@@ -187,22 +187,17 @@ static CachedImageLoader *sharedInstance;
 + (CachedImageLoader *)sharedImageLoader {
     @synchronized(self) {
         if (sharedInstance == nil) {
-            [[self alloc] init]; // assignment not done here
+            sharedInstance = [[super allocWithZone: nil] init];
         }
     }
     return sharedInstance;
 }
 
-
-+ (id)allocWithZone:(NSZone *)zone {
-    @synchronized(self) {
-        if (sharedInstance == nil) {
-            sharedInstance = [super allocWithZone:zone];
-            return sharedInstance;  // assignment and return on first allocation
-        }
-    }
-    return nil; // on subsequent allocation attempts return nil
-}
-
++ (id)allocWithZone:(NSZone *)zone { return sharedInstance; }
+- (id)copyWithZone:(NSZone *)zone { return self; }
+- (id)retain { return self; }
+- (NSUInteger)retainCount { return UINT_MAX; } //denotes an object that cannot be released
+- (oneway void)release {} // never release
+- (id)autorelease { return self; }
 
 @end

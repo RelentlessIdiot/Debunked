@@ -204,7 +204,9 @@
 }
 
 - (void)dealloc {
+    [hideButton release];
 	[searchBar release];
+
     [super dealloc];
 }
 

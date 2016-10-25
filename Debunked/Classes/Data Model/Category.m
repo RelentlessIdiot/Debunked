@@ -46,8 +46,8 @@
 		self.url = theUrl;
 		self.label = theLabel;
 		self.description = theDescription;
-		self.categoryNodes = [[NSMutableArray alloc] init];
-		self.rumorNodes = [[NSMutableArray alloc] init];
+		self.categoryNodes = [NSMutableArray array];
+		self.rumorNodes = [NSMutableArray array];
 	}
 	return self;
 }

@@ -35,7 +35,6 @@
 @synthesize hasRumor;
 @synthesize isRendered;
 @synthesize receivedMemoryWarning;
-@synthesize toolbar;
 
 -(void) setRumor:(Rumor *)theRumor
 {
@@ -74,60 +73,41 @@
 
 - (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource withRumor:(Rumor *)theRumor
 {
-	if (self = [super init]) {
+    if (self = [super init]) {
+        self.dataSource = theDataSource;
 		self.rumor = theRumor;
 
 		if (self.rumor != nil && ![self.rumor isEqual:@""]) {
 			self.title = self.rumor.title;
 		}
 
-		Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-		BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
+        Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+        BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
 
-		Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
-		BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
+        Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
+        BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
 
-		if (canPrint || canEmail) {
-            if (ENABLE_BROWSE_TAB) {
-                NSArray *segmentContent = [NSArray arrayWithObjects:
-                                           [UIImage imageNamed:@"share.png"],
-                                           [UIImage imageNamed:@"browse.png"],
-                                           nil];
-                UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentContent];
-                segmentedControl.momentary = YES;
-                segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-                segmentedControl.frame = CGRectMake(0, 0, 70, 32);
-                [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-                self.toolbar = segmentedControl;
+        NSMutableArray* buttons = [NSMutableArray array];
 
-                UIBarButtonItem *buttons = [[[UIBarButtonItem alloc] initWithCustomView:self.toolbar] autorelease];
-                self.navigationItem.rightBarButtonItem = buttons;
-            } else {
-                UIBarButtonItem *shareButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleShareButton)];
-                self.toolbar = shareButtonItem.customView;
-                self.navigationItem.rightBarButtonItem = shareButtonItem;
-            }
-		} else if (ENABLE_BROWSE_TAB) {
-			UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
-			self.toolbar = browseButtonItem.customView;
-			self.navigationItem.rightBarButtonItem = browseButtonItem;
-		}
-		self.dataSource = theDataSource;
+        if (ENABLE_BROWSE_TAB && (canPrint || canEmail)) {
+            NSArray *segmentContent = @[[UIImage imageNamed:@"share.png"], [UIImage imageNamed:@"browse.png"]];
+            UISegmentedControl *segmentedControl = [[[UISegmentedControl alloc] initWithItems:segmentContent] autorelease];
+            segmentedControl.momentary = YES;
+            [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+            [buttons addObject:[[[UIBarButtonItem alloc] initWithCustomView:segmentedControl] autorelease]];
+        } else if (ENABLE_BROWSE_TAB) {
+            [buttons addObject:[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)] autorelease]];
+        } else if (canPrint || canEmail) {
+            [buttons addObject:[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleShareButton)] autorelease]];
+        }
 
+        [self.navigationItem setRightBarButtonItems:buttons];
 	}
 	return self;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-						 interfaceOrientation == UIInterfaceOrientationPortrait);
-	return shouldRotate;
-}
-
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	NSInteger cancelIndex = 2;
 	NSInteger printIndex = 1;
 	NSInteger emailIndex = 0;
 
@@ -139,16 +119,13 @@
 
 	if (canEmail) {
 		if (canPrint) {
-			cancelIndex = 2;
 			printIndex = 1;
 			emailIndex = 0;
 		} else {
-			cancelIndex = 1;
 			printIndex = -1;
 			emailIndex = 0;
 		}
 	} else if (canPrint) {
-		cancelIndex = 1;
 		printIndex = 0;
 		emailIndex = -1;
 	}
@@ -365,7 +342,7 @@
 	[rumor release];
 	webView.delegate = nil;
 	[webView release];
-    [toolbar release];
+    [dataSource release];
 
     [super dealloc];
 }

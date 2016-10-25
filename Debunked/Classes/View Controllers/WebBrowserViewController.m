@@ -40,13 +40,6 @@
 	return self;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-						 interfaceOrientation == UIInterfaceOrientationPortrait);
-	return shouldRotate;
-}
-
 - (void)loadView
 {
 	// Create a custom view hierarchy.
@@ -61,7 +54,7 @@
 	CGRect webFrame = [self.view frame];
 	webFrame.origin.x = 0;
 	webFrame.origin.y = 0;
-	webView = [[UIWebView alloc] initWithFrame:webFrame];
+	webView = [[[UIWebView alloc] initWithFrame:webFrame] autorelease];
 	webView.delegate = self;
 	webView.scalesPageToFit = YES;
 	webView.dataDetectorTypes = UIDataDetectorTypeNone;
@@ -82,7 +75,7 @@
 	[hackView release];
 	[hackItem release];
 
-	self.addressBar = [[UITextField alloc] init];
+	self.addressBar = [[[UITextField alloc] init] autorelease];
 	self.addressBar.frame = CGRectMake(0, 0, 480, 32);
 	self.addressBar.delegate = self;
 	self.addressBar.textAlignment = NSTextAlignmentLeft;
@@ -105,7 +98,7 @@
 							   [UIImage imageNamed:@"back.png"],
 							   [UIImage imageNamed:@"forward.png"],
 							   nil];
-	self.navBar = [[UISegmentedControl alloc] initWithItems:segmentContent];
+	self.navBar = [[[UISegmentedControl alloc] initWithItems:segmentContent] autorelease];
 	self.navBar.momentary = YES;
 	self.navBar.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	self.navBar.frame = CGRectMake(0, 0, 58, 32);
@@ -221,6 +214,10 @@
 }
 
 - (void)dealloc {
+    [addressBar release];
+    [hideButton release];
+    [navBar release];
+    [url release];
 	webView.delegate = nil;
 	[webView release];
 

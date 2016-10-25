@@ -37,13 +37,6 @@
 	loadingView = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-						 interfaceOrientation == UIInterfaceOrientationPortrait);
-	return shouldRotate;
-}
-
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {	
 	[tableView reloadData];

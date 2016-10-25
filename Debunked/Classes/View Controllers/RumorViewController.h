@@ -42,7 +42,6 @@
 	BOOL hasRumor;
 	BOOL isRendered;
 	BOOL receivedMemoryWarning;
-	UIView *toolbar;
 }
 
 @property (nonatomic,retain) Rumor *rumor;
@@ -52,7 +51,6 @@
 @property (nonatomic,assign) BOOL hasRumor;
 @property (nonatomic,assign) BOOL isRendered;
 @property (nonatomic,assign) BOOL receivedMemoryWarning;
-@property (nonatomic, retain) UIView *toolbar;
 
 - (id)init;
 - (id)initWithRumor:(Rumor *)theRumor;

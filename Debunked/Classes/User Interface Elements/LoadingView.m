@@ -30,11 +30,11 @@
 
 
 //
-// NewPathWithRoundRect
+// CreatePathWithRoundRect
 //
 // Creates a CGPathRect with a round rect of the given radius.
 //
-CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
+CGPathRef CreatePathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 {
 	//
 	// Create the boundary path

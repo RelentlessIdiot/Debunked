@@ -36,13 +36,6 @@
 	[webView loadRequest:request];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	BOOL shouldRotate = (interfaceOrientation == UIInterfaceOrientationLandscapeRight ||
-						 interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-						 interfaceOrientation == UIInterfaceOrientationPortrait);
-	return shouldRotate;
-}
-
 - (void)loadView
 {
 	// Create a custom view hierarchy.

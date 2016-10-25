@@ -90,7 +90,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
-	return nil;
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:@"You must override tableView cellForRowAtIndexPath in a subclass"
+                                 userInfo:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

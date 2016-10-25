@@ -20,9 +20,9 @@
 #import "RefreshConsumer.h"
 
 
-const NSInteger maxDownloadConnections	= 1;
+const NSInteger maxDownloadConnections = 1;
 
-static CachedDataLoader *sharedInstance;
+static CachedDataLoader *sharedInstance = nil;
 
 
 @interface CachedDataLoader (Privates)
@@ -238,22 +238,17 @@ static CachedDataLoader *sharedInstance;
 + (CachedDataLoader *)sharedDataLoader {
     @synchronized(self) {
         if (sharedInstance == nil) {
-            [[self alloc] init]; // assignment not done here
+            sharedInstance = [[super allocWithZone: nil] init];
         }
     }
     return sharedInstance;
 }
 
-
-+ (id)allocWithZone:(NSZone *)zone {
-    @synchronized(self) {
-        if (sharedInstance == nil) {
-            sharedInstance = [super allocWithZone:zone];
-            return sharedInstance;  // assignment and return on first allocation
-        }
-    }
-    return nil; // on subsequent allocation attempts return nil
-}
-
++ (id)allocWithZone:(NSZone *)zone { return sharedInstance; }
+- (id)copyWithZone:(NSZone *)zone { return self; }
+- (id)retain { return self; }
+- (NSUInteger)retainCount { return UINT_MAX; } //denotes an object that cannot be released
+- (oneway void)release {} // never release
+- (id)autorelease { return self; }
 
 @end

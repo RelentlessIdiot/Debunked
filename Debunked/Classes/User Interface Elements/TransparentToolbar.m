@@ -38,16 +38,18 @@
 // Override init.
 - (id) init
 {
-    self = [super init];
-    [self applyTranslucentBackground];
+    if (self = [super init]) {
+        [self applyTranslucentBackground];
+    }
     return self;
 }
 
 // Override initWithFrame.
 - (id) initWithFrame:(CGRect) frame
 {
-    self = [super initWithFrame:frame];
-    [self applyTranslucentBackground];
+    if (self = [super initWithFrame:frame]) {
+        [self applyTranslucentBackground];
+    }
     return self;
 }
 
