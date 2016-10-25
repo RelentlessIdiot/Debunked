@@ -25,6 +25,15 @@
 @synthesize	synopsis;
 @synthesize	rumorHeadline;
 
+- (void)dealloc {
+    [title release];
+    [url release];
+    [synopsis release];
+    [rumorHeadline release];
+
+    [super dealloc];
+}
+
 - (id)init
 {
 	return [self initWithTitle:nil withUrl:nil withSynopsis:nil withRumorHeadline:nil];
@@ -42,15 +51,6 @@
 		self.rumorHeadline = theRumorHeadline;
 	}
 	return self;
-}
-
-- (void)dealloc {
-	[title release];
-	[url release];
-	[synopsis release];
-	[rumorHeadline release];
-
-	[super dealloc];
 }
 
 @end

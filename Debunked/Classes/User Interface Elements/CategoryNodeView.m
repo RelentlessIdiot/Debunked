@@ -43,8 +43,17 @@
 
 @implementation CategoryNodeView
 
+@synthesize categoryNode;
 @synthesize nodeImage;
 @synthesize selected;
+
+- (void)dealloc
+{
+    [categoryNode release];
+    [nodeImage release];
+
+    [super dealloc];
+}
 
 - (CategoryNode *)categoryNode
 {
@@ -166,13 +175,5 @@
 	self.nodeImage = image;
 	[self performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
-
-- (void)dealloc {
-	[categoryNode release];
-	[nodeImage release];
-	
-    [super dealloc];
-}
-
 
 @end

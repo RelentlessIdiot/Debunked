@@ -25,8 +25,7 @@
 
 
 @interface CategoryConsumer: DataConsumer {
-	NSObject<CategoryDelegate> *delegate;
-	CategoryDataSource *dataSource;
+
 }
 
 @property (nonatomic,retain) NSObject<CategoryDelegate> *delegate;

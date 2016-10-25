@@ -29,12 +29,23 @@
 
 @implementation RumorViewController
 
+@synthesize rumor;
 @synthesize dataSource;
 @synthesize webView;
 @synthesize loadingView;
 @synthesize hasRumor;
 @synthesize isRendered;
 @synthesize receivedMemoryWarning;
+
+- (void)dealloc
+{
+    [rumor release];
+    webView.delegate = nil;
+    [webView release];
+    [dataSource release];
+
+    [super dealloc];
+}
 
 -(void) setRumor:(Rumor *)theRumor
 {
@@ -261,7 +272,8 @@
 	loadingView = nil;
 }
 
-- (void)updateWebView {
+- (void)updateWebView
+{
 	if (self.webView && !self.isRendered && self.rumor != nil && ![self.rumor isEqual:@""]) {
 		if (self.rumor.rawHtml != nil && ![self.rumor.rawHtml isEqual:@""]) {
 			self.isRendered = YES;
@@ -271,7 +283,8 @@
 	}
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
 	@synchronized(self) {
 		if (hasRumor && rumor == nil && loadingView == nil) {
 			loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
@@ -296,7 +309,8 @@
 	self.rumor = theRumor;
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSWebViewURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSWebViewURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
     if (navigationType == UIWebViewNavigationTypeLinkClicked) {
 		BOOL isRumor = NO;
         BOOL isCategory = NO;
@@ -320,8 +334,7 @@
 
 		}
 		if (isRumor) {
-			Class rumorDataSourceClass = [DataSourceFactory rumorDataSourceClass];
-			RumorDataSource *rumorDataSource = [[[rumorDataSourceClass alloc] init] autorelease];
+			RumorDataSource *rumorDataSource = [[[RumorDataSource alloc] init] autorelease];
 
 			RumorViewController *rumorViewController = [[[self class] alloc] initWithDataSource:rumorDataSource];
 			rumorViewController.hasRumor = YES;
@@ -344,15 +357,4 @@
     return YES;
 }
 
-- (void)dealloc {
-	[rumor release];
-	webView.delegate = nil;
-	[webView release];
-    [dataSource release];
-
-    [super dealloc];
-}
-
-
 @end
-

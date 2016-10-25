@@ -24,7 +24,6 @@
 
 @interface CategoryTableViewController : AsynchronousTableViewController<CategoryDelegate> {
 	BOOL isTopLevel;
-	Category *category;
 }
 
 @property (nonatomic, retain) NSString *url;

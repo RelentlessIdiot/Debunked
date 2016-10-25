@@ -20,8 +20,9 @@
 #import "NSWebViewURLRequest.h"
 
 
-@interface WebViewController : UIViewController<UIWebViewDelegate> {
-	UIWebView *webView;
+@interface WebViewController : UIViewController<UIWebViewDelegate>
+{
+
 }
 
 @property (nonatomic,retain) UIWebView *webView;

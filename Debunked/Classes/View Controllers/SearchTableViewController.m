@@ -26,12 +26,21 @@
 @synthesize searchBar;
 @synthesize hideButton;
 
+- (void)dealloc
+{
+    [hideButton release];
+    [searchBar release];
+
+    [super dealloc];
+}
+
 - (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [SearchResultView preferredHeight];
 }
 
-- (void)loadView {
+- (void)loadView
+{
 	[super loadView];
 
 	[tableView setDelegate:self];
@@ -201,13 +210,6 @@
 	RumorViewController *rumorViewController = [[RumorViewController alloc] initWithRumor:theRumor];
 	[[self navigationController] pushViewController:rumorViewController animated:YES];
 	[rumorViewController release];
-}
-
-- (void)dealloc {
-    [hideButton release];
-	[searchBar release];
-
-    [super dealloc];
 }
 
 @end

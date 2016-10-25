@@ -27,6 +27,18 @@
 @synthesize hideButton;
 @synthesize receivedMemoryWarning;
 
+- (void)dealloc
+{
+    [addressBar release];
+    [hideButton release];
+    [navBar release];
+    [url release];
+    webView.delegate = nil;
+    [webView release];
+
+    [super dealloc];
+}
+
 - (id)init
 {
 	return [self initWithUrl:nil];
@@ -212,17 +224,5 @@
 	self.receivedMemoryWarning = YES;
 	[super didReceiveMemoryWarning];
 }
-
-- (void)dealloc {
-    [addressBar release];
-    [hideButton release];
-    [navBar release];
-    [url release];
-	webView.delegate = nil;
-	[webView release];
-
-    [super dealloc];
-}
-
 
 @end

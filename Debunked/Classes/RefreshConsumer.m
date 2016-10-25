@@ -22,6 +22,13 @@
 
 @synthesize client;
 
+- (void)dealloc
+{
+    [client release];
+
+    [super dealloc];
+}
+
 - (id)initWithClient:(DataConsumer *)theClient withUrl:(NSString *)theUrl
 {
 	if(self = [super init]) {
@@ -35,12 +42,6 @@
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	[self.client receiveData:data withResponse:response];
-}
-
-- (void)dealloc {
-	[client release];
-	
-	[super dealloc];
 }
 
 @end

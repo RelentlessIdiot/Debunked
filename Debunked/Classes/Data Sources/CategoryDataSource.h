@@ -35,7 +35,7 @@
 
 
 @interface CategoryDataSource: AsynchronousDataSource {
-	NSMutableArray *categoryNodes;
+
 }
 
 @property (nonatomic,retain) NSMutableArray *categoryNodes;

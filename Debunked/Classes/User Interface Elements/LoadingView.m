@@ -82,9 +82,15 @@ CGPathRef CreatePathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	return path;
 }
 
+
 @implementation LoadingView
 
 @synthesize hasBorder;
+
+- (void)dealloc
+{
+    [super dealloc];
+}
 
 //
 // loadingViewInView:
@@ -195,16 +201,6 @@ CGPathRef CreatePathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	[animation setType:kCATransitionFade];
 	
 	[[aSuperview layer] addAnimation:animation forKey:@"layerAnimation"];
-}
-
-//
-// dealloc
-//
-// Release instance memory.
-//
-- (void)dealloc
-{
-    [super dealloc];
 }
 
 @end

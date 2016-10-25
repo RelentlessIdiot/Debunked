@@ -28,6 +28,13 @@
 
 @synthesize searchResults;
 
+- (void)dealloc
+{
+    [searchResults release];
+
+    [super dealloc];
+}
+
 - (id) init
 {
 	return [self initWithSearchResults:[[[NSMutableArray alloc] init] autorelease]];
@@ -109,12 +116,5 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return [searchResults count];
 }
-
-- (void)dealloc {
-	[searchResults release];
-	
-	[super dealloc];
-}
-
 
 @end

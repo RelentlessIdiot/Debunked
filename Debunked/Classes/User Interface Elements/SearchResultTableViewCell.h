@@ -20,8 +20,7 @@
 
 
 @interface SearchResultTableViewCell : UITableViewCell {
-	SearchResult *searchResult;
-	SearchResultView *searchResultView;
+
 }
 
 @property (nonatomic,retain) SearchResult *searchResult;

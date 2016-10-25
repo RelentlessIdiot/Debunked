@@ -23,6 +23,14 @@
 @synthesize delegate;
 @synthesize dataSource;
 
+- (void)dealloc
+{
+    [delegate release];
+    [dataSource release];
+
+    [super dealloc];
+}
+
 - (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
 		withDataSource:(RumorDataSource *)theDataSource
 			   withUrl:(NSString *)theUrl
@@ -46,13 +54,6 @@
     NSArray *rumorNodes = [self parseRumorNodes:data];
     [self.dataSource loadRumorNodes:rumorNodes];
     [self.delegate receiveRumorNodes:rumorNodes withResult:0];
-}
-
-- (void)dealloc {
-	[delegate release];
-	[dataSource release];
-	
-	[super dealloc];
 }
 
 @end

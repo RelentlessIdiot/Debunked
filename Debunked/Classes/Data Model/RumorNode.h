@@ -19,12 +19,10 @@
 
 
 @interface RumorNode : NSObject {
-	NSString *veracity;
-	NSString *url;
-	NSString *synopsis;
-	NSString *label;
-	NSString *imageUrl;
+
 }
+
++ (UIImage *)imageForVeracity:(NSString *)theVeracity;
 
 @property (nonatomic,retain) NSString *veracity;
 @property (nonatomic,retain) NSString *url;
@@ -32,8 +30,6 @@
 @property (nonatomic,retain) NSString *label;
 @property (nonatomic,retain) NSString *imageUrl;
 @property (nonatomic,readonly) UIImage *veracityImage;
-
-+ (UIImage *)imageForVeracity:(NSString *)theVeracity;
 
 - (id)init;
 

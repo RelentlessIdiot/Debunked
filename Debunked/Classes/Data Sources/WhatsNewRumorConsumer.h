@@ -25,8 +25,7 @@
 
 
 @interface WhatsNewRumorConsumer : DataConsumer {
-	NSObject<RumorDelegate> *delegate;
-	RumorDataSource *dataSource;
+
 }
 
 @property (nonatomic,retain) NSObject<RumorDelegate> *delegate;

@@ -25,8 +25,7 @@
 
 
 @interface Top25RumorConsumer : DataConsumer {
-	NSObject<RumorDelegate> *delegate;
-	RumorDataSource *dataSource;
+
 }
 
 @property (nonatomic,retain) NSObject<RumorDelegate> *delegate;

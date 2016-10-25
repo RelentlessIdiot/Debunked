@@ -21,7 +21,7 @@
 
 
 @interface RefreshConsumer : DataConsumer {
-	DataConsumer *client;
+
 }
 
 @property (nonatomic,retain) DataConsumer *client;

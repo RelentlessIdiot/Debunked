@@ -24,12 +24,18 @@
 @synthesize rumorNode;
 @synthesize rumorNodeView;
 
+- (void)dealloc {
+    [rumorNode release];
+    [rumorNodeView release];
+
+    [super dealloc];
+}
+
 - (void)setRumorNode:(RumorNode *)theRumorNode
 {
 	if (theRumorNode != rumorNode) {
 		[rumorNode release];
-		[theRumorNode retain];
-		rumorNode = theRumorNode;
+		rumorNode = [theRumorNode retain];
 	}
 	rumorNodeView.rumorNode = rumorNode;
 	[rumorNodeView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
@@ -72,18 +78,9 @@
     return self;
 }
 
-
 - (void)redisplay
 {
 	[rumorNodeView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
-
-
-- (void)dealloc {
-	[rumorNode release];
-	[rumorNodeView release];
-    [super dealloc];
-}
-
 
 @end

@@ -15,7 +15,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "DataSourceFactory.h"
 #import "CategoryDataSource.h"
 #import "RumorDataSource.h"
 #import "CategoryTableViewController.h"
@@ -49,10 +48,7 @@
 - (void)setupUserInterface {
 	mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	tabBarController = [[UITabBarController alloc] init];
-	
-	[DataSourceFactory setRumorDataSourceClass:[RumorDataSource class]];
-	[DataSourceFactory setCategoryDataSourceClass:[CategoryDataSource class]];
-	
+
 	NSMutableArray *localViewControllers = [[NSMutableArray alloc] initWithCapacity:4];
 	
 	UINavigationController *localNavigationController;
@@ -60,7 +56,7 @@
 	AsynchronousDataSource *localDataSource;
 	
 	//======== Most Viewed =========
-	localDataSource = [[[DataSourceFactory rumorDataSourceClass] alloc] init];
+	localDataSource = [[RumorDataSource alloc] init];
 	localViewController = [[MostViewedTableViewController alloc] initWithDataSource:localDataSource];
 	[localDataSource release];
 	
@@ -100,7 +96,7 @@
 	
 	
 	//======== Search =========
-	localDataSource = [[[DataSourceFactory searchDataSourceClass] alloc] init];
+	localDataSource = [[SearchDataSource alloc] init];
 	localViewController = [[SearchTableViewController alloc] initWithDataSource:localDataSource];
 	[localDataSource release];
 	
@@ -113,7 +109,7 @@
 	
 	
 	//======== Random =========
-	localDataSource = [[[DataSourceFactory rumorDataSourceClass] alloc] init];
+	localDataSource = [[RumorDataSource alloc] init];
 	localViewController = [[RandomViewController alloc] initWithDataSource:(RumorDataSource *)localDataSource];
 	[localDataSource release];
 	
@@ -132,7 +128,8 @@
 	mainWindow.rootViewController = tabBarController;
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     [tabBarController release];
     [mainWindow release];
 

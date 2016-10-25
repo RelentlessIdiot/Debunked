@@ -34,7 +34,7 @@
 
 
 @interface RumorDataSource: AsynchronousDataSource {
-	NSArray *rumorNodes;
+
 }
 
 @property (nonatomic,retain) NSArray *rumorNodes;

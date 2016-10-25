@@ -20,12 +20,22 @@
 
 @implementation Category
 
-- (NSString *)ident {return url;}
 @synthesize url;
 @synthesize label;
 @synthesize description;
 @synthesize categoryNodes;
 @synthesize rumorNodes;
+
+- (void)dealloc
+{
+    [url release];
+    [label release];
+    [description release];
+    [categoryNodes release];
+    [rumorNodes release];
+
+    [super dealloc];
+}
 
 - (id)init
 {
@@ -50,16 +60,6 @@
 		self.rumorNodes = [NSMutableArray array];
 	}
 	return self;
-}
-
-- (void)dealloc {
-	[url release];
-	[label release];
-	[description release];
-	[categoryNodes release];
-	[rumorNodes release];
-	
-	[super dealloc];
 }
 
 @end

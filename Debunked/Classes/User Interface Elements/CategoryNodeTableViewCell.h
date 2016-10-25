@@ -20,8 +20,7 @@
 
 
 @interface CategoryNodeTableViewCell : UITableViewCell {
-	CategoryNode *categoryNode;
-	CategoryNodeView *categoryNodeView;
+
 }
 
 @property (nonatomic,retain) CategoryNode *categoryNode;

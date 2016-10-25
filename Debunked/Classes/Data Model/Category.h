@@ -16,18 +16,12 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "IdentObject.h"
 
 
-@interface Category : NSObject<IdentObject> {
-	NSString *url;
-	NSString *label;
-	NSString *description;
-	NSMutableArray *categoryNodes;
-	NSMutableArray *rumorNodes;
+@interface Category : NSObject {
+
 }
 
-@property (readonly) NSString *ident;
 @property (nonatomic,retain) NSString *url;
 @property (nonatomic,retain) NSString *label;
 @property (nonatomic,retain) NSString *description;

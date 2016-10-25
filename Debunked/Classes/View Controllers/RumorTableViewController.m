@@ -22,7 +22,15 @@
 
 @synthesize category;
 
-- (void)loadView {
+- (void)dealloc
+{
+    [category release];
+
+    [super dealloc];
+}
+
+- (void)loadView
+{
     if (ENABLE_BROWSE_TAB) {
         UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
         self.navigationItem.rightBarButtonItem = browseButtonItem;
@@ -80,12 +88,6 @@
 		WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
 		[webBrowser loadUrl:self.category.url];
 	}
-}
-
-- (void)dealloc {
-    [category release];
-
-    [super dealloc];
 }
 
 @end

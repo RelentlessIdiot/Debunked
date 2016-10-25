@@ -23,6 +23,14 @@
 @synthesize url;
 @synthesize targetUrl;
 
+- (void)dealloc
+{
+    [url release];
+    [targetUrl release];
+
+    [super dealloc];
+}
+
 - (NSWebViewURLRequest *)request
 {
 	NSURL *urlObject = [NSURL URLWithString:[self url]];
@@ -111,13 +119,6 @@
     }
 
     return rumorNodes;
-}
-
-- (void)dealloc {
-	[url release];
-	[targetUrl release];
-	
-	[super dealloc];
 }
 
 @end

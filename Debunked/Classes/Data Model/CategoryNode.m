@@ -25,6 +25,16 @@
 @synthesize synopsis;
 @synthesize imageUrl;
 
+- (void)dealloc
+{
+    [url release];
+    [label release];
+    [synopsis release];
+    [imageUrl release];
+
+    [super dealloc];
+}
+
 - (id)init
 {
     return [self initWithUrl:@"" withLabel:@"" withSynopsis:@""];
@@ -55,15 +65,6 @@
 		self.imageUrl = theImageUrl;
 	}
 	return self;
-}
-
-- (void)dealloc {
-	[url release];
-	[label release];
-	[synopsis release];
-	[imageUrl release];
-	
-	[super dealloc];
 }
 
 @end

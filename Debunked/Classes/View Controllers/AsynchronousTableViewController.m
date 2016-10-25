@@ -24,7 +24,17 @@
 @synthesize tableView;
 @synthesize dataSource;
 
-- (UITableViewCell *)loadingCell {return loadingCell;}
+- (UITableViewCell *)loadingCell { return loadingCell; }
+
+- (void)dealloc
+{
+    tableView.delegate = nil;
+    tableView.dataSource = nil;
+    [tableView release];
+    [dataSource release];
+
+    [super dealloc];
+}
 
 - (void)viewDidLoad
 {
@@ -82,7 +92,8 @@
 	
 }
 
-- (void)loadView {
+- (void)loadView
+{
 	// create a new table using the full application frame
 	// we'll ask the datasource which type of table to use (plain or grouped)
 	UITableView *newTableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
@@ -108,12 +119,14 @@
 	[newTableView release];
 }
 
-- (void)tableView:(UITableView *)theTableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)theIndexPath {	
+- (void)tableView:(UITableView *)theTableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)theIndexPath
+{
 	[self tableView:theTableView didSelectRowAtIndexPath:theIndexPath];
 	[theTableView selectRowAtIndexPath:theIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
-- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)theIndexPath {
+- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)theIndexPath
+{
 	@synchronized(self) {
 		UITableViewCell *aCell = [theTableView cellForRowAtIndexPath:theIndexPath];
 		if (![aCell isEqual:self.loadingCell]) {
@@ -130,17 +143,9 @@
     [super viewWillAppear:animated];
 }
 
-- (void)scrollToTop {
+- (void)scrollToTop
+{
 	[tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-}
-
-- (void)dealloc {
-	tableView.delegate = nil;
-	tableView.dataSource = nil;
-	[tableView release];
-	[dataSource release];
-	
-	[super dealloc];
 }
 
 @end

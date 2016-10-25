@@ -24,12 +24,19 @@
 @synthesize searchResult;
 @synthesize searchResultView;
 
+- (void)dealloc
+{
+    [searchResult release];
+    [searchResultView release];
+
+    [super dealloc];
+}
+
 - (void)setSearchResult:(SearchResult *)theSearchResult
 {
 	if (theSearchResult != searchResult) {
 		[searchResult release];
-		[theSearchResult retain];
-		searchResult = theSearchResult;
+		searchResult = [theSearchResult retain];
 	}
 	searchResultView.searchResult = searchResult;
 	[searchResultView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
@@ -72,19 +79,9 @@
     return self;
 }
 
-
 - (void)redisplay
 {
 	[searchResultView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
-
-
-- (void)dealloc {
-	[searchResult release];
-	[searchResultView release];
-	
-    [super dealloc];
-}
-
 
 @end

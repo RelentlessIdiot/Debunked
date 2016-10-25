@@ -33,8 +33,17 @@
 
 @implementation RumorNodeView
 
+@synthesize rumorNode;
 @synthesize nodeImage;
 @synthesize selected;
+
+- (void)dealloc
+{
+    [rumorNode release];
+    [nodeImage release];
+
+    [super dealloc];
+}
 
 + (UIEdgeInsets) padding
 {
@@ -81,7 +90,6 @@
     return [self initWithRumorNode:nil withFrame:frame];
 }
 
-
 - (id)initWithRumorNode:(RumorNode *)theRumorNode withFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -91,7 +99,6 @@
     }
     return self;
 }
-
 
 - (void)drawRect:(CGRect)rect
 {
@@ -176,19 +183,10 @@
 	
 }
 
-- (void)renderImage:(UIImage *)image;
+- (void)renderImage:(UIImage *)image
 {
 	self.nodeImage = image;
 	[self performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
-
-- (void)dealloc
-{
-	[rumorNode release];
-	[nodeImage release];
-	
-    [super dealloc];
-}
-
 
 @end

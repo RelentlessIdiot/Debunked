@@ -20,11 +20,18 @@
 
 @implementation AsynchronousDataSource
 
+- (void)dealloc
+{
+    [activeRequests release];
+
+    [super dealloc];
+}
+
 - (id)init
 {
 	if(self = [super init]) {
 		lastRequestId = 0;
-		activeRequests = [NSMutableDictionary dictionary];
+		activeRequests = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -97,12 +104,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 	return 0;
-}
-
-- (void)dealloc {
-	[activeRequests release];
-	
-	[super dealloc];
 }
 
 @end

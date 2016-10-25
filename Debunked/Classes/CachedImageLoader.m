@@ -36,7 +36,8 @@ static CachedImageLoader *sharedInstance;
 
 @implementation CachedImageLoader
 
-- (void)dealloc {
+- (void)dealloc
+{
 	[_imageDownloadQueue cancelAllOperations];
 	[_imageDownloadQueue release];
 

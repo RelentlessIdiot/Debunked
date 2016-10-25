@@ -19,10 +19,7 @@
 
 
 @interface CategoryNode : NSObject {
-	NSString *url;
-	NSString *label;
-	NSString *synopsis;
-	NSString *imageUrl;
+
 }
 
 @property (nonatomic,retain) NSString *url;

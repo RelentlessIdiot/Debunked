@@ -22,6 +22,14 @@
 
 @synthesize webView;
 
+- (void)dealloc
+{
+    webView.delegate = nil;
+    [webView release];
+
+    [super dealloc];
+}
+
 - (id)init
 {
     if (self = [super init]) {
@@ -83,25 +91,14 @@
 	self.title = @"";
 }
 
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload
+{
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
-
-
-- (void)dealloc {
-	webView.delegate = nil;
-	[webView release];
-    [super dealloc];
-}
-
 
 @end

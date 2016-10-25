@@ -22,8 +22,7 @@
 
 
 @interface RumorNodeView : UIView<ImageConsumer> {
-	RumorNode *rumorNode;
-	UIImage *nodeImage;
+
 }
 
 @property (nonatomic, retain) RumorNode *rumorNode;

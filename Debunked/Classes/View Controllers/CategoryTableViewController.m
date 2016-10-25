@@ -19,7 +19,6 @@
 #import "RumorTableViewController.h"
 #import "RumorDataSource.h"
 #import "CategoryDataSource.h"
-#import "DataSourceFactory.h"
 #import "CategoryNodeView.h"
 
 
@@ -27,6 +26,14 @@
 
 @synthesize url;
 @synthesize category;
+
+- (void)dealloc
+{
+    [url release];
+    [category release];
+
+    [super dealloc];
+}
 
 - (id)initWithUrl:(NSString *)theUrl
 {
@@ -44,7 +51,7 @@
 - (void)loadView {
 	if (dataSource == nil) {
 		isTopLevel = YES;
-		CategoryDataSource *localDataSource = [[[DataSourceFactory categoryDataSourceClass] alloc] init];
+		CategoryDataSource *localDataSource = [[CategoryDataSource alloc] init];
 		self.dataSource = localDataSource;
 		[localDataSource release];
 	}
@@ -109,7 +116,7 @@
 		}
 		Category *theCategory = (Category *)theItem;
 		if ([[theCategory categoryNodes] count] > 0 || [[theCategory rumorNodes] count] <= 0) {
-			CategoryDataSource *categoryDataSource = [[[DataSourceFactory categoryDataSourceClass] alloc] initWithCategoryNodes:[theCategory categoryNodes]];
+			CategoryDataSource *categoryDataSource = [[CategoryDataSource alloc] initWithCategoryNodes:[theCategory categoryNodes]];
 			CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithDataSource:categoryDataSource];
 			[categoryDataSource release];
 			
@@ -119,8 +126,7 @@
 			[self performSelectorOnMainThread:@selector(pushViewControllerAnimated:) withObject:categoryTableViewController waitUntilDone:YES];
 			[categoryTableViewController release];
 		} else {
-			Class rumorDataSourceClass = [DataSourceFactory rumorDataSourceClass];
-			RumorDataSource *rumorDataSource = [[rumorDataSourceClass alloc] initWithRumorNodes:[theCategory rumorNodes]];
+			RumorDataSource *rumorDataSource = [[RumorDataSource alloc] initWithRumorNodes:[theCategory rumorNodes]];
 			RumorTableViewController *rumorTableViewController = [[RumorTableViewController alloc] initWithDataSource:rumorDataSource];
 			[rumorDataSource release];
 			
@@ -144,13 +150,6 @@
 		}
 		[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	}
-}
-
-- (void)dealloc {
-    [url release];
-    [category release];
-
-    [super dealloc];
 }
 
 @end

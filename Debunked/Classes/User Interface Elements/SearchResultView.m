@@ -33,7 +33,15 @@
 
 @implementation SearchResultView
 
+@synthesize searchResult;
 @synthesize selected;
+
+- (void)dealloc
+{
+    [searchResult release];
+
+    [super dealloc];
+}
 
 - (SearchResult *)searchResult
 {
@@ -58,7 +66,6 @@
     return [self initWithSearchResult:nil withFrame:frame];
 }
 
-
 - (id)initWithSearchResult:(SearchResult *)theSearchResult withFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -68,7 +75,6 @@
     }
     return self;
 }
-
 
 - (void)drawRect:(CGRect)rect
 {
@@ -129,13 +135,5 @@
 
     [text drawInRect:contentRect];
 }
-
-- (void)dealloc
-{
-	[searchResult release];
-	
-    [super dealloc];
-}
-
 
 @end

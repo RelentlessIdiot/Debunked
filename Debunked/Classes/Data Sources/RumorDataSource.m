@@ -28,6 +28,13 @@
 
 @synthesize rumorNodes;
 
+- (void)dealloc
+{
+    [rumorNodes release];
+
+    [super dealloc];
+}
+
 - (id) init
 {
 	return [self initWithRumorNodes:[NSArray array]];
@@ -180,12 +187,5 @@
 - (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section {
 	return [rumorNodes count];
 }
-
-- (void)dealloc {
-	[rumorNodes release];
-	
-	[super dealloc];
-}
-
 
 @end

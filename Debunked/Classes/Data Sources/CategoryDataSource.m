@@ -27,6 +27,13 @@
 
 @synthesize categoryNodes;
 
+- (void)dealloc
+{
+    [categoryNodes release];
+
+    [super dealloc];
+}
+
 - (id) init
 {
 	return [self initWithCategoryNodes:[[[NSMutableArray alloc] init] autorelease]];
@@ -124,13 +131,5 @@
 {
 	return [categoryNodes count];
 }
-
-- (void)dealloc
-{
-	[categoryNodes release];
-	
-	[super dealloc];
-}
-
 
 @end

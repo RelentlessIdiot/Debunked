@@ -34,7 +34,6 @@
 		DAA2127716FD83A800F2CAC0 /* RumorExample.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120C16FD83A800F2CAC0 /* RumorExample.m */; };
 		DAA2127816FD83A800F2CAC0 /* RumorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120E16FD83A800F2CAC0 /* RumorNode.m */; };
 		DAA2127916FD83A800F2CAC0 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121016FD83A800F2CAC0 /* SearchResult.m */; };
-		DAA2127A16FD83A800F2CAC0 /* DataSourceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121516FD83A800F2CAC0 /* DataSourceFactory.m */; };
 		DAA2128516FD83A800F2CAC0 /* DataConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122F16FD83A800F2CAC0 /* DataConsumer.m */; };
 		DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2123116FD83A800F2CAC0 /* DebunkedAppDelegate.m */; };
 		DAA2128716FD83A800F2CAC0 /* DiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2123316FD83A800F2CAC0 /* DiskCache.m */; };
@@ -56,7 +55,6 @@
 		DAA2129716FD83A800F2CAC0 /* RumorNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2125716FD83A800F2CAC0 /* RumorNodeView.m */; };
 		DAA2129816FD83A800F2CAC0 /* SearchResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2125916FD83A800F2CAC0 /* SearchResultTableViewCell.m */; };
 		DAA2129916FD83A800F2CAC0 /* SearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2125B16FD83A800F2CAC0 /* SearchResultView.m */; };
-		DAA2129A16FD83A800F2CAC0 /* TransparentToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2125D16FD83A800F2CAC0 /* TransparentToolbar.m */; };
 		DAA2129B16FD83A800F2CAC0 /* AsynchronousTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126016FD83A800F2CAC0 /* AsynchronousTableViewController.m */; };
 		DAA2129C16FD83A800F2CAC0 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126216FD83A800F2CAC0 /* CategoryTableViewController.m */; };
 		DAA2129D16FD83A800F2CAC0 /* MostViewedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126416FD83A800F2CAC0 /* MostViewedTableViewController.m */; };
@@ -175,8 +173,6 @@
 		DAA2120E16FD83A800F2CAC0 /* RumorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorNode.m; sourceTree = "<group>"; };
 		DAA2120F16FD83A800F2CAC0 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		DAA2121016FD83A800F2CAC0 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
-		DAA2121416FD83A800F2CAC0 /* DataSourceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSourceFactory.h; sourceTree = "<group>"; };
-		DAA2121516FD83A800F2CAC0 /* DataSourceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSourceFactory.m; sourceTree = "<group>"; };
 		DAA2122E16FD83A800F2CAC0 /* DataConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataConsumer.h; sourceTree = "<group>"; };
 		DAA2122F16FD83A800F2CAC0 /* DataConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataConsumer.m; sourceTree = "<group>"; };
 		DAA2123016FD83A800F2CAC0 /* DebunkedAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebunkedAppDelegate.h; sourceTree = "<group>"; };
@@ -220,8 +216,6 @@
 		DAA2125916FD83A800F2CAC0 /* SearchResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultTableViewCell.m; sourceTree = "<group>"; };
 		DAA2125A16FD83A800F2CAC0 /* SearchResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultView.h; sourceTree = "<group>"; };
 		DAA2125B16FD83A800F2CAC0 /* SearchResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultView.m; sourceTree = "<group>"; };
-		DAA2125C16FD83A800F2CAC0 /* TransparentToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransparentToolbar.h; sourceTree = "<group>"; };
-		DAA2125D16FD83A800F2CAC0 /* TransparentToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransparentToolbar.m; sourceTree = "<group>"; };
 		DAA2125F16FD83A800F2CAC0 /* AsynchronousTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousTableViewController.h; sourceTree = "<group>"; };
 		DAA2126016FD83A800F2CAC0 /* AsynchronousTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousTableViewController.m; sourceTree = "<group>"; };
 		DAA2126116FD83A800F2CAC0 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
@@ -450,8 +444,6 @@
 				DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */,
 				DA146F301DBFD39A006BAC25 /* WhatsNewRumorConsumer.h */,
 				DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */,
-				DAA2121416FD83A800F2CAC0 /* DataSourceFactory.h */,
-				DAA2121516FD83A800F2CAC0 /* DataSourceFactory.m */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -506,8 +498,6 @@
 				DAA2125916FD83A800F2CAC0 /* SearchResultTableViewCell.m */,
 				DAA2125A16FD83A800F2CAC0 /* SearchResultView.h */,
 				DAA2125B16FD83A800F2CAC0 /* SearchResultView.m */,
-				DAA2125C16FD83A800F2CAC0 /* TransparentToolbar.h */,
-				DAA2125D16FD83A800F2CAC0 /* TransparentToolbar.m */,
 			);
 			path = "User Interface Elements";
 			sourceTree = "<group>";
@@ -776,7 +766,6 @@
 				DAA2127716FD83A800F2CAC0 /* RumorExample.m in Sources */,
 				DAA2127816FD83A800F2CAC0 /* RumorNode.m in Sources */,
 				DAA2127916FD83A800F2CAC0 /* SearchResult.m in Sources */,
-				DAA2127A16FD83A800F2CAC0 /* DataSourceFactory.m in Sources */,
 				DAA2128516FD83A800F2CAC0 /* DataConsumer.m in Sources */,
 				DA146F3A1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m in Sources */,
 				DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */,
@@ -806,7 +795,6 @@
 				DAA2129816FD83A800F2CAC0 /* SearchResultTableViewCell.m in Sources */,
 				DA146F341DBFD39A006BAC25 /* CategoryDataSource.m in Sources */,
 				DAA2129916FD83A800F2CAC0 /* SearchResultView.m in Sources */,
-				DAA2129A16FD83A800F2CAC0 /* TransparentToolbar.m in Sources */,
 				DA146F351DBFD39A006BAC25 /* RumorConsumer.m in Sources */,
 				DAA2129B16FD83A800F2CAC0 /* AsynchronousTableViewController.m in Sources */,
 				DAA2129C16FD83A800F2CAC0 /* CategoryTableViewController.m in Sources */,

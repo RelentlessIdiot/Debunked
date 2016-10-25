@@ -24,12 +24,19 @@
 @synthesize categoryNode;
 @synthesize categoryNodeView;
 
+- (void)dealloc
+{
+    [categoryNode release];
+    [categoryNodeView release];
+
+    [super dealloc];
+}
+
 - (void)setCategoryNode:(CategoryNode *)theCategoryNode
 {
 	if (theCategoryNode != categoryNode) {
 		[categoryNode release];
-		[theCategoryNode retain];
-		categoryNode = theCategoryNode;
+		categoryNode = [theCategoryNode retain];
 	}
 	categoryNodeView.categoryNode = categoryNode;
 	[categoryNodeView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
@@ -76,13 +83,5 @@
 {
 	[categoryNodeView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
 }
-
-
-- (void)dealloc {
-	[categoryNode release];
-	[categoryNodeView release];
-    [super dealloc];
-}
-
 
 @end

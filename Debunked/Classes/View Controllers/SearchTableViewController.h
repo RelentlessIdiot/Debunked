@@ -21,8 +21,6 @@
 
 
 @interface SearchTableViewController : AsynchronousTableViewController<UISearchBarDelegate, SearchDelegate> {
-	UISearchBar *searchBar;
-	UIButton *hideButton;
 	BOOL needsLoadingView;
 }
 

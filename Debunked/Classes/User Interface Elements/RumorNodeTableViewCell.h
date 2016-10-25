@@ -20,12 +20,10 @@
 
 
 @interface RumorNodeTableViewCell : UITableViewCell {
-	RumorNode *rumorNode;
-	RumorNodeView *rumorNodeView;
+
 }
 
 @property (nonatomic,retain) RumorNode *rumorNode;
 @property (nonatomic,retain) RumorNodeView *rumorNodeView;
-
 
 @end

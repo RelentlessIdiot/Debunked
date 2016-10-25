@@ -27,8 +27,7 @@
 
 
 @interface SearchConsumer : DataConsumer {
-	NSObject<SearchDelegate> *delegate;
-	SearchDataSource *dataSource;
+
 }
 
 @property (nonatomic,retain) NSObject<SearchDelegate> *delegate;

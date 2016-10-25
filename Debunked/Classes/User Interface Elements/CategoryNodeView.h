@@ -22,8 +22,7 @@
 
 
 @interface CategoryNodeView : UIView<ImageConsumer> {
-	CategoryNode *categoryNode;
-	UIImage *nodeImage;
+
 }
 
 @property (nonatomic,retain) CategoryNode *categoryNode;

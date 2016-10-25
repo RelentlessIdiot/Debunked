@@ -19,8 +19,7 @@
 
 
 @interface RumorExample : NSObject {
-	NSString *source;
-	NSString *text;
+
 }
 
 @property (nonatomic,retain) NSString *source;

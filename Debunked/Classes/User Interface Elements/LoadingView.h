@@ -28,8 +28,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface LoadingView : UIView
-{
+@interface LoadingView : UIView {
 	BOOL hasBorder;
 }
 

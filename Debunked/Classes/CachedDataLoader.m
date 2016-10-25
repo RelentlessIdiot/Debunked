@@ -34,7 +34,8 @@ static CachedDataLoader *sharedInstance = nil;
 
 @implementation CachedDataLoader
 
-- (void)dealloc {
+- (void)dealloc
+{
 	[_dataDownloadQueue cancelAllOperations];
 	[_dataDownloadQueue release];
 	
@@ -42,7 +43,8 @@ static CachedDataLoader *sharedInstance = nil;
 }
 
 
-- (id)init {
+- (id)init
+{
 	if (self = [super init]) {
 		_dataDownloadQueue = [[NSOperationQueue alloc] init];
 		[_dataDownloadQueue setMaxConcurrentOperationCount:maxDownloadConnections];

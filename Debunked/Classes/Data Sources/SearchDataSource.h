@@ -33,7 +33,7 @@
 
 
 @interface SearchDataSource : AsynchronousDataSource {
-	NSMutableArray *searchResults;
+
 }
 
 @property (nonatomic,retain) NSMutableArray *searchResults;

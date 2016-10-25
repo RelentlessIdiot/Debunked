@@ -20,6 +20,26 @@
 
 @implementation RumorNode
 
++ (UIImage *)imageForVeracity:(NSString *)theVeracity
+{
+    NSString *veracity = [theVeracity stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    veracity = [veracity lowercaseString];
+
+    if ([veracity isEqual:@"true"]) {
+        return [UIImage imageNamed:@"true.png"];
+    } else if ([veracity isEqual:@"false"]) {
+        return [UIImage imageNamed:@"false.png"];
+    } else if ([veracity isEqual:@"truefalse"]) {
+        return [UIImage imageNamed:@"truefalse.png"];
+    } else if ([veracity isEqual:@"undetermined"]) {
+        return [UIImage imageNamed:@"maybe.png"];
+    } else if ([veracity isEqual:@"unknown"]) {
+        return [UIImage imageNamed:@"unknown.png"];
+    } else {
+        return nil;
+    }
+}
+
 @synthesize	veracity;
 @synthesize	url;
 @synthesize	synopsis;
@@ -31,24 +51,14 @@
 	return [RumorNode imageForVeracity:self.veracity];
 }
 
-+ (UIImage *)imageForVeracity:(NSString *)theVeracity
-{
-	NSString *veracity = [theVeracity stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-	veracity = [veracity lowercaseString];
-	
-	if ([veracity isEqual:@"true"]) {
-		return [UIImage imageNamed:@"true.png"];
-	} else if ([veracity isEqual:@"false"]) {
-		return [UIImage imageNamed:@"false.png"];
-	} else if ([veracity isEqual:@"truefalse"]) {
-		return [UIImage imageNamed:@"truefalse.png"];
-	} else if ([veracity isEqual:@"undetermined"]) {
-		return [UIImage imageNamed:@"maybe.png"];
-	} else if ([veracity isEqual:@"unknown"]) {
-		return [UIImage imageNamed:@"unknown.png"];
-	} else {
-		return nil;
-	}
+- (void)dealloc {
+    [veracity release];
+    [url release];
+    [synopsis release];
+    [label release];
+    [imageUrl release];
+
+    [super dealloc];
 }
 
 - (id)init
@@ -97,17 +107,6 @@
 		self.imageUrl = theImageUrl;
 	}
 	return self;
-}
-
-
-- (void)dealloc {
-	[veracity release];
-	[url release];
-	[synopsis release];
-	[label release];
-	[imageUrl release];
-	
-	[super dealloc];
 }
 
 @end

@@ -24,6 +24,14 @@
 @synthesize delegate;
 @synthesize dataSource;
 
+- (void)dealloc
+{
+    [delegate release];
+    [dataSource release];
+
+    [super dealloc];
+}
+
 - (id)initWithDelegate:(NSObject<CategoryDelegate>*)theDelegate
 		withDataSource:(CategoryDataSource*)theDataSource
 			   withUrl:(NSString *)theUrl
@@ -108,13 +116,6 @@
 	@finally {
 		[parser release];
 	}
-}
-
-- (void)dealloc {
-	[delegate release];
-	[dataSource release];
-	
-	[super dealloc];
 }
 
 @end

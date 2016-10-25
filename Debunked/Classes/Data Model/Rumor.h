@@ -19,17 +19,7 @@
 
 
 @interface Rumor : NSObject {
-	NSString *veracity;
-	NSString *url;
-	NSString *title;
-	NSString *claim;
-	NSString *origin;
-	NSString *sightings;
-	NSString *lastUpdated;
-	NSMutableArray *examples;
-	NSMutableArray *variations;
-	NSMutableArray *sources;
-	NSString *rawHtml;
+
 }
 
 @property (nonatomic,retain) NSString *veracity;

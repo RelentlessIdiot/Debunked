@@ -41,13 +41,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	if (!self.hasRumor) {
-		lastRequestId = [dataSource requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)self];
+		lastRequestId = [self.dataSource requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)self];
 		self.hasRumor = YES;
 	}
 
 	@synchronized(self) {
-		if (hasRumor && rumor == nil && loadingView == nil) {
-			loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+		if (self.hasRumor && self.rumor == nil && self.loadingView == nil) {
+			self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
 		}
 	}
 
@@ -55,6 +55,7 @@
 
 	[super viewWillAppear:animated];
 }
+
 - (void)onNextButtonClick
 {
 	[self performSelectorOnMainThread:@selector(loadRumorView) withObject:nil waitUntilDone:NO];
@@ -62,7 +63,7 @@
 
 - (void)loadRumorView
 {
-	RandomViewController *randomViewController = [[RandomViewController alloc] initWithDataSource:dataSource];
+	RandomViewController *randomViewController = [[RandomViewController alloc] initWithDataSource:self.dataSource];
 	[[self navigationController] pushViewController:randomViewController animated:YES];
 	[randomViewController release];
 }

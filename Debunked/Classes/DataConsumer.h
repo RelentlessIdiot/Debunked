@@ -23,8 +23,7 @@
 
 
 @interface DataConsumer : NSObject {
-	NSString *url;
-	NSString *targetUrl;
+
 }
 
 @property (nonatomic,retain) NSString *url;

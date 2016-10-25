@@ -23,7 +23,6 @@
 #import "RumorDataSource.h"
 #import "LoadingView.h"
 #import "WebViewController.h"
-#import "DataSourceFactory.h"
 #import "CategoryDataSource.h"
 #import "RumorDataSource.h"
 #import "CategoryTableViewController.h"
@@ -36,14 +35,9 @@
 									UIWebViewDelegate, 
 									UIActionSheetDelegate,
 									MFMailComposeViewControllerDelegate,
-									UIPrintInteractionControllerDelegate> {
-	Rumor *rumor;
-	UIWebView *webView;
-	LoadingView *loadingView;
-	RumorDataSource *dataSource;
-	BOOL hasRumor;
-	BOOL isRendered;
-	BOOL receivedMemoryWarning;
+									UIPrintInteractionControllerDelegate>
+{
+
 }
 
 @property (nonatomic,retain) Rumor *rumor;

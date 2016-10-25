@@ -19,10 +19,7 @@
 
 
 @interface SearchResult : NSObject {
-	NSString *title;
-	NSString *url;
-	NSString *synopsis;
-	NSString *rumorHeadline;
+
 }
 
 @property (nonatomic,retain) NSString *title;

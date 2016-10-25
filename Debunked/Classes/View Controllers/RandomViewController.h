@@ -19,7 +19,6 @@
 #import "Rumor.h"
 #import "RumorViewController.h"
 #import "RumorDataSource.h"
-#import "TransparentToolbar.h"
 
 
 @interface RandomViewController : RumorViewController {
