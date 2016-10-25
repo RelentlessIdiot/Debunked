@@ -55,7 +55,8 @@
 
 - (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
 {
-	
+    [self doesNotRecognizeSelector:_cmd];
+    @throw @"doesNotRecognizeSelector";
 }
 
 - (void)cancelRequest:(NSInteger)theRequestId
