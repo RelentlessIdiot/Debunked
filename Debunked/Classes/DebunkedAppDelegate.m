@@ -16,8 +16,8 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "DataSourceFactory.h"
-#import "HttpCategoryDataSource.h"
-#import "HttpRumorDataSource.h"
+#import "CategoryDataSource.h"
+#import "RumorDataSource.h"
 #import "CategoryTableViewController.h"
 #import "RumorTableViewController.h"
 #import "MostViewedTableViewController.h"
@@ -50,14 +50,14 @@
 	mainWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	tabBarController = [[UITabBarController alloc] init];
 	
-	[DataSourceFactory setRumorDataSourceClass:[HttpRumorDataSource class]];
-	[DataSourceFactory setCategoryDataSourceClass:[HttpCategoryDataSource class]];
+	[DataSourceFactory setRumorDataSourceClass:[RumorDataSource class]];
+	[DataSourceFactory setCategoryDataSourceClass:[CategoryDataSource class]];
 	
 	NSMutableArray *localViewControllers = [[NSMutableArray alloc] initWithCapacity:4];
 	
 	UINavigationController *localNavigationController;
 	UIViewController *localViewController;
-	NSObject<AsynchronousDataSource> *localDataSource;
+	AsynchronousDataSource *localDataSource;
 	
 	//======== Most Viewed =========
 	localDataSource = [[[DataSourceFactory rumorDataSourceClass] alloc] init];
@@ -114,7 +114,7 @@
 	
 	//======== Random =========
 	localDataSource = [[[DataSourceFactory rumorDataSourceClass] alloc] init];
-	localViewController = [[RandomViewController alloc] initWithDataSource:(NSObject<RumorDataSource> *)localDataSource];
+	localViewController = [[RandomViewController alloc] initWithDataSource:(RumorDataSource *)localDataSource];
 	[localDataSource release];
 	
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];

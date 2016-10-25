@@ -24,17 +24,18 @@
 #import "TFHpple.h"
 
 
-@interface WhatsNewRumorConsumer : DataConsumer {
+@interface RumorConsumer : DataConsumer<ElementTransformer> {
 	NSObject<RumorDelegate> *delegate;
-	NSObject<RumorDataSource> *dataSource;
+	RumorDataSource *dataSource;
 }
 
 @property (nonatomic,retain) NSObject<RumorDelegate> *delegate;
-@property (nonatomic,retain) NSObject<RumorDataSource> *dataSource;
+@property (nonatomic,retain) RumorDataSource *dataSource;
 
 - (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
-		withDataSource:(NSObject<RumorDataSource> *)theDataSource
+		withDataSource:(RumorDataSource *)theDataSource
 			   withUrl:(NSString *)theUrl;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
+- (TFHppleElement *)transform:(TFHppleElement *)element;
 
 @end

@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA146F321DBFD39A006BAC25 /* AsynchronousDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F1F1DBFD39A006BAC25 /* AsynchronousDataSource.m */; };
+		DA146F331DBFD39A006BAC25 /* CategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F211DBFD39A006BAC25 /* CategoryConsumer.m */; };
+		DA146F341DBFD39A006BAC25 /* CategoryDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F231DBFD39A006BAC25 /* CategoryDataSource.m */; };
+		DA146F351DBFD39A006BAC25 /* RumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F251DBFD39A006BAC25 /* RumorConsumer.m */; };
+		DA146F361DBFD39A006BAC25 /* RumorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F271DBFD39A006BAC25 /* RumorDataSource.m */; };
+		DA146F371DBFD39A006BAC25 /* SearchConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F291DBFD39A006BAC25 /* SearchConsumer.m */; };
+		DA146F381DBFD39A006BAC25 /* SearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */; };
+		DA146F391DBFD39A006BAC25 /* Top25RumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F2D1DBFD39A006BAC25 /* Top25RumorConsumer.m */; };
+		DA146F3A1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */; };
+		DA146F3B1DBFD39A006BAC25 /* WhatsNewRumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */; };
 		DA8659731AA67A9F00BF5C91 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DA8659721AA67A9F00BF5C91 /* Icon-72@2x.png */; };
 		DAA2113816FD7E5500F2CAC0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAA2113716FD7E5500F2CAC0 /* UIKit.framework */; };
 		DAA2113A16FD7E5500F2CAC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAA2113916FD7E5500F2CAC0 /* Foundation.framework */; };
@@ -25,16 +35,6 @@
 		DAA2127816FD83A800F2CAC0 /* RumorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2120E16FD83A800F2CAC0 /* RumorNode.m */; };
 		DAA2127916FD83A800F2CAC0 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121016FD83A800F2CAC0 /* SearchResult.m */; };
 		DAA2127A16FD83A800F2CAC0 /* DataSourceFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121516FD83A800F2CAC0 /* DataSourceFactory.m */; };
-		DAA2127B16FD83A800F2CAC0 /* CategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121816FD83A800F2CAC0 /* CategoryConsumer.m */; };
-		DAA2127C16FD83A800F2CAC0 /* HttpAsynchronousDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121A16FD83A800F2CAC0 /* HttpAsynchronousDataSource.m */; };
-		DAA2127D16FD83A800F2CAC0 /* HttpCategoryDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121C16FD83A800F2CAC0 /* HttpCategoryDataSource.m */; };
-		DAA2127E16FD83A800F2CAC0 /* HttpRumorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2121E16FD83A800F2CAC0 /* HttpRumorDataSource.m */; };
-		DAA2127F16FD83A800F2CAC0 /* HttpSearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122016FD83A800F2CAC0 /* HttpSearchDataSource.m */; };
-		DAA2128016FD83A800F2CAC0 /* RumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122216FD83A800F2CAC0 /* RumorConsumer.m */; };
-		DAA2128116FD83A800F2CAC0 /* SearchConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122416FD83A800F2CAC0 /* SearchConsumer.m */; };
-		DAA2128216FD83A800F2CAC0 /* Top25RumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122616FD83A800F2CAC0 /* Top25RumorConsumer.m */; };
-		DAA2128316FD83A800F2CAC0 /* TopLevelCategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122816FD83A800F2CAC0 /* TopLevelCategoryConsumer.m */; };
-		DAA2128416FD83A800F2CAC0 /* WhatsNewRumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122A16FD83A800F2CAC0 /* WhatsNewRumorConsumer.m */; };
 		DAA2128516FD83A800F2CAC0 /* DataConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2122F16FD83A800F2CAC0 /* DataConsumer.m */; };
 		DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2123116FD83A800F2CAC0 /* DebunkedAppDelegate.m */; };
 		DAA2128716FD83A800F2CAC0 /* DiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2123316FD83A800F2CAC0 /* DiskCache.m */; };
@@ -127,6 +127,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA146F1E1DBFD39A006BAC25 /* AsynchronousDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousDataSource.h; sourceTree = "<group>"; };
+		DA146F1F1DBFD39A006BAC25 /* AsynchronousDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousDataSource.m; sourceTree = "<group>"; };
+		DA146F201DBFD39A006BAC25 /* CategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryConsumer.h; sourceTree = "<group>"; };
+		DA146F211DBFD39A006BAC25 /* CategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryConsumer.m; sourceTree = "<group>"; };
+		DA146F221DBFD39A006BAC25 /* CategoryDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDataSource.h; sourceTree = "<group>"; };
+		DA146F231DBFD39A006BAC25 /* CategoryDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryDataSource.m; sourceTree = "<group>"; };
+		DA146F241DBFD39A006BAC25 /* RumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorConsumer.h; sourceTree = "<group>"; };
+		DA146F251DBFD39A006BAC25 /* RumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorConsumer.m; sourceTree = "<group>"; };
+		DA146F261DBFD39A006BAC25 /* RumorDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorDataSource.h; sourceTree = "<group>"; };
+		DA146F271DBFD39A006BAC25 /* RumorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorDataSource.m; sourceTree = "<group>"; };
+		DA146F281DBFD39A006BAC25 /* SearchConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchConsumer.h; sourceTree = "<group>"; };
+		DA146F291DBFD39A006BAC25 /* SearchConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchConsumer.m; sourceTree = "<group>"; };
+		DA146F2A1DBFD39A006BAC25 /* SearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDataSource.h; sourceTree = "<group>"; };
+		DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDataSource.m; sourceTree = "<group>"; };
+		DA146F2C1DBFD39A006BAC25 /* Top25RumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Top25RumorConsumer.h; sourceTree = "<group>"; };
+		DA146F2D1DBFD39A006BAC25 /* Top25RumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top25RumorConsumer.m; sourceTree = "<group>"; };
+		DA146F2E1DBFD39A006BAC25 /* TopLevelCategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopLevelCategoryConsumer.h; sourceTree = "<group>"; };
+		DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopLevelCategoryConsumer.m; sourceTree = "<group>"; };
+		DA146F301DBFD39A006BAC25 /* WhatsNewRumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatsNewRumorConsumer.h; sourceTree = "<group>"; };
+		DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatsNewRumorConsumer.m; sourceTree = "<group>"; };
 		DA8659721AA67A9F00BF5C91 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
 		DAA2113416FD7E5500F2CAC0 /* Debunked.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Debunked.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAA2113716FD7E5500F2CAC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -155,32 +175,8 @@
 		DAA2120E16FD83A800F2CAC0 /* RumorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorNode.m; sourceTree = "<group>"; };
 		DAA2120F16FD83A800F2CAC0 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		DAA2121016FD83A800F2CAC0 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
-		DAA2121216FD83A800F2CAC0 /* AsynchronousDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousDataSource.h; sourceTree = "<group>"; };
-		DAA2121316FD83A800F2CAC0 /* CategoryDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDataSource.h; sourceTree = "<group>"; };
 		DAA2121416FD83A800F2CAC0 /* DataSourceFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSourceFactory.h; sourceTree = "<group>"; };
 		DAA2121516FD83A800F2CAC0 /* DataSourceFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSourceFactory.m; sourceTree = "<group>"; };
-		DAA2121716FD83A800F2CAC0 /* CategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryConsumer.h; sourceTree = "<group>"; };
-		DAA2121816FD83A800F2CAC0 /* CategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryConsumer.m; sourceTree = "<group>"; };
-		DAA2121916FD83A800F2CAC0 /* HttpAsynchronousDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpAsynchronousDataSource.h; sourceTree = "<group>"; };
-		DAA2121A16FD83A800F2CAC0 /* HttpAsynchronousDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpAsynchronousDataSource.m; sourceTree = "<group>"; };
-		DAA2121B16FD83A800F2CAC0 /* HttpCategoryDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpCategoryDataSource.h; sourceTree = "<group>"; };
-		DAA2121C16FD83A800F2CAC0 /* HttpCategoryDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpCategoryDataSource.m; sourceTree = "<group>"; };
-		DAA2121D16FD83A800F2CAC0 /* HttpRumorDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRumorDataSource.h; sourceTree = "<group>"; };
-		DAA2121E16FD83A800F2CAC0 /* HttpRumorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRumorDataSource.m; sourceTree = "<group>"; };
-		DAA2121F16FD83A800F2CAC0 /* HttpSearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpSearchDataSource.h; sourceTree = "<group>"; };
-		DAA2122016FD83A800F2CAC0 /* HttpSearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpSearchDataSource.m; sourceTree = "<group>"; };
-		DAA2122116FD83A800F2CAC0 /* RumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorConsumer.h; sourceTree = "<group>"; };
-		DAA2122216FD83A800F2CAC0 /* RumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorConsumer.m; sourceTree = "<group>"; };
-		DAA2122316FD83A800F2CAC0 /* SearchConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchConsumer.h; sourceTree = "<group>"; };
-		DAA2122416FD83A800F2CAC0 /* SearchConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchConsumer.m; sourceTree = "<group>"; };
-		DAA2122516FD83A800F2CAC0 /* Top25RumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Top25RumorConsumer.h; sourceTree = "<group>"; };
-		DAA2122616FD83A800F2CAC0 /* Top25RumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top25RumorConsumer.m; sourceTree = "<group>"; };
-		DAA2122716FD83A800F2CAC0 /* TopLevelCategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopLevelCategoryConsumer.h; sourceTree = "<group>"; };
-		DAA2122816FD83A800F2CAC0 /* TopLevelCategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopLevelCategoryConsumer.m; sourceTree = "<group>"; };
-		DAA2122916FD83A800F2CAC0 /* WhatsNewRumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatsNewRumorConsumer.h; sourceTree = "<group>"; };
-		DAA2122A16FD83A800F2CAC0 /* WhatsNewRumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatsNewRumorConsumer.m; sourceTree = "<group>"; };
-		DAA2122C16FD83A800F2CAC0 /* RumorDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorDataSource.h; sourceTree = "<group>"; };
-		DAA2122D16FD83A800F2CAC0 /* SearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDataSource.h; sourceTree = "<group>"; };
 		DAA2122E16FD83A800F2CAC0 /* DataConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataConsumer.h; sourceTree = "<group>"; };
 		DAA2122F16FD83A800F2CAC0 /* DataConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataConsumer.m; sourceTree = "<group>"; };
 		DAA2123016FD83A800F2CAC0 /* DebunkedAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebunkedAppDelegate.h; sourceTree = "<group>"; };
@@ -434,42 +430,30 @@
 		DAA2121116FD83A800F2CAC0 /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
-				DAA2121216FD83A800F2CAC0 /* AsynchronousDataSource.h */,
-				DAA2121316FD83A800F2CAC0 /* CategoryDataSource.h */,
+				DA146F1E1DBFD39A006BAC25 /* AsynchronousDataSource.h */,
+				DA146F1F1DBFD39A006BAC25 /* AsynchronousDataSource.m */,
+				DA146F201DBFD39A006BAC25 /* CategoryConsumer.h */,
+				DA146F211DBFD39A006BAC25 /* CategoryConsumer.m */,
+				DA146F221DBFD39A006BAC25 /* CategoryDataSource.h */,
+				DA146F231DBFD39A006BAC25 /* CategoryDataSource.m */,
+				DA146F241DBFD39A006BAC25 /* RumorConsumer.h */,
+				DA146F251DBFD39A006BAC25 /* RumorConsumer.m */,
+				DA146F261DBFD39A006BAC25 /* RumorDataSource.h */,
+				DA146F271DBFD39A006BAC25 /* RumorDataSource.m */,
+				DA146F281DBFD39A006BAC25 /* SearchConsumer.h */,
+				DA146F291DBFD39A006BAC25 /* SearchConsumer.m */,
+				DA146F2A1DBFD39A006BAC25 /* SearchDataSource.h */,
+				DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */,
+				DA146F2C1DBFD39A006BAC25 /* Top25RumorConsumer.h */,
+				DA146F2D1DBFD39A006BAC25 /* Top25RumorConsumer.m */,
+				DA146F2E1DBFD39A006BAC25 /* TopLevelCategoryConsumer.h */,
+				DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */,
+				DA146F301DBFD39A006BAC25 /* WhatsNewRumorConsumer.h */,
+				DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */,
 				DAA2121416FD83A800F2CAC0 /* DataSourceFactory.h */,
 				DAA2121516FD83A800F2CAC0 /* DataSourceFactory.m */,
-				DAA2121616FD83A800F2CAC0 /* Http */,
-				DAA2122C16FD83A800F2CAC0 /* RumorDataSource.h */,
-				DAA2122D16FD83A800F2CAC0 /* SearchDataSource.h */,
 			);
 			path = "Data Sources";
-			sourceTree = "<group>";
-		};
-		DAA2121616FD83A800F2CAC0 /* Http */ = {
-			isa = PBXGroup;
-			children = (
-				DAA2121716FD83A800F2CAC0 /* CategoryConsumer.h */,
-				DAA2121816FD83A800F2CAC0 /* CategoryConsumer.m */,
-				DAA2121916FD83A800F2CAC0 /* HttpAsynchronousDataSource.h */,
-				DAA2121A16FD83A800F2CAC0 /* HttpAsynchronousDataSource.m */,
-				DAA2121B16FD83A800F2CAC0 /* HttpCategoryDataSource.h */,
-				DAA2121C16FD83A800F2CAC0 /* HttpCategoryDataSource.m */,
-				DAA2121D16FD83A800F2CAC0 /* HttpRumorDataSource.h */,
-				DAA2121E16FD83A800F2CAC0 /* HttpRumorDataSource.m */,
-				DAA2121F16FD83A800F2CAC0 /* HttpSearchDataSource.h */,
-				DAA2122016FD83A800F2CAC0 /* HttpSearchDataSource.m */,
-				DAA2122116FD83A800F2CAC0 /* RumorConsumer.h */,
-				DAA2122216FD83A800F2CAC0 /* RumorConsumer.m */,
-				DAA2122316FD83A800F2CAC0 /* SearchConsumer.h */,
-				DAA2122416FD83A800F2CAC0 /* SearchConsumer.m */,
-				DAA2122516FD83A800F2CAC0 /* Top25RumorConsumer.h */,
-				DAA2122616FD83A800F2CAC0 /* Top25RumorConsumer.m */,
-				DAA2122716FD83A800F2CAC0 /* TopLevelCategoryConsumer.h */,
-				DAA2122816FD83A800F2CAC0 /* TopLevelCategoryConsumer.m */,
-				DAA2122916FD83A800F2CAC0 /* WhatsNewRumorConsumer.h */,
-				DAA2122A16FD83A800F2CAC0 /* WhatsNewRumorConsumer.m */,
-			);
-			path = Http;
 			sourceTree = "<group>";
 		};
 		DAA2123416FD83A800F2CAC0 /* Hpple */ = {
@@ -793,41 +777,41 @@
 				DAA2127816FD83A800F2CAC0 /* RumorNode.m in Sources */,
 				DAA2127916FD83A800F2CAC0 /* SearchResult.m in Sources */,
 				DAA2127A16FD83A800F2CAC0 /* DataSourceFactory.m in Sources */,
-				DAA2127B16FD83A800F2CAC0 /* CategoryConsumer.m in Sources */,
-				DAA2127C16FD83A800F2CAC0 /* HttpAsynchronousDataSource.m in Sources */,
-				DAA2127D16FD83A800F2CAC0 /* HttpCategoryDataSource.m in Sources */,
-				DAA2127E16FD83A800F2CAC0 /* HttpRumorDataSource.m in Sources */,
-				DAA2127F16FD83A800F2CAC0 /* HttpSearchDataSource.m in Sources */,
-				DAA2128016FD83A800F2CAC0 /* RumorConsumer.m in Sources */,
-				DAA2128116FD83A800F2CAC0 /* SearchConsumer.m in Sources */,
-				DAA2128216FD83A800F2CAC0 /* Top25RumorConsumer.m in Sources */,
-				DAA2128316FD83A800F2CAC0 /* TopLevelCategoryConsumer.m in Sources */,
-				DAA2128416FD83A800F2CAC0 /* WhatsNewRumorConsumer.m in Sources */,
 				DAA2128516FD83A800F2CAC0 /* DataConsumer.m in Sources */,
+				DA146F3A1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m in Sources */,
 				DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */,
 				DAA2128716FD83A800F2CAC0 /* DiskCache.m in Sources */,
+				DA146F371DBFD39A006BAC25 /* SearchConsumer.m in Sources */,
 				DAA2128816FD83A800F2CAC0 /* TFHpple.m in Sources */,
 				DAA2128916FD83A800F2CAC0 /* TFHppleElement.m in Sources */,
 				DAA2128A16FD83A800F2CAC0 /* XPathQuery.m in Sources */,
 				DAA2128B16FD83A800F2CAC0 /* NSObject+SBJSON.m in Sources */,
 				DAA2128C16FD83A800F2CAC0 /* NSString+SBJSON.m in Sources */,
+				DA146F3B1DBFD39A006BAC25 /* WhatsNewRumorConsumer.m in Sources */,
 				DAA2128D16FD83A800F2CAC0 /* SBJSON.m in Sources */,
+				DA146F331DBFD39A006BAC25 /* CategoryConsumer.m in Sources */,
+				DA146F321DBFD39A006BAC25 /* AsynchronousDataSource.m in Sources */,
+				DA146F361DBFD39A006BAC25 /* RumorDataSource.m in Sources */,
 				DAA2128E16FD83A800F2CAC0 /* SBJsonBase.m in Sources */,
 				DAA2128F16FD83A800F2CAC0 /* SBJsonParser.m in Sources */,
 				DAA2129016FD83A800F2CAC0 /* SBJsonWriter.m in Sources */,
 				DAA2129116FD83A800F2CAC0 /* NSWebViewURLRequest.m in Sources */,
 				DAA2129216FD83A800F2CAC0 /* RefreshConsumer.m in Sources */,
+				DA146F391DBFD39A006BAC25 /* Top25RumorConsumer.m in Sources */,
 				DAA2129316FD83A800F2CAC0 /* CategoryNodeTableViewCell.m in Sources */,
 				DAA2129416FD83A800F2CAC0 /* CategoryNodeView.m in Sources */,
 				DAA2129516FD83A800F2CAC0 /* LoadingView.m in Sources */,
 				DAA2129616FD83A800F2CAC0 /* RumorNodeTableViewCell.m in Sources */,
 				DAA2129716FD83A800F2CAC0 /* RumorNodeView.m in Sources */,
 				DAA2129816FD83A800F2CAC0 /* SearchResultTableViewCell.m in Sources */,
+				DA146F341DBFD39A006BAC25 /* CategoryDataSource.m in Sources */,
 				DAA2129916FD83A800F2CAC0 /* SearchResultView.m in Sources */,
 				DAA2129A16FD83A800F2CAC0 /* TransparentToolbar.m in Sources */,
+				DA146F351DBFD39A006BAC25 /* RumorConsumer.m in Sources */,
 				DAA2129B16FD83A800F2CAC0 /* AsynchronousTableViewController.m in Sources */,
 				DAA2129C16FD83A800F2CAC0 /* CategoryTableViewController.m in Sources */,
 				DAA2129D16FD83A800F2CAC0 /* MostViewedTableViewController.m in Sources */,
+				DA146F381DBFD39A006BAC25 /* SearchDataSource.m in Sources */,
 				DAA2129E16FD83A800F2CAC0 /* RandomViewController.m in Sources */,
 				DAA2129F16FD83A800F2CAC0 /* RumorTableViewController.m in Sources */,
 				DAA212A016FD83A800F2CAC0 /* RumorViewController.m in Sources */,

@@ -24,16 +24,16 @@
 	UITableView *tableView;
 	UITableViewCell *loadingCell;
 	NSInteger lastRequestId;
-	NSObject<AsynchronousDataSource> *dataSource;
+	AsynchronousDataSource *dataSource;
 	LoadingView *loadingView;
 }
 
 @property (nonatomic,assign) LoadingView *loadingView;
 @property (nonatomic,retain) UITableView *tableView;
 @property (assign) UITableViewCell *loadingCell;
-@property (nonatomic,retain) NSObject<AsynchronousDataSource> *dataSource;
+@property (nonatomic,retain) AsynchronousDataSource *dataSource;
 
-- (id)initWithDataSource:(NSObject<AsynchronousDataSource> *)theDataSource;
+- (id)initWithDataSource:(AsynchronousDataSource *)theDataSource;
 - (void)pushViewControllerAnimated:(UIViewController *)viewController;
 - (void)receive:(id)theItem withResult:(NSInteger)theResult;
 - (void)updateLoadingCell:(UITableViewCell *)theLoadingCell;

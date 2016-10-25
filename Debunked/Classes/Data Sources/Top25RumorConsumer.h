@@ -16,27 +16,25 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "Rumor.h"
-#import "RumorConsumer.h"
-#import "RumorNode.h"
-#import "Top25RumorConsumer.h"
-#import "WhatsNewRumorConsumer.h"
+#import "Blacklist.h"
 #import "RumorDataSource.h"
-#import "HttpAsynchronousDataSource.h"
+#import "RumorNode.h"
+#import "CachedDataLoader.h"
+#import "DataConsumer.h"
+#import "TFHpple.h"
 
 
-@interface HttpRumorDataSource : HttpAsynchronousDataSource<RumorDataSource> {
-	NSArray *rumorNodes;
+@interface Top25RumorConsumer : DataConsumer {
+	NSObject<RumorDelegate> *delegate;
+	RumorDataSource *dataSource;
 }
 
-@property (nonatomic,retain) NSArray *rumorNodes;
+@property (nonatomic,retain) NSObject<RumorDelegate> *delegate;
+@property (nonatomic,retain) RumorDataSource *dataSource;
 
-- (id)init;
-- (id)initWithRumorNodes:(NSArray *)theRumorNodes NS_DESIGNATED_INITIALIZER;
-
-- (void)loadRumorNodes:(NSArray *)theRumorNodes;
-- (NSInteger)requestTop25RumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
-- (NSInteger)requestWhatsNewRumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
-- (NSInteger)requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
+- (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
+		withDataSource:(RumorDataSource *)theDataSource
+			   withUrl:(NSString *)theUrl;
+- (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 
 @end

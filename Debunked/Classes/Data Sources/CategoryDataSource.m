@@ -15,16 +15,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "TFHpple.h"
-#import "CategoryNode.h"
-#import "RumorNode.h"
+#import "CategoryDataSource.h"
+
+#import "CategoryConsumer.h"
+#import "TopLevelCategoryConsumer.h"
+
 #import "CategoryNodeTableViewCell.h"
-#import "HttpCategoryDataSource.h"
-#import "HttpRumorDataSource.h"
-#import "JSON.h"
 
 
-@implementation HttpCategoryDataSource
+@implementation CategoryDataSource
 
 @synthesize categoryNodes;
 
@@ -121,11 +120,13 @@
 	return cell;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView  numberOfRowsInSection:(NSInteger)section
+{
 	return [categoryNodes count];
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
 	[categoryNodes release];
 	
 	[super dealloc];

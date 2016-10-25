@@ -40,14 +40,14 @@
 	Rumor *rumor;
 	UIWebView *webView;
 	LoadingView *loadingView;
-	NSObject<RumorDataSource> *dataSource;
+	RumorDataSource *dataSource;
 	BOOL hasRumor;
 	BOOL isRendered;
 	BOOL receivedMemoryWarning;
 }
 
 @property (nonatomic,retain) Rumor *rumor;
-@property (nonatomic,retain) NSObject<RumorDataSource> *dataSource;
+@property (nonatomic,retain) RumorDataSource *dataSource;
 @property (nonatomic,assign) LoadingView *loadingView;
 @property (nonatomic,retain) UIWebView *webView;
 @property (nonatomic,assign) BOOL hasRumor;
@@ -56,8 +56,8 @@
 
 - (id)init;
 - (id)initWithRumor:(Rumor *)theRumor;
-- (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource;
-- (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource withRumor:(Rumor *)theRumor;
+- (id)initWithDataSource:(RumorDataSource *)theDataSource;
+- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor;
 - (void)updateWebView;
 - (void)removeLoadingView;
 - (void)segmentAction:(id)sender;

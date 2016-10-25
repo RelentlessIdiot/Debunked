@@ -15,10 +15,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 #import "AsynchronousDataSource.h"
+#import "CachedDataLoader.h"
+
 #import "Category.h"
 #import "CategoryNode.h"
+#import "RumorNode.h"
 
 
 @protocol CategoryDelegate<AsynchronousDelegate>
@@ -30,20 +34,21 @@
 @end
 
 
-@protocol CategoryDataSource <AsynchronousDataSource>
-
-@required
+@interface CategoryDataSource: AsynchronousDataSource {
+	NSMutableArray *categoryNodes;
+}
 
 @property (nonatomic,retain) NSMutableArray *categoryNodes;
 
 - (id)init;
-- (id)initWithCategoryNodes:(NSMutableArray *)theCategoryNodes;
+- (id)initWithCategoryNodes:(NSMutableArray *)theCategoryNodes NS_DESIGNATED_INITIALIZER;
+- (CategoryNode *)categoryNodeForIndexPath:(NSIndexPath *)theIndexPath;
 
 - (void)loadCategoryNodes:(NSMutableArray *)theCategoryNodes;
 
 - (NSInteger)requestCategoryNodes:(NSString *)theUrl notifyDelegate:(NSObject<CategoryDelegate> *)theDelegate;
 - (NSInteger)requestTopLevelCategoryNodesNotifyDelegate:(NSObject<CategoryDelegate> *)theDelegate;
 
-- (CategoryNode *)categoryNodeForIndexPath:(NSIndexPath *)theIndexPath;
+- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
 
 @end

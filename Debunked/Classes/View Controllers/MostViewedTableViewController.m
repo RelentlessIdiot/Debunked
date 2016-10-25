@@ -17,7 +17,7 @@
 
 #import "MostViewedTableViewController.h"
 #import "LoadingView.h"
-#import "HttpRumorDataSource.h"
+#import "RumorDataSource.h"
 
 
 @implementation MostViewedTableViewController
@@ -40,7 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	@synchronized(self) {
-		if ([[(HttpRumorDataSource *)dataSource rumorNodes] count] == 0) {
+		if ([[(RumorDataSource *)dataSource rumorNodes] count] == 0) {
 			tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 			if (tableView.dragging || tableView.decelerating) {
 				needsLoadingView = YES;
@@ -51,9 +51,9 @@
 				}
 			}
 			if ([(UISegmentedControl *)self.navigationItem.titleView selectedSegmentIndex] == 0) {
-				lastRequestId = [(HttpRumorDataSource *)dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
+				lastRequestId = [(RumorDataSource *)dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
 			} else {
-				lastRequestId = [(HttpRumorDataSource *)dataSource requestTop25RumorNodesNotifyDelegate:self];
+				lastRequestId = [(RumorDataSource *)dataSource requestTop25RumorNodesNotifyDelegate:self];
 			}
 		}
 	}
@@ -102,9 +102,9 @@
 		UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
 		selectedSegmentIndex = segmentedControl.selectedSegmentIndex;
 		if (segmentedControl.selectedSegmentIndex == 0) {
-			lastRequestId = [(HttpRumorDataSource *)dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
+			lastRequestId = [(RumorDataSource *)dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
 		} else {
-			lastRequestId = [(HttpRumorDataSource *)dataSource requestTop25RumorNodesNotifyDelegate:self];
+			lastRequestId = [(RumorDataSource *)dataSource requestTop25RumorNodesNotifyDelegate:self];
 		}
 	}
 }

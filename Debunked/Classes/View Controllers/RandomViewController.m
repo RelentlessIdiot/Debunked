@@ -20,7 +20,7 @@
 
 @implementation RandomViewController
 
-- (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource withRumor:(Rumor *)theRumor
+- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor
 {
 	if (self = [super initWithDataSource:theDataSource withRumor:theRumor]) {
 		lastRequestId = 0;

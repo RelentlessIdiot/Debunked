@@ -67,13 +67,11 @@
 	[[self navigationController] pushViewController:viewController animated:YES];
 }
 
-- (id)initWithDataSource:(NSObject<AsynchronousDataSource> *)theDataSource
+- (id)initWithDataSource:(AsynchronousDataSource *)theDataSource
 {
 	if (self = [self init]) {
-		tableView = nil;
+		self.tableView = nil;
 		lastRequestId = 0;
-		
-		// retain the data source
 		self.dataSource = theDataSource;
 	}
 	return self;

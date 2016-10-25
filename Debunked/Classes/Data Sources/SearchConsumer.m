@@ -24,7 +24,7 @@
 @synthesize dataSource;
 
 - (id)initWithDelegate:(NSObject<SearchDelegate> *)theDelegate 
-		withDataSource:(NSObject<SearchDataSource> *)theDataSource
+		withDataSource:(SearchDataSource *)theDataSource
 			   withUrl:(NSString *)theUrl
 {
 	if(self = [super init]) {

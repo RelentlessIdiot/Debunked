@@ -15,16 +15,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HttpAsynchronousDataSource.h"
+#import "AsynchronousDataSource.h"
 
 
-@implementation HttpAsynchronousDataSource
+@implementation AsynchronousDataSource
 
 - (id)init
 {
 	if(self = [super init]) {
 		lastRequestId = 0;
-		activeRequests = [[NSMutableDictionary alloc] init];
+		activeRequests = [NSMutableDictionary dictionary];
 	}
 	return self;
 }
@@ -90,12 +90,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:@"You must override tableView cellForRowAtIndexPath in a subclass"
-                                 userInfo:nil];
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
 	return 0;
 }
 

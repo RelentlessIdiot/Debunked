@@ -24,8 +24,8 @@
 @synthesize delegate;
 @synthesize dataSource;
 
-- (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
-		withDataSource:(NSObject<CategoryDataSource> *)theDataSource
+- (id)initWithDelegate:(NSObject<CategoryDelegate>*)theDelegate
+		withDataSource:(CategoryDataSource*)theDataSource
 			   withUrl:(NSString *)theUrl
 {
 	if(self = [super init]) {

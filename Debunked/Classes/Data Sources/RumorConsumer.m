@@ -25,7 +25,7 @@
 @synthesize dataSource;
 
 - (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
-		withDataSource:(NSObject<RumorDataSource> *)theDataSource
+		withDataSource:(RumorDataSource *)theDataSource
 			   withUrl:(NSString *)theUrl
 {
 	if(self = [super init]) {

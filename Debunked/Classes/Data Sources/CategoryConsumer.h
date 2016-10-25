@@ -17,25 +17,24 @@
 
 #import <Foundation/Foundation.h>
 #import "Blacklist.h"
-#import "RumorDataSource.h"
-#import "RumorNode.h"
+#import "CategoryDataSource.h"
+#import "CategoryNode.h"
 #import "CachedDataLoader.h"
 #import "DataConsumer.h"
 #import "TFHpple.h"
 
 
-@interface RumorConsumer : DataConsumer<ElementTransformer> {
-	NSObject<RumorDelegate> *delegate;
-	NSObject<RumorDataSource> *dataSource;
+@interface CategoryConsumer: DataConsumer {
+	NSObject<CategoryDelegate> *delegate;
+	CategoryDataSource *dataSource;
 }
 
-@property (nonatomic,retain) NSObject<RumorDelegate> *delegate;
-@property (nonatomic,retain) NSObject<RumorDataSource> *dataSource;
+@property (nonatomic,retain) NSObject<CategoryDelegate> *delegate;
+@property (nonatomic,retain) CategoryDataSource *dataSource;
 
-- (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
-		withDataSource:(NSObject<RumorDataSource> *)theDataSource
+- (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate
+		withDataSource:(CategoryDataSource *)theDataSource
 			   withUrl:(NSString *)theUrl;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
-- (TFHppleElement *)transform:(TFHppleElement *)element;
 
 @end

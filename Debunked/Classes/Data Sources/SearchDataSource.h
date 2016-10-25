@@ -15,8 +15,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 #import "AsynchronousDataSource.h"
+#import "CachedDataLoader.h"
+
 #import "SearchResult.h"
 
 
@@ -29,14 +32,14 @@
 @end
 
 
-@protocol SearchDataSource <AsynchronousDataSource>
-
-@required
+@interface SearchDataSource : AsynchronousDataSource {
+	NSMutableArray *searchResults;
+}
 
 @property (nonatomic,retain) NSMutableArray *searchResults;
 
 - (id)init;
-- (id)initWithSearchResults:(NSMutableArray *)theSearchResults;
+- (id)initWithSearchResults:(NSMutableArray *)theSearchResults NS_DESIGNATED_INITIALIZER;
 
 - (void)loadSearchResults:(NSMutableArray *)theSearchResults;
 

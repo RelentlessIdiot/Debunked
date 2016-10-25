@@ -66,12 +66,12 @@
 	return [self initWithDataSource:nil withRumor:theRumor];
 }
 
-- (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource
+- (id)initWithDataSource:(RumorDataSource *)theDataSource
 {
 	return [self initWithDataSource:theDataSource withRumor:nil];
 }
 
-- (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource withRumor:(Rumor *)theRumor
+- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor
 {
     if (self = [super init]) {
         self.dataSource = theDataSource;
@@ -321,7 +321,7 @@
 		}
 		if (isRumor) {
 			Class rumorDataSourceClass = [DataSourceFactory rumorDataSourceClass];
-			NSObject<RumorDataSource> *rumorDataSource = [[[rumorDataSourceClass alloc] init] autorelease];
+			RumorDataSource *rumorDataSource = [[[rumorDataSourceClass alloc] init] autorelease];
 
 			RumorViewController *rumorViewController = [[[self class] alloc] initWithDataSource:rumorDataSource];
 			rumorViewController.hasRumor = YES;

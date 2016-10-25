@@ -26,6 +26,6 @@
 	NSInteger lastRequestId;
 }
 
-- (id)initWithDataSource:(NSObject<RumorDataSource> *)theDataSource withRumor:(Rumor *)theRumor;
+- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor;
 
 @end

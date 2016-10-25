@@ -15,15 +15,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <stdlib.h>
+#import "RumorDataSource.h"
 
-#import "JSON.h"
-#import "RumorNode.h"
+#import "RumorConsumer.h"
+#import "Top25RumorConsumer.h"
+#import "WhatsNewRumorConsumer.h"
+
 #import "RumorNodeTableViewCell.h"
-#import "HttpRumorDataSource.h"
 
 
-@implementation HttpRumorDataSource
+@implementation RumorDataSource
 
 @synthesize rumorNodes;
 

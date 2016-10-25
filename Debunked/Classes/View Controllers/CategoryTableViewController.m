@@ -44,7 +44,7 @@
 - (void)loadView {
 	if (dataSource == nil) {
 		isTopLevel = YES;
-		NSObject<CategoryDataSource> *localDataSource = [[[DataSourceFactory categoryDataSourceClass] alloc] init];
+		CategoryDataSource *localDataSource = [[[DataSourceFactory categoryDataSourceClass] alloc] init];
 		self.dataSource = localDataSource;
 		[localDataSource release];
 	}
@@ -65,15 +65,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	@synchronized(self) {
-		if (isTopLevel && [[(NSObject<CategoryDataSource> *)dataSource categoryNodes] count] == 0) {
+		if (isTopLevel && [[(CategoryDataSource *)dataSource categoryNodes] count] == 0) {
 			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 			if (loadingView == nil) {
 				loadingView = [LoadingView loadingViewInView:tableView withBorder:NO];
 			}
             if (url == nil) {
-                lastRequestId = [(NSObject<CategoryDataSource> *)dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
+                lastRequestId = [(CategoryDataSource *)dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
             } else {
-                lastRequestId = [(NSObject<CategoryDataSource> *)dataSource requestCategoryNodes:url notifyDelegate:self];
+                lastRequestId = [(CategoryDataSource *)dataSource requestCategoryNodes:url notifyDelegate:self];
             }
 		}
 	}
@@ -109,7 +109,7 @@
 		}
 		Category *theCategory = (Category *)theItem;
 		if ([[theCategory categoryNodes] count] > 0 || [[theCategory rumorNodes] count] <= 0) {
-			NSObject<CategoryDataSource> *categoryDataSource = [[[DataSourceFactory categoryDataSourceClass] alloc] initWithCategoryNodes:[theCategory categoryNodes]];
+			CategoryDataSource *categoryDataSource = [[[DataSourceFactory categoryDataSourceClass] alloc] initWithCategoryNodes:[theCategory categoryNodes]];
 			CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithDataSource:categoryDataSource];
 			[categoryDataSource release];
 			
@@ -120,7 +120,7 @@
 			[categoryTableViewController release];
 		} else {
 			Class rumorDataSourceClass = [DataSourceFactory rumorDataSourceClass];
-			NSObject<RumorDataSource> *rumorDataSource = [[rumorDataSourceClass alloc] initWithRumorNodes:[theCategory rumorNodes]];
+			RumorDataSource *rumorDataSource = [[rumorDataSourceClass alloc] initWithRumorNodes:[theCategory rumorNodes]];
 			RumorTableViewController *rumorTableViewController = [[RumorTableViewController alloc] initWithDataSource:rumorDataSource];
 			[rumorDataSource release];
 			

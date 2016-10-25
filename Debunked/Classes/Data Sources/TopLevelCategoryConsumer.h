@@ -16,18 +16,27 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "AsynchronousDataSource.h"
+#import "Blacklist.h"
+#import "CategoryDataSource.h"
+#import "CategoryNode.h"
+#import "CachedDataLoader.h"
+#import "DataConsumer.h"
+#import "TFHpple.h"
 
 
-@interface HttpAsynchronousDataSource : NSObject<AsynchronousDataSource> {
-	NSInteger lastRequestId;
-	NSMutableDictionary *activeRequests;
+@interface TopLevelCategoryConsumer: DataConsumer {
+	NSObject<CategoryDelegate> *delegate;
+	CategoryDataSource *dataSource;
 }
 
-- (NSInteger)requestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
-- (void)cancelRequest:(NSInteger)theRequestId;
-- (void)validateRequest:(NSNumber *)theRequestId;
+@property (nonatomic,retain) NSObject<CategoryDelegate> *delegate;
+@property (nonatomic,retain) CategoryDataSource *dataSource;
 
-- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
+- (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
+        withDataSource:(CategoryDataSource *)theDataSource
+               withUrl:(NSString *)theUrl;
+- (NSWebViewURLRequest *)request;
+- (NSWebViewURLRequest *)targetRequest;
+- (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 
 @end

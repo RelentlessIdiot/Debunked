@@ -18,7 +18,7 @@
 #import "SearchTableViewController.h"
 #import "RumorViewController.h"
 #import "SearchResultView.h"
-#import "HttpSearchDataSource.h"
+#import "SearchDataSource.h"
 
 
 @implementation SearchTableViewController
@@ -157,7 +157,7 @@
 			}
 		}
 
-		lastRequestId = [(HttpSearchDataSource *)dataSource requestSearchResults:[searchBar text] notifyDelegate:self];
+		lastRequestId = [(SearchDataSource *)dataSource requestSearchResults:[searchBar text] notifyDelegate:self];
 	}
 }
 

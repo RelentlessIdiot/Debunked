@@ -17,23 +17,25 @@
 
 #import <Foundation/Foundation.h>
 #import "Blacklist.h"
-#import "CategoryDataSource.h"
-#import "CategoryNode.h"
+#import "SearchDataSource.h"
+#import "RumorDataSource.h"
+#import "Rumor.h"
+#import "SearchResult.h"
 #import "CachedDataLoader.h"
 #import "DataConsumer.h"
 #import "TFHpple.h"
 
 
-@interface CategoryConsumer : DataConsumer {
-	NSObject<CategoryDelegate> *delegate;
-	NSObject<CategoryDataSource> *dataSource;
+@interface SearchConsumer : DataConsumer {
+	NSObject<SearchDelegate> *delegate;
+	SearchDataSource *dataSource;
 }
 
-@property (nonatomic,retain) NSObject<CategoryDelegate> *delegate;
-@property (nonatomic,retain) NSObject<CategoryDataSource> *dataSource;
+@property (nonatomic,retain) NSObject<SearchDelegate> *delegate;
+@property (nonatomic,retain) SearchDataSource *dataSource;
 
-- (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
-		withDataSource:(NSObject<CategoryDataSource> *)theDataSource
+- (id)initWithDelegate:(NSObject<SearchDelegate> *)theDelegate 
+		withDataSource:(SearchDataSource *)theDataSource
 			   withUrl:(NSString *)theUrl;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 

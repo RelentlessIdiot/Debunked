@@ -16,9 +16,9 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "DataSourceFactory.h"
-#import "HttpCategoryDataSource.h"
-#import "HttpRumorDataSource.h"
-#import "HttpSearchDataSource.h"
+#import "CategoryDataSource.h"
+#import "RumorDataSource.h"
+#import "SearchDataSource.h"
 
 
 @implementation DataSourceFactory
@@ -30,7 +30,7 @@ static Class searchDataSourceClassInstance;
 + (Class)categoryDataSourceClass
 {
 	if (categoryDataSourceClassInstance == NULL) {
-		categoryDataSourceClassInstance = [HttpCategoryDataSource class];
+		categoryDataSourceClassInstance = [CategoryDataSource class];
 	}
 	return categoryDataSourceClassInstance;
 }
@@ -43,7 +43,7 @@ static Class searchDataSourceClassInstance;
 + (Class)rumorDataSourceClass
 {
 	if (rumorDataSourceClassInstance == NULL) {
-		rumorDataSourceClassInstance = [HttpRumorDataSource class];
+		rumorDataSourceClassInstance = [RumorDataSource class];
 	}
 	return rumorDataSourceClassInstance;
 }
@@ -56,7 +56,7 @@ static Class searchDataSourceClassInstance;
 + (Class)searchDataSourceClass
 {
 	if (searchDataSourceClassInstance == NULL) {
-		searchDataSourceClassInstance = [HttpSearchDataSource class];
+		searchDataSourceClassInstance = [SearchDataSource class];
 	}
 	return searchDataSourceClassInstance;
 }

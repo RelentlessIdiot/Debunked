@@ -15,9 +15,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <UIKit/UIKit.h>
-#import "Category.h"
-#import "CategoryNode.h"
+#import <Foundation/Foundation.h>
 
 
 @protocol AsynchronousDelegate
@@ -29,11 +27,15 @@
 @end
 
 
-@protocol AsynchronousDataSource <UITableViewDataSource>
-
-@required
+@interface AsynchronousDataSource: NSObject<UITableViewDataSource> {
+	NSInteger lastRequestId;
+	NSMutableDictionary *activeRequests;
+}
 
 - (NSInteger)requestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
 - (void)cancelRequest:(NSInteger)theRequestId;
+- (void)validateRequest:(NSNumber *)theRequestId;
+
+- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
 
 @end

@@ -15,16 +15,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <stdlib.h>
+#import "SearchDataSource.h"
 
-#import "JSON.h"
-#import "SearchResult.h"
+#import "SearchConsumer.h"
 #import "SearchResultTableViewCell.h"
-#import "HttpSearchDataSource.h"
-#import "HttpRumorDataSource.h"
+
+#import "RumorConsumer.h"
+#import "RumorDataSource.h"
 
 
-@implementation HttpSearchDataSource
+@implementation SearchDataSource
 
 @synthesize searchResults;
 
@@ -99,7 +99,7 @@
 	SearchResult *aSearchResult = [self searchResultForIndex:theIndexPath.row];	
 	
 	RumorConsumer *consumer = [[RumorConsumer alloc] initWithDelegate:(NSObject<RumorDelegate> *)theDelegate
-													   withDataSource:(NSObject<RumorDataSource> *)self
+													   withDataSource:(RumorDataSource *)self
 															  withUrl:aSearchResult.url];	
 	CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
 	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes

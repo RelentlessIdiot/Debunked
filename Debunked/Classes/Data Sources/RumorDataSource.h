@@ -15,8 +15,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 #import "AsynchronousDataSource.h"
+#import "CachedDataLoader.h"
+
 #import "Rumor.h"
 #import "RumorNode.h"
 
@@ -30,17 +33,16 @@
 @end
 
 
-@protocol RumorDataSource <AsynchronousDataSource>
-
-@required
+@interface RumorDataSource: AsynchronousDataSource {
+	NSArray *rumorNodes;
+}
 
 @property (nonatomic,retain) NSArray *rumorNodes;
 
 - (id)init;
-- (id)initWithRumorNodes:(NSArray *)theRumorNodes;
+- (id)initWithRumorNodes:(NSArray *)theRumorNodes NS_DESIGNATED_INITIALIZER;
 
 - (void)loadRumorNodes:(NSArray *)theRumorNodes;
-
 - (NSInteger)requestTop25RumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
 - (NSInteger)requestWhatsNewRumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
 - (NSInteger)requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
