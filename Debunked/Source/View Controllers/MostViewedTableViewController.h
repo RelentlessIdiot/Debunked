@@ -16,14 +16,12 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "RumorTableViewController.h"
+#import "CategoryTableViewController.h"
 
 
-@interface MostViewedTableViewController : RumorTableViewController<UIScrollViewDelegate>
-{
-	BOOL needsLoadingView;
-	NSInteger selectedSegmentIndex;
-}
+@interface MostViewedTableViewController: CategoryTableViewController
+
+@property (nonatomic,retain) UISegmentedControl *segmentedControl;
 
 - (void)handleBrowseButton;
 - (void)segmentAction:(id)sender;

@@ -17,7 +17,7 @@
 
 #import "SearchTableViewController.h"
 #import "RumorViewController.h"
-#import "SearchResultView.h"
+#import "SearchResultTableViewCell.h"
 #import "SearchDataSource.h"
 
 
@@ -36,6 +36,10 @@
 
 - (void)viewDidLoad
 {
+    if (self.dataSource == nil) {
+        self.dataSource = [[[SearchDataSource alloc] init] autorelease];
+    }
+
     [super viewDidLoad];
 
 	UIView *hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
@@ -67,19 +71,13 @@
 	[self.view addSubview:hideButton];
 }
 
-- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)reloadDataSource
 {
-    return [SearchResultView preferredHeight];
-}
+    @synchronized(self) {
+        [super reloadDataSource];
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-	if (needsLoadingView == YES) {
-		needsLoadingView = NO;
-		if (self.loadingView == nil) {
-			self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-		}
-	}
+        lastRequestId = [(SearchDataSource *)self.dataSource requestSearchResults:searchBar.text notifyDelegate:self];
+    }
 }
 
 - (void)hideButtonClicked
@@ -132,20 +130,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)theSearchBar
 {
 	[searchBar resignFirstResponder];
-
-	@synchronized(self) {
-		self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		if (self.tableView.dragging || self.tableView.decelerating) {
-			needsLoadingView = YES;
-		} else {
-			if (self.loadingView == nil) {
-				needsLoadingView = NO;
-				self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-			}
-		}
-
-		lastRequestId = [(SearchDataSource *)self.dataSource requestSearchResults:searchBar.text notifyDelegate:self];
-	}
+    [self reloadDataSource];
 }
 
 - (void)searchBar:(UISearchBar *)theSearchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
@@ -153,41 +138,21 @@
 
 }
 
-- (void)receiveSearchResults:(NSArray *)theSearchResults withResult:(NSInteger)theResult
+- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
-	@synchronized(self) {
-		needsLoadingView = NO;
-		[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-		if (theSearchResults != nil && [theSearchResults count] > 0) {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-		}
-		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-        [self performSelectorOnMainThread:@selector(resizeHideButton) withObject:nil waitUntilDone:YES];
-	}
-	[self performSelectorOnMainThread:@selector(scrollToTop) withObject:nil waitUntilDone:NO];
-	[self.tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
-}
-
-- (void)receive:(id)theItem withResult:(NSInteger)theResult
-{
-	@synchronized(self)
-	{
-		[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-		self.loadingCell = nil;
-
-		if (theItem == nil) {
-			return;
-		}
-		Rumor *theRumor = (Rumor *)theItem;
-		[self performSelectorOnMainThread:@selector(loadRumorView:) withObject:theRumor waitUntilDone:NO];
-	}
-}
-
-- (void)loadRumorView:(Rumor *)theRumor
-{
-	RumorViewController *rumorViewController = [[RumorViewController alloc] initWithRumor:theRumor];
-	[[self navigationController] pushViewController:rumorViewController animated:YES];
-	[rumorViewController release];
+    @synchronized(self) {
+        UITableViewCell *cell = [theTableView cellForRowAtIndexPath:theIndexPath];
+        if ([cell isKindOfClass: SearchResultTableViewCell.class]) {
+            SearchResultTableViewCell *searchResultCell = (SearchResultTableViewCell *)cell;
+            RumorViewController *rumorController = [[[RumorViewController alloc] initWithUrl:searchResultCell.searchResult.url] autorelease];
+            rumorController.title = searchResultCell.searchResult.title;
+            [self performSelectorOnMainThread:@selector(pushViewControllerAnimated:)
+                                   withObject:rumorController
+                                waitUntilDone:YES];
+        } else {
+            [theTableView deselectRowAtIndexPath:theIndexPath animated:YES];
+        }
+    }
 }
 
 @end

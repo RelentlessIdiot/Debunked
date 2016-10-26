@@ -18,6 +18,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "DebunkedAppDelegate.h"
 #import "Rumor.h"
 #import "AsynchronousDataSource.h"
 #import "RumorDataSource.h"
@@ -27,7 +28,6 @@
 #import "RumorDataSource.h"
 #import "CategoryTableViewController.h"
 #import "WebBrowserViewController.h"
-#import "DebunkedAppDelegate.h"
 
 
 @interface RumorViewController : UIViewController<
@@ -37,21 +37,18 @@
 									MFMailComposeViewControllerDelegate,
 									UIPrintInteractionControllerDelegate>
 {
-
+    NSInteger lastRequestId;
 }
 
 @property (nonatomic,retain) Rumor *rumor;
 @property (nonatomic,retain) RumorDataSource *dataSource;
 @property (nonatomic,assign) LoadingView *loadingView;
 @property (nonatomic,retain) UIWebView *webView;
-@property (nonatomic,assign) BOOL hasRumor;
-@property (nonatomic,assign) BOOL isRendered;
+@property (nonatomic,assign) BOOL isWebViewLoaded;
+@property (nonatomic,retain) NSString *url;
 
 - (id)init;
-- (id)initWithRumor:(Rumor *)theRumor;
-- (id)initWithDataSource:(RumorDataSource *)theDataSource;
-- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor;
-- (void)updateWebView;
+- (id)initWithUrl:(NSString *)theUrl;
 - (void)removeLoadingView;
 - (void)segmentAction:(id)sender;
 - (void)handleBrowseButton;

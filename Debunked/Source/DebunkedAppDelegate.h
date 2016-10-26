@@ -16,10 +16,21 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
 
 
 #define ENABLE_BROWSE_TAB NO
+
+
+@interface UIViewController (Extension)
+- (void)pushViewControllerAnimated:(UIViewController *)viewController;
+@end
+
+@implementation UIViewController (Extension)
+- (void)pushViewControllerAnimated:(UIViewController *)viewController
+{
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+@end
 
 
 @interface DebunkedAppDelegate : NSObject<UIApplicationDelegate>

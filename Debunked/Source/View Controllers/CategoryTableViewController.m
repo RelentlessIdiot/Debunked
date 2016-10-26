@@ -16,37 +16,21 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "CategoryTableViewController.h"
-#import "RumorTableViewController.h"
+#import "DebunkedAppDelegate.h"
+#import "WebBrowserViewController.h"
+#import "RumorViewController.h"
 #import "RumorDataSource.h"
 #import "CategoryDataSource.h"
 #import "CategoryNodeView.h"
+#import "CategoryNodeTableViewCell.h"
+#import "RumorNodeTableViewCell.h"
 
 
 @implementation CategoryTableViewController
 
-@synthesize url;
-@synthesize category;
-
-- (void)dealloc
-{
-    [url release];
-    [category release];
-
-    [super dealloc];
-}
-
-- (id)initWithUrl:(NSString *)theUrl
-{
-    if (self = [super init]) {
-        self.url = theUrl;
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
 	if (self.dataSource == nil) {
-		isTopLevel = YES;
 		self.dataSource = [[[CategoryDataSource alloc] init] autorelease];
     }
 
@@ -61,25 +45,26 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	@synchronized(self) {
-		if (isTopLevel && [[(CategoryDataSource *)self.dataSource categoryNodes] count] == 0) {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-			if (self.loadingView == nil) {
-				self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-			}
-            if (url == nil) {
-                lastRequestId = [(CategoryDataSource *)self.dataSource requestTopLevelCategoryNodesNotifyDelegate:self];
-            } else {
-                lastRequestId = [(CategoryDataSource *)self.dataSource requestCategoryNodes:url notifyDelegate:self];
-            }
+		if (((CategoryDataSource *)self.dataSource).nodeCount == 0) {
+            [self reloadDataSource];
 		}
 	}
 	
 	[super viewWillAppear:animated];
 }
 
-- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)reloadDataSource
 {
-    return [CategoryNodeView preferredHeight];
+    @synchronized(self) {
+        [super reloadDataSource];
+
+        CategoryDataSource *categoryDataSource = (CategoryDataSource *)self.dataSource;
+        if (self.url == nil) {
+            lastRequestId = [categoryDataSource requestTopLevelCategoryNotifyDelegate:self];
+        } else {
+            lastRequestId = [categoryDataSource requestCategory:self.url notifyDelegate:self];
+        }
+    }
 }
 
 - (void)handleBrowseButton
@@ -88,62 +73,40 @@
 	[appDelegate.tabBarController setSelectedIndex:2];
 	UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
 	WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
-	if (self.category == nil) {
-        if (self.url == nil) {
+    if (self.url == nil) {
+        CategoryDataSource *categoryDataSource = (CategoryDataSource *)self.dataSource;
+        if (categoryDataSource.category.url == nil) {
             [webBrowser loadUrl:@"http://www.snopes.com"];
         } else {
-            [webBrowser loadUrl:url];
+            [webBrowser loadUrl:categoryDataSource.category.url];
         }
-	} else {
-		[webBrowser loadUrl:self.category.url];
-	}
+    } else {
+        [webBrowser loadUrl:self.url];
+    }
 }
 
-- (void)receive:(id)theItem withResult:(NSInteger)theResult
+- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
-	@synchronized(self) {
-		[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-		self.loadingCell = nil;
-		
-		if (theItem == nil) {
-			return;
-		}
-		Category *theCategory = (Category *)theItem;
-		if ([[theCategory categoryNodes] count] > 0 || [[theCategory rumorNodes] count] <= 0) {
-			CategoryDataSource *categoryDataSource = [[CategoryDataSource alloc] initWithCategoryNodes:[theCategory categoryNodes]];
-			CategoryTableViewController *categoryTableViewController = [[CategoryTableViewController alloc] initWithDataSource:categoryDataSource];
-			[categoryDataSource release];
-			
-			categoryTableViewController.title = [theCategory label];
-			categoryTableViewController.category = theCategory;
-
-			[self performSelectorOnMainThread:@selector(pushViewControllerAnimated:) withObject:categoryTableViewController waitUntilDone:YES];
-			[categoryTableViewController release];
-		} else {
-			RumorDataSource *rumorDataSource = [[RumorDataSource alloc] initWithRumorNodes:[theCategory rumorNodes]];
-			RumorTableViewController *rumorTableViewController = [[RumorTableViewController alloc] initWithDataSource:rumorDataSource];
-			[rumorDataSource release];
-			
-			rumorTableViewController.title = [theCategory label];
-			rumorTableViewController.category = theCategory;
-			
-			[self performSelectorOnMainThread:@selector(pushViewControllerAnimated:) withObject:rumorTableViewController waitUntilDone:YES];
-			[rumorTableViewController release];
-		}
-	}
-}
-
-- (void)receiveCategoryNodes:(NSArray *)theCategoryNodes withResult:(NSInteger)theResult
-{
-	@synchronized(self) {
-		[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-		if (theCategoryNodes != nil && [theCategoryNodes count] > 0) {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-		} else {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		}
-		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-	}
+    @synchronized(self) {
+        UITableViewCell *cell = [theTableView cellForRowAtIndexPath:theIndexPath];
+        if ([cell isKindOfClass: RumorNodeTableViewCell.class]) {
+            RumorNodeTableViewCell *rumorCell = (RumorNodeTableViewCell *)cell;
+			RumorViewController *rumorController = [[[RumorViewController alloc] initWithUrl:rumorCell.rumorNode.url] autorelease];
+			rumorController.title = rumorCell.rumorNode.label;
+			[self performSelectorOnMainThread:@selector(pushViewControllerAnimated:)
+                                   withObject:rumorController
+                                waitUntilDone:YES];
+        } else if ([cell isKindOfClass: CategoryNodeTableViewCell.class]) {
+            CategoryNodeTableViewCell *categoryCell = (CategoryNodeTableViewCell *)cell;
+            CategoryTableViewController *categoryController = [[[CategoryTableViewController alloc] initWithUrl:categoryCell.categoryNode.url] autorelease];
+            categoryController.title = categoryCell.categoryNode.label;
+            [self performSelectorOnMainThread:@selector(pushViewControllerAnimated:)
+                                   withObject:categoryController
+                                waitUntilDone:YES];
+        } else {
+            [theTableView deselectRowAtIndexPath:theIndexPath animated:YES];
+        }
+    }
 }
 
 @end

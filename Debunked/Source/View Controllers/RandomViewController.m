@@ -20,11 +20,14 @@
 
 @implementation RandomViewController
 
-- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor
+- (id)init
 {
-	if (self = [super initWithDataSource:theDataSource withRumor:theRumor]) {
-		lastRequestId = 0;
+    return [self initWithUrl:@"http://www.snopes.com/info/random/random.asp"];
+}
 
+- (id)initWithUrl:(NSString *)theUrl
+{
+    if (self = [super initWithUrl:theUrl]) {
 		UIBarButtonItem *nextButton = [[[UIBarButtonItem alloc] init] autorelease];
 		nextButton.style = UIBarButtonItemStylePlain;
 		nextButton.title = @"Random";
@@ -38,34 +41,26 @@
 	return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-	if (!self.hasRumor) {
-		lastRequestId = [self.dataSource requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)self];
-		self.hasRumor = YES;
-	}
-
-	@synchronized(self) {
-		if (self.hasRumor && self.rumor == nil && self.loadingView == nil) {
-			self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-		}
-	}
-
-	[self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
-
-	[super viewWillAppear:animated];
-}
-
 - (void)onNextButtonClick
 {
-	[self performSelectorOnMainThread:@selector(loadRumorView) withObject:nil waitUntilDone:NO];
+    RandomViewController *randomViewController = [[[RandomViewController alloc] init] autorelease];
+    [self performSelectorOnMainThread:@selector(pushViewControllerAnimated:) withObject:randomViewController waitUntilDone:NO];
 }
 
-- (void)loadRumorView
+- (void)reloadDataSource
 {
-	RandomViewController *randomViewController = [[RandomViewController alloc] initWithDataSource:self.dataSource];
-	[[self navigationController] pushViewController:randomViewController animated:YES];
-	[randomViewController release];
+    @synchronized(self) {
+        [self.dataSource cancelRequest:lastRequestId];
+
+        if (self.url != nil) {
+            if (self.loadingView == nil) {
+                self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+            }
+
+            RumorDataSource *rumorDataSource = (RumorDataSource *)self.dataSource;
+            lastRequestId = [rumorDataSource requestRandomRumorNotifyDelegate:self];
+        }
+    }
 }
 
 @end

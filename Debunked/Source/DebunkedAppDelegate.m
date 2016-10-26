@@ -15,15 +15,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "CategoryDataSource.h"
-#import "RumorDataSource.h"
-#import "CategoryTableViewController.h"
-#import "RumorTableViewController.h"
+#import "DebunkedAppDelegate.h"
 #import "MostViewedTableViewController.h"
+#import "CategoryTableViewController.h"
+#import "WebBrowserViewController.h"
 #import "SearchTableViewController.h"
 #import "RandomViewController.h"
-#import "WebBrowserViewController.h"
-#import "DebunkedAppDelegate.h"
 
 
 @implementation DebunkedAppDelegate
@@ -63,13 +60,9 @@
 	
 	UINavigationController *localNavigationController;
 	UIViewController *localViewController;
-	AsynchronousDataSource *localDataSource;
-	
+
 	//======== Most Viewed =========
-	localDataSource = [[RumorDataSource alloc] init];
-	localViewController = [[MostViewedTableViewController alloc] initWithDataSource:localDataSource];
-	[localDataSource release];
-	
+	localViewController = [[MostViewedTableViewController alloc] init];
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
 	[localViewController release];
 	
@@ -80,8 +73,7 @@
 	
 	//======== Categories =========
 	localViewController = [[CategoryTableViewController alloc] init];
-	localViewController.title = @"Categories";
-	
+    localViewController.title = @"Categories";
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
 	[localViewController release];
 	
@@ -94,7 +86,6 @@
 	//======== Browse =========
     if (ENABLE_BROWSE_TAB) {
         localViewController = [[WebBrowserViewController alloc] initWithUrl:@"http://www.snopes.com"];
-
         localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
         [localViewController release];
 
@@ -106,10 +97,7 @@
 	
 	
 	//======== Search =========
-	localDataSource = [[SearchDataSource alloc] init];
-	localViewController = [[SearchTableViewController alloc] initWithDataSource:localDataSource];
-	[localDataSource release];
-	
+	localViewController = [[SearchTableViewController alloc] init];
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
 	[localViewController release];
 	
@@ -119,10 +107,7 @@
 	
 	
 	//======== Random =========
-	localDataSource = [[RumorDataSource alloc] init];
-	localViewController = [[RandomViewController alloc] initWithDataSource:(RumorDataSource *)localDataSource];
-	[localDataSource release];
-	
+	localViewController = [[RandomViewController alloc] init];
 	localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
 	[localViewController release];
 	

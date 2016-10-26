@@ -15,7 +15,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 
 @interface Blacklist : NSObject

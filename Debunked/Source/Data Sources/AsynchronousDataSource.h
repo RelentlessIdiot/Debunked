@@ -22,7 +22,7 @@
 
 @required
 
-- (void)receive:(id)theItem withResult:(NSInteger)theResult;
+- (void)receive:(id)theItem;
 
 @end
 
@@ -33,10 +33,18 @@
 	NSMutableDictionary *activeRequests;
 }
 
-- (NSInteger)requestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
-- (void)cancelRequest:(NSInteger)theRequestId;
-- (void)validateRequest:(NSNumber *)theRequestId;
+@property (nonatomic,retain) id item;
 
-- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
+- (void)cancelRequest:(NSInteger)theRequestId;
+- (void)receiveRequest:(NSInteger)theRequestId withItem:(id)theItem withResult:(NSInteger)theResult;
+- (NSInteger)request:(NSString *)theUrl
+       consumerClass:(Class)theConsumerClass
+      notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
+- (NSInteger)request:(NSString *)theUrl
+       consumerClass:(Class)theConsumerClass
+      notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
+      withExpiration:(NSInteger)theExpiration;
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

@@ -16,28 +16,13 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-
 #import "AsynchronousDataSource.h"
-#import "CachedDataLoader.h"
-
-#import "SearchResult.h"
-
-
-@protocol SearchDelegate<AsynchronousDelegate>
-
-@required
-
-- (void)receiveSearchResults:(NSArray *)theSearchResults withResult:(NSInteger)theResult;
-
-@end
 
 
 @interface SearchDataSource : AsynchronousDataSource 
 
-@property (nonatomic,retain) NSMutableArray *searchResults;
+@property (nonatomic,readonly) NSArray *searchResults;
 
-- (id)init;
-- (void)loadSearchResults:(NSMutableArray *)theSearchResults;
-- (NSInteger)requestSearchResults:(NSString *)query notifyDelegate:(NSObject<SearchDelegate> *)theDelegate;
+- (NSInteger)requestSearchResults:(NSString *)query notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
 
 @end

@@ -16,7 +16,6 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "CachedDataLoader.h"
 #import "DataConsumer.h"
 
 

@@ -21,11 +21,9 @@
 @implementation AsynchronousTableViewController
 
 @synthesize dataSource;
-@synthesize loadingCell;
 @synthesize loadingView;
 @synthesize tableView;
-
-- (UITableViewCell *)loadingCell { return loadingCell; }
+@synthesize url;
 
 - (void)dealloc
 {
@@ -33,15 +31,16 @@
     tableView.dataSource = nil;
     [tableView release];
     [dataSource release];
+    [url release];
 
     [super dealloc];
 }
 
-- (id)initWithDataSource:(AsynchronousDataSource *)theDataSource
+- (id)initWithUrl:(NSString *)theUrl
 {
-    if (self = [self init]) {
+    if (self = [super init]) {
         lastRequestId = 0;
-        self.dataSource = theDataSource;
+        self.url = theUrl;
     }
     return self;
 }
@@ -56,54 +55,75 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = dataSource;
 
+    [self.view addSubview:self.tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
     if (self.dataSource != nil && [self.dataSource tableView:self.tableView numberOfRowsInSection:0]) {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     } else {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
-
-    [self.view addSubview:self.tableView];
-}
-
-- (void)removeLoadingView
-{
-	[loadingView removeView];
-	loadingView = nil;
+    [self.tableView reloadData];
+    [super viewWillAppear:animated];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {	
-	[tableView reloadData];
-	
+	[self.tableView reloadData];
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)updateLoadingCell:(UITableViewCell *)theLoadingCell
+- (void)removeLoadingView
 {
-	if (loadingCell != nil && ![loadingCell isEqual:theLoadingCell]) {
-		NSIndexPath *indexPath = [self.tableView indexPathForCell:loadingCell];
-		[self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-		[loadingCell setAccessoryView:nil];
-		loadingCell = nil;
-	}
-	if (theLoadingCell != nil) {
-		loadingCell = theLoadingCell;
-	}
+    needsLoadingView = NO;
+    [loadingView removeView];
+    loadingView = nil;
 }
 
-- (void)setLoadingCell:(UITableViewCell *)theLoadingCell
+- (void)reloadDataSource
 {
-	[self performSelectorOnMainThread:@selector(updateLoadingCell:) withObject:theLoadingCell waitUntilDone:YES];
+    @synchronized(self) {
+        [self.dataSource cancelRequest:lastRequestId];
+
+        if (self.tableView.dragging || self.tableView.decelerating) {
+            needsLoadingView = YES;
+        } else if (self.loadingView == nil) {
+            needsLoadingView = NO;
+            self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+        }
+    }
 }
 
-- (void)pushViewControllerAnimated:(UIViewController *)viewController
+- (void)receive:(id)theItem
 {
-	[[self navigationController] pushViewController:viewController animated:YES];
+    @synchronized(self) {
+        [self removeLoadingView];
+        if (self.dataSource != nil && [self.dataSource tableView:self.tableView numberOfRowsInSection:0]) {
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        } else {
+            self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
+        [self.tableView reloadData];
+        [self scrollToTop];
+        [self.tableView setNeedsDisplay];
+    }
 }
 
-- (void)receive:(id)theItem withResult:(NSInteger)theResult
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-	
+    if (needsLoadingView == YES) {
+        needsLoadingView = NO;
+        if (self.loadingView == nil) {
+            self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+        }
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)theIndexPath
+{
+    return [self.dataSource tableView:theTableView heightForRowAtIndexPath:theIndexPath];
 }
 
 - (void)tableView:(UITableView *)theTableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)theIndexPath
@@ -112,22 +132,15 @@
 	[theTableView selectRowAtIndexPath:theIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
-- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)theIndexPath
+- (NSIndexPath *)tableView:(UITableView *)theTableView willSelectRowAtIndexPath:(NSIndexPath *)theIndexPath
 {
-	@synchronized(self) {
-		UITableViewCell *aCell = [theTableView cellForRowAtIndexPath:theIndexPath];
-		if (![aCell isEqual:self.loadingCell]) {
-			[dataSource cancelRequest:lastRequestId];
-			self.loadingCell = aCell;
-			lastRequestId = [dataSource requestItemForIndexPath:theIndexPath notifyDelegate:self];
-		}
-	}
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-    [super viewWillAppear:animated];
+    @synchronized(self) {
+        NSIndexPath *oldIndexPath = [theTableView indexPathForSelectedRow];
+        if (oldIndexPath != nil && ![theIndexPath isEqual:oldIndexPath]) {
+            [dataSource cancelRequest:lastRequestId];
+        }
+    }
+    return theIndexPath;
 }
 
 - (void)scrollToTop

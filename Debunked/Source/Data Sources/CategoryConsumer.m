@@ -16,39 +16,19 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "CategoryConsumer.h"
+#import "Blacklist.h"
+#import "Category.h"
+#import "CategoryNode.h"
 #import "RumorNode.h"
+#import "TFHpple.h"
 
 
 @implementation CategoryConsumer
 
-@synthesize delegate;
-@synthesize dataSource;
-
-- (void)dealloc
-{
-    [delegate release];
-    [dataSource release];
-
-    [super dealloc];
-}
-
-- (id)initWithDelegate:(NSObject<CategoryDelegate>*)theDelegate
-		withDataSource:(CategoryDataSource*)theDataSource
-			   withUrl:(NSString *)theUrl
-{
-	if(self = [super init]) {
-		self.url = theUrl;
-		self.targetUrl = theUrl;
-		self.delegate = theDelegate;
-		self.dataSource = theDataSource;
-	}
-	return self;
-}
-
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	if (data == nil) {
-		[self.delegate receive:nil withResult:0];
+		[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 		return;
 	}
 	
@@ -72,50 +52,82 @@
 
         NSString *description = [descriptionEl textContent];
         NSString *label = [labelEl textContent];
-        NSArray *links = nil;
-        NSArray *imgs  = nil;
-        NSArray *nodeSynopses = nil;
 
         Category *category = [[Category alloc] initWithUrl:[[response URL] absoluteString]
                                                  withLabel:label
                                            withDescription:description];
-        @try {
-            NSMutableArray *categoryNodes = [NSMutableArray array];
-            for (int i = 0; i < [links count] && i < [imgs count] && i < [nodeSynopses count]; i++) {
-                TFHppleElement *link = [links objectAtIndex:i];
-                TFHppleElement *img = [imgs objectAtIndex:i];
-                TFHppleElement *syn = [nodeSynopses objectAtIndex:i];
-                NSString *nodeUrl = [self resolveUrl:[link objectForKey:@"href"]];
-                NSString *nodeImageUrl = [self resolveUrl:[img objectForKey:@"src"]];
-                NSString *nodeSynopsis = [[syn content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                NSString *nodeLabel = [[link textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                
-                if (![Blacklist isBlacklisted:nodeUrl]) {
-                    CategoryNode *categoryNode = [[CategoryNode alloc] initWithUrl:nodeUrl
-                                                                         withLabel:nodeLabel
-                                                                      withSynopsis:nodeSynopsis 
-                                                                      withImageUrl:nodeImageUrl];
-                    [categoryNodes addObject:categoryNode];
-                    [categoryNode release];
-                }
-            }
-            if ([categoryNodes count] == 0) {
-                category.rumorNodes = [NSMutableArray arrayWithArray:[self parseRumorNodes:data]];
-            } else {
-                category.categoryNodes = categoryNodes;
-            }
-            [self.delegate receive:category withResult:0];
-        }
-        @catch (NSException *exception) {
-            [self.delegate receive:category withResult:1];
-        }
+
+        category.categoryNodes = [self parseCategoryNodes:data];
+        category.rumorNodes = [self parseRumorNodes:data];
+
+        [self.dataSource receiveRequest:self.requestId withItem:category withResult:0];
 	}
 	@catch (NSException *exception) {
-		[self.delegate receive:nil withResult:1];
+		[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 	}
 	@finally {
 		[parser release];
 	}
+}
+
+- (NSArray *)parseCategoryNodes:(NSData *)data
+{
+    return nil;
+}
+
+
+- (NSArray *)parseRumorNodes:(NSData *)data
+{
+    NSMutableArray *rumorNodes = [NSMutableArray array];
+    TFHpple *parser = nil;
+    @try {
+        parser = [[TFHpple alloc] initWithHTMLData:data];
+        NSArray *posts = [parser search: @"//ul[@class=\"post-list\"]/li"];
+
+        for (int i = 0; i < [posts count]; i++) {
+            TFHppleElement *post = [posts objectAtIndex:i];
+            TFHpple *postParser = nil;
+            @try {
+                postParser = [[TFHpple alloc] initWithHTMLData: [post.outerHtml dataUsingEncoding: NSUTF8StringEncoding]];
+                TFHppleElement *link = [postParser at: @"//h4[@class=\"title\"]/a"];
+                TFHppleElement *img = [postParser at: @"//div[@class=\"post-img\"]/img"];
+                TFHppleElement *syn = [postParser at: @"//p[@class=\"body\"]/span[@class=\"label\"]"];
+                if (syn == nil) {
+                    syn = [postParser at: @"//p[@class=\"body\"]"];
+                }
+                if (link && img && syn) {
+                    NSString *nodeUrl = [self resolveUrl:[link objectForKey:@"href"]];
+                    NSString *nodeImageUrl = [self resolveUrl:[img objectForKey:@"src"]];
+                    NSString *nodeSynopsis = [[syn content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSString *nodeLabel = [[link textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+                    if (![Blacklist isBlacklisted:nodeUrl]) {
+                        RumorNode *rumorNode = [[RumorNode alloc] initWithUrl:nodeUrl
+                                                                    withLabel:nodeLabel
+                                                                 withSynopsis:nodeSynopsis
+                                                                 withVeracity:@""
+                                                                 withImageUrl:nodeImageUrl];
+                        [rumorNodes addObject:rumorNode];
+                        [rumorNode release];
+                    }
+                }
+            }
+            @catch (NSException *exception) {
+                NSLog(@"ERROR: failed parsing rumor\n%@\n\n%@", exception.description, post.outerHtml);
+            }
+            @finally {
+                [postParser release];
+            }
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"ERROR: failed parsing rumors\n%@", exception.description);
+    }
+    @finally {
+        [parser release];
+    }
+    
+    return rumorNodes;
 }
 
 @end

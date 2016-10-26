@@ -16,18 +16,13 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "LoadingView.h"
 #import "NSWebViewURLRequest.h"
 
 
-@interface WebViewController : UIViewController<UIWebViewDelegate>
-{
-
-}
+@interface WebViewController: UIViewController<UIWebViewDelegate>
 
 @property (nonatomic,retain) UIWebView *webView;
 
-- (id)init;
 - (void)loadRequest:(NSWebViewURLRequest *)theRequest;
 
 @end

@@ -16,13 +16,18 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "AsynchronousDataSource.h"
+#import "CachedDataLoader.h"
+#import "DataConsumer.h"
 
 
 @implementation AsynchronousDataSource
 
+@synthesize item;
+
 - (void)dealloc
 {
     [activeRequests release];
+    [item release];
 
     [super dealloc];
 }
@@ -36,67 +41,66 @@
 	return self;
 }
 
-- (NSInteger)requestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
+- (void)cancelRequest:(NSInteger)theRequestId
 {
-	NSNumber *requestId = nil;
-	@synchronized(self) {
-		lastRequestId++;
-		requestId = [NSNumber numberWithInteger:lastRequestId];
-		NSArray *theRequest = [NSArray arrayWithObjects:
-							   NSStringFromSelector(@selector(doRequestItemForIndexPath:notifyDelegate:)), 
-							   theIndexPath, 
-							   theDelegate, 
-							   nil];
-		[activeRequests setObject:theRequest forKey:requestId];
-		[self performSelector:@selector(validateRequest:) withObject:requestId];
-	}
-	return [requestId intValue];
+    @synchronized(self) {
+        [activeRequests removeObjectForKey:[NSNumber numberWithInteger:theRequestId]];
+    }
 }
 
-- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
+- (void)receiveRequest:(NSInteger)theRequestId withItem:(id)theItem withResult:(NSInteger)theResult
+{
+	@synchronized(self) {
+        self.item = theItem;
+        NSNumber *requestId = [NSNumber numberWithInteger:theRequestId];
+        NSObject<AsynchronousDelegate> *delegate = [activeRequests objectForKey:requestId];
+        if (delegate != nil) {
+            [activeRequests removeObjectForKey:requestId];
+            [delegate performSelectorOnMainThread:@selector(receive:) withObject:theItem waitUntilDone:YES];
+        }
+    }
+}
+
+- (NSInteger)request:(NSString *)theUrl
+       consumerClass:(Class)theConsumerClass
+      notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
+{
+    return [self request:theUrl
+           consumerClass:theConsumerClass
+          notifyDelegate:theDelegate
+          withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+}
+
+- (NSInteger)request:(NSString *)theUrl
+       consumerClass:(Class)theConsumerClass
+      notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
+      withExpiration:(NSInteger)theExpiration
+{
+    NSNumber *requestId = nil;
+    @synchronized(self) {
+        lastRequestId++;
+        requestId = [NSNumber numberWithInteger:lastRequestId];
+
+        DataConsumer *consumer = [[theConsumerClass alloc] initWithRequestId:lastRequestId
+                                                              withDataSource:self
+                                                                     withUrl:theUrl];
+
+        [activeRequests setObject:theDelegate forKey:requestId];
+
+        CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
+        [dataLoader addClientToDownloadQueue:consumer withExpiration:theExpiration];
+        [consumer release];
+    }
+    return [requestId intValue];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self doesNotRecognizeSelector:_cmd];
     @throw @"doesNotRecognizeSelector";
 }
 
-- (void)cancelRequest:(NSInteger)theRequestId
-{
-	@synchronized(self) {
-		[activeRequests removeObjectForKey:[NSNumber numberWithInteger:theRequestId]];
-	}
-}
-
-- (void)validateRequest:(NSNumber *)theRequestId
-{
-	@synchronized(self) {
-		NSArray *theRequest = (NSArray *)[activeRequests objectForKey:theRequestId];
-		if (theRequest != nil) {
-			[theRequest retain];
-			@try {
-				[activeRequests removeObjectForKey:theRequestId];
-				SEL method = NSSelectorFromString([theRequest objectAtIndex:0]);
-				if ([theRequest count] == 1) {
-					[self performSelector:method];
-				} else if ([theRequest count] == 2) {
-					id anObject = [theRequest objectAtIndex:1];
-					[self performSelector:method withObject:anObject];
-				} else {
-					id anObject1 = [theRequest objectAtIndex:1];
-					id anObject2 = [theRequest objectAtIndex:2];
-					[self performSelector:method withObject:anObject1 withObject:anObject2];
-				}
-			}
-			@catch (NSException * e) {
-				// Do nothing
-			}
-			@finally {
-				[theRequest release];
-			}
-		}
-	}
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)theIndexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self doesNotRecognizeSelector:_cmd];
     @throw @"doesNotRecognizeSelector";

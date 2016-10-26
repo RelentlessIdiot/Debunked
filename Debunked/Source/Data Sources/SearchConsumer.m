@@ -16,38 +16,17 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "SearchConsumer.h"
+#import "Blacklist.h"
+#import "SearchResult.h"
+#import "TFHpple.h"
 
 
 @implementation SearchConsumer
 
-@synthesize delegate;
-@synthesize dataSource;
-
-- (void)dealloc
-{
-    [delegate release];
-    [dataSource release];
-
-    [super dealloc];
-}
-
-- (id)initWithDelegate:(NSObject<SearchDelegate> *)theDelegate 
-		withDataSource:(SearchDataSource *)theDataSource
-			   withUrl:(NSString *)theUrl
-{
-	if(self = [super init]) {
-		self.url = theUrl;
-		self.targetUrl = theUrl;
-		self.delegate = theDelegate;
-		self.dataSource = theDataSource;
-	}
-	return self;
-}
-
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	if (data == nil) {
-		[self.delegate receive:nil withResult:0];
+		[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 		return;
 	}
 	
@@ -140,12 +119,11 @@
 				rumorHeadline = nil;
 			}
 		}
-		
-		[self.dataSource loadSearchResults:results];
-		[self.delegate receiveSearchResults:results withResult:0];
+
+		[self.dataSource receiveRequest:self.requestId withItem:results withResult:0];
 	}
 	@catch (NSException *exception) {
-		[self.delegate receiveSearchResults:nil withResult:1];
+		[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 	}
 	@finally {
 		[parser release];

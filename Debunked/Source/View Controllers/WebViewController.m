@@ -30,14 +30,6 @@
     [super dealloc];
 }
 
-- (id)init
-{
-    if (self = [super init]) {
-		self.title = @"";
-    }
-	return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

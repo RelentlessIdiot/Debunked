@@ -16,24 +16,9 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "Blacklist.h"
-#import "SearchDataSource.h"
-#import "RumorDataSource.h"
-#import "Rumor.h"
-#import "SearchResult.h"
-#import "CachedDataLoader.h"
 #import "DataConsumer.h"
-#import "TFHpple.h"
 
 
 @interface SearchConsumer : DataConsumer 
-
-@property (nonatomic,retain) NSObject<SearchDelegate> *delegate;
-@property (nonatomic,retain) SearchDataSource *dataSource;
-
-- (id)initWithDelegate:(NSObject<SearchDelegate> *)theDelegate 
-		withDataSource:(SearchDataSource *)theDataSource
-			   withUrl:(NSString *)theUrl;
-- (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 
 @end

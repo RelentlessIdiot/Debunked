@@ -16,14 +16,10 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "RumorTableViewController.h"
-#import "SearchDataSource.h"
+#import "AsynchronousTableViewController.h"
 
 
-@interface SearchTableViewController : AsynchronousTableViewController<UISearchBarDelegate, SearchDelegate>
-{
-	BOOL needsLoadingView;
-}
+@interface SearchTableViewController: AsynchronousTableViewController<UISearchBarDelegate>
 
 @property (nonatomic,retain) UISearchBar *searchBar;
 @property (nonatomic,retain) UIButton *hideButton;
@@ -39,10 +35,6 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar;
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope;
-
-- (void)receiveSearchResults:(NSArray *)theSearchResults withResult:(NSInteger)theResult;
-
-- (void)loadRumorView:(Rumor *)theRumor;
 
 - (void)hideButtonClicked;
 - (void)resizeHideButton;

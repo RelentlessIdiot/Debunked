@@ -16,34 +16,15 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-
 #import "AsynchronousDataSource.h"
-#import "CachedDataLoader.h"
-
 #import "Rumor.h"
-#import "RumorNode.h"
-
-
-@protocol RumorDelegate<AsynchronousDelegate>
-
-@required
-
-- (void)receiveRumorNodes:(NSArray *)theRumorNodes withResult:(NSInteger)theResult;
-
-@end
 
 
 @interface RumorDataSource: AsynchronousDataSource 
 
-@property (nonatomic,retain) NSArray *rumorNodes;
+@property (nonatomic,readonly) Rumor *rumor;
 
-- (id)init;
-- (id)initWithRumorNodes:(NSArray *)theRumorNodes NS_DESIGNATED_INITIALIZER;
-
-- (void)loadRumorNodes:(NSArray *)theRumorNodes;
-- (NSInteger)requestTop25RumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
-- (NSInteger)requestWhatsNewRumorNodesNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
-- (NSInteger)requestRandomRumorNotifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
-- (NSInteger)requestRumor:(NSString *)url notifyDelegate:(NSObject<RumorDelegate> *)theDelegate;
+- (NSInteger)requestRumor:(NSString *)url notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
+- (NSInteger)requestRandomRumorNotifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
 
 @end

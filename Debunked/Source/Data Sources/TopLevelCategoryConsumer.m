@@ -16,38 +16,18 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "TopLevelCategoryConsumer.h"
+#import "Blacklist.h"
+#import "Category.h"
+#import "CategoryNode.h"
+#import "TFHpple.h"
 
 
 @implementation TopLevelCategoryConsumer
 
-@synthesize delegate;
-@synthesize dataSource;
-
-- (void)dealloc
-{
-    [delegate release];
-    [dataSource release];
-
-    [super dealloc];
-}
-
-- (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate 
-        withDataSource:(CategoryDataSource *)theDataSource
-               withUrl:(NSString *)theUrl
-{
-	if(self = [super init]) {
-		self.url = theUrl;
-		self.targetUrl = theUrl;
-		self.delegate = theDelegate;
-		self.dataSource = theDataSource;
-	}
-	return self;
-}
-
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response
 {
 	if (data == nil) {
-		[self.delegate receive:nil withResult:0];
+		[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 		return;
 	}
 	
@@ -86,15 +66,17 @@
             NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES] autorelease];
             [uniqueCategoryNodes sortUsingDescriptors: @[sortDescriptor]];
 
-			[self.dataSource loadCategoryNodes:uniqueCategoryNodes];
-			[self.delegate receiveCategoryNodes:uniqueCategoryNodes withResult:0];
+            Category *category = [[[Category alloc] initWithUrl:self.url] autorelease];
+            category.categoryNodes = uniqueCategoryNodes;
+
+            [self.dataSource receiveRequest:self.requestId withItem:category withResult:0];
 		}
 		@catch (NSException *exception) {
-			[self.delegate receiveCategoryNodes:categoryNodes withResult:1];
+			[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 		}
 	}
 	@catch (NSException *exception) {
-		[self.delegate receiveCategoryNodes:nil withResult:1];
+		[self.dataSource receiveRequest:self.requestId withItem:nil withResult:1];
 	}
 	@finally {
 		[parser release];

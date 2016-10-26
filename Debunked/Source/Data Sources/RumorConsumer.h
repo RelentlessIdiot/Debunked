@@ -16,23 +16,10 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "Blacklist.h"
-#import "RumorDataSource.h"
-#import "RumorNode.h"
-#import "CachedDataLoader.h"
 #import "DataConsumer.h"
 #import "TFHpple.h"
 
 
 @interface RumorConsumer : DataConsumer<ElementTransformer> 
-
-@property (nonatomic,retain) NSObject<RumorDelegate> *delegate;
-@property (nonatomic,retain) RumorDataSource *dataSource;
-
-- (id)initWithDelegate:(NSObject<RumorDelegate> *)theDelegate 
-		withDataSource:(RumorDataSource *)theDataSource
-			   withUrl:(NSString *)theUrl;
-- (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
-- (TFHppleElement *)transform:(TFHppleElement *)element;
 
 @end

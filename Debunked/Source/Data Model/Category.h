@@ -23,10 +23,13 @@
 @property (nonatomic,retain) NSString *url;
 @property (nonatomic,retain) NSString *label;
 @property (nonatomic,retain) NSString *description;
-@property (nonatomic,retain) NSMutableArray *categoryNodes;
-@property (nonatomic,retain) NSMutableArray *rumorNodes;
+@property (nonatomic,retain) NSArray *categoryNodes;
+@property (nonatomic,retain) NSArray *rumorNodes;
+@property (nonatomic,readonly) NSInteger nodeCount;
 
 - (id)init;
+
+- (id)initWithUrl:(NSString *)theUrl;
 
 - (id)initWithUrl:(NSString *)theUrl 
 		withLabel:(NSString *)theLabel;

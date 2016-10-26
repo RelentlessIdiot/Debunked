@@ -16,21 +16,24 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "Blacklist.h"
+#import "AsynchronousDataSource.h"
 #import "NSWebViewURLRequest.h"
-#import "RumorNode.h"
-#import "TFHpple.h"
 
 
 @interface DataConsumer : NSObject 
 
+@property (nonatomic,assign) NSInteger requestId;
 @property (nonatomic,retain) NSString *url;
 @property (nonatomic,retain) NSString *targetUrl;
+@property (nonatomic,retain) AsynchronousDataSource *dataSource;
+
+- (id)initWithRequestId:(NSInteger)theRequestId
+         withDataSource:(AsynchronousDataSource *)theDataSource
+                withUrl:(NSString *)theUrl;
 
 - (NSWebViewURLRequest *)request;
 - (NSWebViewURLRequest *)targetRequest;
 - (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 - (NSString *)resolveUrl:(NSString *)urlString;
-- (NSArray *)parseRumorNodes:(NSData *)data;
 
 @end

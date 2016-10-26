@@ -22,18 +22,18 @@
 
 @interface AsynchronousTableViewController: UIViewController<UITableViewDelegate, AsynchronousDelegate>
 {
-	NSInteger lastRequestId;
+    NSInteger lastRequestId;
+    BOOL needsLoadingView;
 }
 
 @property (nonatomic,retain) AsynchronousDataSource *dataSource;
-@property (nonatomic,assign) UITableViewCell *loadingCell;
 @property (nonatomic,assign) LoadingView *loadingView;
 @property (nonatomic,retain) UITableView *tableView;
+@property (nonatomic,retain) NSString *url;
 
-- (id)initWithDataSource:(AsynchronousDataSource *)theDataSource;
-- (void)pushViewControllerAnimated:(UIViewController *)viewController;
-- (void)receive:(id)theItem withResult:(NSInteger)theResult;
-- (void)updateLoadingCell:(UITableViewCell *)theLoadingCell;
+- (id)initWithUrl:(NSString *)theUrl;
+- (void)receive:(id)theItem;
+- (void)reloadDataSource;
 - (void)scrollToTop;
 
 @end

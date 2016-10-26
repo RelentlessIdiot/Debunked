@@ -22,10 +22,5 @@
 
 
 @interface RandomViewController : RumorViewController
-{
-	NSInteger lastRequestId;
-}
-
-- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor;
 
 @end

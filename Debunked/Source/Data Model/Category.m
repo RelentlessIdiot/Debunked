@@ -26,6 +26,10 @@
 @synthesize categoryNodes;
 @synthesize rumorNodes;
 
+- (NSInteger)nodeCount {
+    return (rumorNodes.count > 0) ? rumorNodes.count : categoryNodes.count;
+}
+
 - (void)dealloc
 {
     [url release];
@@ -42,6 +46,11 @@
     return [self initWithUrl:@"" withLabel:@"" withDescription:@""];
 }
 
+- (id)initWithUrl:(NSString *)theUrl
+{
+    return [self initWithUrl:theUrl	withLabel:@"" withDescription:@""];
+}
+
 - (id)initWithUrl:(NSString *)theUrl 
 		withLabel:(NSString *)theLabel
 {
@@ -56,8 +65,8 @@
 		self.url = theUrl;
 		self.label = theLabel;
 		self.description = theDescription;
-		self.categoryNodes = [NSMutableArray array];
-		self.rumorNodes = [NSMutableArray array];
+		self.categoryNodes = [NSArray array];
+		self.rumorNodes = [NSArray array];
 	}
 	return self;
 }

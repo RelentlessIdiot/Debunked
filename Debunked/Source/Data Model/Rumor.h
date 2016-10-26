@@ -27,9 +27,9 @@
 @property (nonatomic,retain) NSString *origin;
 @property (nonatomic,retain) NSString *sightings;
 @property (nonatomic,retain) NSString *lastUpdated;
-@property (nonatomic,retain) NSMutableArray *examples;
-@property (nonatomic,retain) NSMutableArray *variations;
-@property (nonatomic,retain) NSMutableArray *sources;
+@property (nonatomic,retain) NSArray *examples;
+@property (nonatomic,retain) NSArray *variations;
+@property (nonatomic,retain) NSArray *sources;
 @property (nonatomic,retain) NSString *rawHtml;
 
 @end

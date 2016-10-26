@@ -14,9 +14,7 @@
 		DA146F361DBFD39A006BAC25 /* RumorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F271DBFD39A006BAC25 /* RumorDataSource.m */; };
 		DA146F371DBFD39A006BAC25 /* SearchConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F291DBFD39A006BAC25 /* SearchConsumer.m */; };
 		DA146F381DBFD39A006BAC25 /* SearchDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */; };
-		DA146F391DBFD39A006BAC25 /* Top25RumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F2D1DBFD39A006BAC25 /* Top25RumorConsumer.m */; };
 		DA146F3A1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */; };
-		DA146F3B1DBFD39A006BAC25 /* WhatsNewRumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */; };
 		DA146F541DBFE921006BAC25 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F411DBFE921006BAC25 /* TFHpple.m */; };
 		DA146F551DBFE921006BAC25 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F431DBFE921006BAC25 /* TFHppleElement.m */; };
 		DA146F561DBFE921006BAC25 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = DA146F451DBFE921006BAC25 /* XPathQuery.m */; };
@@ -58,7 +56,6 @@
 		DAA2129C16FD83A800F2CAC0 /* CategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126216FD83A800F2CAC0 /* CategoryTableViewController.m */; };
 		DAA2129D16FD83A800F2CAC0 /* MostViewedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126416FD83A800F2CAC0 /* MostViewedTableViewController.m */; };
 		DAA2129E16FD83A800F2CAC0 /* RandomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126616FD83A800F2CAC0 /* RandomViewController.m */; };
-		DAA2129F16FD83A800F2CAC0 /* RumorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126816FD83A800F2CAC0 /* RumorTableViewController.m */; };
 		DAA212A016FD83A800F2CAC0 /* RumorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126A16FD83A800F2CAC0 /* RumorViewController.m */; };
 		DAA212A116FD83A800F2CAC0 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126C16FD83A800F2CAC0 /* SearchTableViewController.m */; };
 		DAA212A216FD83A800F2CAC0 /* WebBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAA2126E16FD83A800F2CAC0 /* WebBrowserViewController.m */; };
@@ -124,26 +121,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DA146F1E1DBFD39A006BAC25 /* AsynchronousDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousDataSource.h; sourceTree = "<group>"; };
-		DA146F1F1DBFD39A006BAC25 /* AsynchronousDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousDataSource.m; sourceTree = "<group>"; };
+		DA146F1E1DBFD39A006BAC25 /* AsynchronousDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AsynchronousDataSource.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		DA146F1F1DBFD39A006BAC25 /* AsynchronousDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AsynchronousDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DA146F201DBFD39A006BAC25 /* CategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryConsumer.h; sourceTree = "<group>"; };
 		DA146F211DBFD39A006BAC25 /* CategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryConsumer.m; sourceTree = "<group>"; };
 		DA146F221DBFD39A006BAC25 /* CategoryDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryDataSource.h; sourceTree = "<group>"; };
-		DA146F231DBFD39A006BAC25 /* CategoryDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryDataSource.m; sourceTree = "<group>"; };
+		DA146F231DBFD39A006BAC25 /* CategoryDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CategoryDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DA146F241DBFD39A006BAC25 /* RumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorConsumer.h; sourceTree = "<group>"; };
 		DA146F251DBFD39A006BAC25 /* RumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorConsumer.m; sourceTree = "<group>"; };
 		DA146F261DBFD39A006BAC25 /* RumorDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorDataSource.h; sourceTree = "<group>"; };
-		DA146F271DBFD39A006BAC25 /* RumorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorDataSource.m; sourceTree = "<group>"; };
+		DA146F271DBFD39A006BAC25 /* RumorDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RumorDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DA146F281DBFD39A006BAC25 /* SearchConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchConsumer.h; sourceTree = "<group>"; };
 		DA146F291DBFD39A006BAC25 /* SearchConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchConsumer.m; sourceTree = "<group>"; };
 		DA146F2A1DBFD39A006BAC25 /* SearchDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchDataSource.h; sourceTree = "<group>"; };
-		DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchDataSource.m; sourceTree = "<group>"; };
-		DA146F2C1DBFD39A006BAC25 /* Top25RumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Top25RumorConsumer.h; sourceTree = "<group>"; };
-		DA146F2D1DBFD39A006BAC25 /* Top25RumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top25RumorConsumer.m; sourceTree = "<group>"; };
+		DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchDataSource.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DA146F2E1DBFD39A006BAC25 /* TopLevelCategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopLevelCategoryConsumer.h; sourceTree = "<group>"; };
 		DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopLevelCategoryConsumer.m; sourceTree = "<group>"; };
-		DA146F301DBFD39A006BAC25 /* WhatsNewRumorConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhatsNewRumorConsumer.h; sourceTree = "<group>"; };
-		DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhatsNewRumorConsumer.m; sourceTree = "<group>"; };
 		DA146F401DBFE921006BAC25 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		DA146F411DBFE921006BAC25 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		DA146F421DBFE921006BAC25 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -213,17 +206,15 @@
 		DAA2123016FD83A800F2CAC0 /* DebunkedAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebunkedAppDelegate.h; sourceTree = "<group>"; };
 		DAA2123116FD83A800F2CAC0 /* DebunkedAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebunkedAppDelegate.m; sourceTree = "<group>"; };
 		DAA2125F16FD83A800F2CAC0 /* AsynchronousTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousTableViewController.h; sourceTree = "<group>"; };
-		DAA2126016FD83A800F2CAC0 /* AsynchronousTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousTableViewController.m; sourceTree = "<group>"; };
+		DAA2126016FD83A800F2CAC0 /* AsynchronousTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AsynchronousTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DAA2126116FD83A800F2CAC0 /* CategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryTableViewController.h; sourceTree = "<group>"; };
 		DAA2126216FD83A800F2CAC0 /* CategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryTableViewController.m; sourceTree = "<group>"; };
 		DAA2126316FD83A800F2CAC0 /* MostViewedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MostViewedTableViewController.h; sourceTree = "<group>"; };
 		DAA2126416FD83A800F2CAC0 /* MostViewedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MostViewedTableViewController.m; sourceTree = "<group>"; };
 		DAA2126516FD83A800F2CAC0 /* RandomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomViewController.h; sourceTree = "<group>"; };
 		DAA2126616FD83A800F2CAC0 /* RandomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomViewController.m; sourceTree = "<group>"; };
-		DAA2126716FD83A800F2CAC0 /* RumorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorTableViewController.h; sourceTree = "<group>"; };
-		DAA2126816FD83A800F2CAC0 /* RumorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorTableViewController.m; sourceTree = "<group>"; };
 		DAA2126916FD83A800F2CAC0 /* RumorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RumorViewController.h; sourceTree = "<group>"; };
-		DAA2126A16FD83A800F2CAC0 /* RumorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RumorViewController.m; sourceTree = "<group>"; };
+		DAA2126A16FD83A800F2CAC0 /* RumorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RumorViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		DAA2126B16FD83A800F2CAC0 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
 		DAA2126C16FD83A800F2CAC0 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
 		DAA2126D16FD83A800F2CAC0 /* WebBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebBrowserViewController.h; sourceTree = "<group>"; };
@@ -501,12 +492,8 @@
 				DA146F291DBFD39A006BAC25 /* SearchConsumer.m */,
 				DA146F2A1DBFD39A006BAC25 /* SearchDataSource.h */,
 				DA146F2B1DBFD39A006BAC25 /* SearchDataSource.m */,
-				DA146F2C1DBFD39A006BAC25 /* Top25RumorConsumer.h */,
-				DA146F2D1DBFD39A006BAC25 /* Top25RumorConsumer.m */,
 				DA146F2E1DBFD39A006BAC25 /* TopLevelCategoryConsumer.h */,
 				DA146F2F1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m */,
-				DA146F301DBFD39A006BAC25 /* WhatsNewRumorConsumer.h */,
-				DA146F311DBFD39A006BAC25 /* WhatsNewRumorConsumer.m */,
 			);
 			path = "Data Sources";
 			sourceTree = "<group>";
@@ -522,8 +509,6 @@
 				DAA2126416FD83A800F2CAC0 /* MostViewedTableViewController.m */,
 				DAA2126516FD83A800F2CAC0 /* RandomViewController.h */,
 				DAA2126616FD83A800F2CAC0 /* RandomViewController.m */,
-				DAA2126716FD83A800F2CAC0 /* RumorTableViewController.h */,
-				DAA2126816FD83A800F2CAC0 /* RumorTableViewController.m */,
 				DAA2126916FD83A800F2CAC0 /* RumorViewController.h */,
 				DAA2126A16FD83A800F2CAC0 /* RumorViewController.m */,
 				DAA2126B16FD83A800F2CAC0 /* SearchTableViewController.h */,
@@ -778,7 +763,6 @@
 				DA146F3A1DBFD39A006BAC25 /* TopLevelCategoryConsumer.m in Sources */,
 				DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */,
 				DA146F371DBFD39A006BAC25 /* SearchConsumer.m in Sources */,
-				DA146F3B1DBFD39A006BAC25 /* WhatsNewRumorConsumer.m in Sources */,
 				DA146F331DBFD39A006BAC25 /* CategoryConsumer.m in Sources */,
 				DA146F321DBFD39A006BAC25 /* AsynchronousDataSource.m in Sources */,
 				DA146F821DBFE9B8006BAC25 /* RumorNodeTableViewCell.m in Sources */,
@@ -786,7 +770,6 @@
 				DA146F5C1DBFE921006BAC25 /* SBJsonWriter.m in Sources */,
 				DA146F7F1DBFE9B8006BAC25 /* CategoryNodeTableViewCell.m in Sources */,
 				DA146F841DBFE9B8006BAC25 /* SearchResultTableViewCell.m in Sources */,
-				DA146F391DBFD39A006BAC25 /* Top25RumorConsumer.m in Sources */,
 				DA146F551DBFE921006BAC25 /* TFHppleElement.m in Sources */,
 				DA146F591DBFE921006BAC25 /* SBJSON.m in Sources */,
 				DA146F811DBFE9B8006BAC25 /* LoadingView.m in Sources */,
@@ -804,7 +787,6 @@
 				DA146F6A1DBFE951006BAC25 /* DiskCache.m in Sources */,
 				DA146F381DBFD39A006BAC25 /* SearchDataSource.m in Sources */,
 				DAA2129E16FD83A800F2CAC0 /* RandomViewController.m in Sources */,
-				DAA2129F16FD83A800F2CAC0 /* RumorTableViewController.m in Sources */,
 				DAA212A016FD83A800F2CAC0 /* RumorViewController.m in Sources */,
 				DA146F571DBFE921006BAC25 /* NSObject+SBJSON.m in Sources */,
 				DA146F801DBFE9B8006BAC25 /* CategoryNodeView.m in Sources */,

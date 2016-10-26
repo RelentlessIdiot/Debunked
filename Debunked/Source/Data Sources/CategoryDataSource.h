@@ -16,37 +16,21 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-
 #import "AsynchronousDataSource.h"
-#import "CachedDataLoader.h"
-
 #import "Category.h"
 #import "CategoryNode.h"
 #import "RumorNode.h"
 
 
-@protocol CategoryDelegate<AsynchronousDelegate>
-
-@required
-
-- (void)receiveCategoryNodes:(NSArray *)theCategoryNodes withResult:(NSInteger)theResult;
-
-@end
-
-
 @interface CategoryDataSource: AsynchronousDataSource
 
-@property (nonatomic,retain) NSMutableArray *categoryNodes;
+@property (nonatomic,readonly) Category *category;
+@property (nonatomic,readonly) NSInteger nodeCount;
 
-- (id)init;
-- (id)initWithCategoryNodes:(NSMutableArray *)theCategoryNodes NS_DESIGNATED_INITIALIZER;
 - (CategoryNode *)categoryNodeForIndexPath:(NSIndexPath *)theIndexPath;
+- (RumorNode *)rumorNodeForIndexPath:(NSIndexPath *)theIndexPath;
 
-- (void)loadCategoryNodes:(NSMutableArray *)theCategoryNodes;
-
-- (NSInteger)requestCategoryNodes:(NSString *)theUrl notifyDelegate:(NSObject<CategoryDelegate> *)theDelegate;
-- (NSInteger)requestTopLevelCategoryNodesNotifyDelegate:(NSObject<CategoryDelegate> *)theDelegate;
-
-- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
+- (NSInteger)requestCategory:(NSString *)theUrl notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
+- (NSInteger)requestTopLevelCategoryNotifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate;
 
 @end

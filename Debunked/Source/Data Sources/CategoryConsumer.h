@@ -16,22 +16,9 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "Blacklist.h"
-#import "CategoryDataSource.h"
-#import "CategoryNode.h"
-#import "CachedDataLoader.h"
 #import "DataConsumer.h"
-#import "TFHpple.h"
 
 
 @interface CategoryConsumer: DataConsumer
-
-@property (nonatomic,retain) NSObject<CategoryDelegate> *delegate;
-@property (nonatomic,retain) CategoryDataSource *dataSource;
-
-- (id)initWithDelegate:(NSObject<CategoryDelegate> *)theDelegate
-		withDataSource:(CategoryDataSource *)theDataSource
-			   withUrl:(NSString *)theUrl;
-- (void)receiveData:(NSData *)data withResponse:(NSURLResponse *)response;
 
 @end

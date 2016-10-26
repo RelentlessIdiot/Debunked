@@ -16,71 +16,35 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "SearchDataSource.h"
-
+#import "CachedDataLoader.h"
 #import "SearchConsumer.h"
+#import "SearchResultView.h"
 #import "SearchResultTableViewCell.h"
-
-#import "RumorConsumer.h"
-#import "RumorDataSource.h"
 
 
 @implementation SearchDataSource
 
-@synthesize searchResults;
-
-- (void)dealloc
+- (NSArray *)searchResults
 {
-    [searchResults release];
-
-    [super dealloc];
-}
-
-- (id) init
-{
-    if(self = [super init]) {
-        lastRequestId = 0;
-    }
-    return self;
-}
-
-- (void)loadSearchResults:(NSMutableArray *)theSearchResults
-{
-	self.searchResults = theSearchResults;
+    return (NSArray *)self.item;
 }
 
 - (SearchResult *)searchResultForIndex:(NSUInteger)theIndex
 {
-	if([searchResults count] > 0) {
-		return [searchResults objectAtIndex:theIndex];
-	} else {
-		return nil;
-	}
+	return [self.searchResults objectAtIndex:theIndex];
 }
 
-- (NSInteger)requestSearchResults:(NSString *)query notifyDelegate:(NSObject<SearchDelegate> *)theDelegate
+- (NSInteger)requestSearchResults:(NSString *)query notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
 {
 	NSString *baseQuery = @"http://search.atomz.com/search/?sp-a=00062d45-sp00000000&sp-c=100&sp-q=";
 	NSString *queryString = [[query componentsSeparatedByString:@" "] componentsJoinedByString:@"+"];
 	NSString *fullQuery = [baseQuery stringByAppendingString:queryString];
-	NSNumber *requestId = nil;
-	@synchronized(self) {
-		lastRequestId++;
-		requestId = [NSNumber numberWithInteger:lastRequestId];
-		
-		SearchConsumer *consumer = [[SearchConsumer alloc] initWithDelegate:theDelegate 
-																	 withDataSource:self
-																			withUrl:fullQuery];
-		NSArray *theRequest = [NSArray arrayWithObjects:
-							   consumer, 
-							   theDelegate, 
-							   nil];
-		[activeRequests setObject:theRequest forKey:requestId];
-		
-		CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-		[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
-		[consumer release];
-	}
-	return [requestId intValue];
+    return [self request:fullQuery consumerClass:SearchConsumer.class notifyDelegate:theDelegate];
+}
+
+- (CGFloat)tableView:(UITableView *)theTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [SearchResultView preferredHeight];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -94,20 +58,9 @@
 	return cell;
 }
 
-- (void)doRequestItemForIndexPath:(NSIndexPath *)theIndexPath notifyDelegate:(NSObject<AsynchronousDelegate> *)theDelegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	SearchResult *aSearchResult = [self searchResultForIndex:theIndexPath.row];	
-	
-	RumorConsumer *consumer = [[RumorConsumer alloc] initWithDelegate:(NSObject<RumorDelegate> *)theDelegate
-													   withDataSource:(RumorDataSource *)self
-															  withUrl:aSearchResult.url];	
-	CachedDataLoader *dataLoader = [CachedDataLoader sharedDataLoader];
-	[dataLoader addClientToDownloadQueue:consumer withExpiration:(60 * 10)]; // 10 minutes
-	[consumer release];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [searchResults count];
+	return self.searchResults.count;
 }
 
 @end

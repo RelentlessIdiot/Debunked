@@ -16,20 +16,9 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "DebunkedAppDelegate.h"
-#import "CategoryDataSource.h"
 #import "AsynchronousTableViewController.h"
-#import "WebBrowserViewController.h"
 
 
-@interface CategoryTableViewController : AsynchronousTableViewController<CategoryDelegate>
-{
-	BOOL isTopLevel;
-}
-
-@property (nonatomic,retain) NSString *url;
-@property (nonatomic,retain) Category *category;
-
-- (id)initWithUrl:(NSString *)theUrl;
+@interface CategoryTableViewController: AsynchronousTableViewController<UIScrollViewDelegate>
 
 @end

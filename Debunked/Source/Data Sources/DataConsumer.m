@@ -16,17 +16,36 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "DataConsumer.h"
+#import "Blacklist.h"
+#import "RumorNode.h"
+#import "TFHpple.h"
 
 
 @implementation DataConsumer
 
+@synthesize requestId;
 @synthesize url;
 @synthesize targetUrl;
+@synthesize dataSource;
+
+- (id)initWithRequestId:(NSInteger)theRequestId
+         withDataSource:(AsynchronousDataSource *)theDataSource
+                withUrl:(NSString *)theUrl
+{
+    if(self = [super init]) {
+        self.requestId = theRequestId;
+        self.url = theUrl;
+        self.targetUrl = theUrl;
+        self.dataSource = theDataSource;
+    }
+    return self;
+}
 
 - (void)dealloc
 {
     [url release];
     [targetUrl release];
+    [dataSource release];
 
     [super dealloc];
 }
@@ -65,60 +84,6 @@
         absoluteUrl = [absoluteUrl stringByAppendingString:urlString];
         return absoluteUrl;
     }
-}
-
-- (NSArray *)parseRumorNodes:(NSData *)data
-{
-    NSMutableArray *rumorNodes = [NSMutableArray array];
-    TFHpple *parser = nil;
-    @try {
-        parser = [[TFHpple alloc] initWithHTMLData:data];
-        NSArray *posts = [parser search: @"//ul[@class=\"post-list\"]/li"];
-
-        for (int i = 0; i < [posts count]; i++) {
-            TFHppleElement *post = [posts objectAtIndex:i];
-            TFHpple *postParser = nil;
-            @try {
-                postParser = [[TFHpple alloc] initWithHTMLData: [post.outerHtml dataUsingEncoding: NSUTF8StringEncoding]];
-                TFHppleElement *link = [postParser at: @"//h4[@class=\"title\"]/a"];
-                TFHppleElement *img = [postParser at: @"//div[@class=\"post-img\"]/img"];
-                TFHppleElement *syn = [postParser at: @"//p[@class=\"body\"]/span[@class=\"label\"]"];
-                if (syn == nil) {
-                    syn = [postParser at: @"//p[@class=\"body\"]"];
-                }
-                if (link && img && syn) {
-                    NSString *nodeUrl = [self resolveUrl:[link objectForKey:@"href"]];
-                    NSString *nodeImageUrl = [self resolveUrl:[img objectForKey:@"src"]];
-                    NSString *nodeSynopsis = [[syn content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                    NSString *nodeLabel = [[link textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
-                    if (![Blacklist isBlacklisted:nodeUrl]) {
-                        RumorNode *rumorNode = [[RumorNode alloc] initWithUrl:nodeUrl
-                                                                    withLabel:nodeLabel
-                                                                 withSynopsis:nodeSynopsis
-                                                                 withVeracity:@""
-                                                                 withImageUrl:nodeImageUrl];
-                        [rumorNodes addObject:rumorNode];
-                        [rumorNode release];
-                    }
-                }
-            }
-            @catch (NSException *exception) {
-                NSLog(@"ERROR: failed parsing rumor\n%@\n\n%@", exception.description, post.outerHtml);
-            }
-            @finally {
-                [postParser release];
-            }
-        }
-    }
-    @catch (NSException *exception) {
-        NSLog(@"ERROR: failed parsing rumors\n%@", exception.description);
-    }
-    @finally {
-        [parser release];
-    }
-
-    return rumorNodes;
 }
 
 @end

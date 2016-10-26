@@ -24,8 +24,8 @@
 @synthesize dataSource;
 @synthesize webView;
 @synthesize loadingView;
-@synthesize hasRumor;
-@synthesize isRendered;
+@synthesize isWebViewLoaded;
+@synthesize url;
 
 - (void)dealloc
 {
@@ -33,49 +33,20 @@
     webView.delegate = nil;
     [webView release];
     [dataSource release];
+    [url release];
 
     [super dealloc];
 }
 
--(void) setRumor:(Rumor *)theRumor
-{
-	if (rumor != theRumor) {
-		[rumor release];
-		rumor = [theRumor retain];
-
-		if (self.rumor != nil && ![self.rumor isEqual:@""]) {
-			[self.navigationItem performSelectorOnMainThread:@selector(setTitle:) withObject:self.rumor.title waitUntilDone:NO];
-			[self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
-		}
-	}
-	self.hasRumor = (rumor != nil);
-	[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-}
-
 - (id)init
 {
-	return [self initWithRumor:nil];
+	return [self initWithUrl:nil];
 }
 
-- (id)initWithRumor:(Rumor *)theRumor
-{
-	return [self initWithDataSource:nil withRumor:theRumor];
-}
-
-- (id)initWithDataSource:(RumorDataSource *)theDataSource
-{
-	return [self initWithDataSource:theDataSource withRumor:nil];
-}
-
-- (id)initWithDataSource:(RumorDataSource *)theDataSource withRumor:(Rumor *)theRumor
+- (id)initWithUrl:(NSString *)theUrl
 {
     if (self = [super init]) {
-        self.dataSource = theDataSource;
-		self.rumor = theRumor;
-
-		if (self.rumor != nil && ![self.rumor isEqual:@""]) {
-			self.title = self.rumor.title;
-		}
+        self.url = theUrl;
 
         Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
         BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
@@ -98,12 +69,16 @@
         }
 
         [self.navigationItem setRightBarButtonItems:buttons];
-	}
-	return self;
+    }
+    return self;
 }
 
 - (void)viewDidLoad
 {
+    if (self.dataSource == nil) {
+        self.dataSource = [[[RumorDataSource alloc] init] autorelease];
+    }
+
     [super viewDidLoad];
 
     self.webView = [[[UIWebView alloc] initWithFrame:self.view.bounds] autorelease];
@@ -118,20 +93,28 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     @synchronized(self) {
-        if (hasRumor && rumor == nil && loadingView == nil) {
-            loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+        if (!isWebViewLoaded) {
+            [self reloadDataSource];
         }
     }
-
-    [self performSelectorOnMainThread:@selector(updateWebView) withObject:nil waitUntilDone:NO];
 
     [super viewWillAppear:animated];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)reloadDataSource
 {
-    self.isRendered = NO;
-    [super didReceiveMemoryWarning];
+    @synchronized(self) {
+        [self.dataSource cancelRequest:lastRequestId];
+
+        if (self.url != nil) {
+            if (self.loadingView == nil) {
+                self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
+            }
+
+            RumorDataSource *rumorDataSource = (RumorDataSource *)self.dataSource;
+            lastRequestId = [rumorDataSource requestRumor:self.url notifyDelegate:self];
+        }
+    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -207,7 +190,8 @@
 }
 
 - (void)handleBrowseButton
-{	if (self.rumor != nil) {
+{
+    if (self.rumor != nil) {
 		DebunkedAppDelegate *appDelegate = (DebunkedAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[appDelegate.tabBarController setSelectedIndex:2];
 		UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
@@ -265,21 +249,27 @@
 	loadingView = nil;
 }
 
-- (void)updateWebView
-{
-	if (self.webView && !self.isRendered && self.rumor != nil && ![self.rumor isEqual:@""]) {
-		if (self.rumor.rawHtml != nil && ![self.rumor.rawHtml isEqual:@""]) {
-			self.isRendered = YES;
-			NSURL *baseUrl = [NSURL URLWithString:self.rumor.url];
-			[self.webView loadHTMLString:self.rumor.rawHtml baseURL:baseUrl];
-		}
-	}
-}
-
-- (void)receive:(id)theItem withResult:(NSInteger)theResult
+- (void)receive:(id)theItem
 {
 	Rumor *theRumor = (Rumor *)theItem;
-	self.rumor = theRumor;
+    if (theRumor == nil) {
+        NSURL *baseUrl = [NSURL URLWithString:@""];
+        [self.webView loadHTMLString:@"" baseURL:baseUrl];
+    } else {
+        NSURL *baseUrl = [NSURL URLWithString:theRumor.url];
+        [self.webView loadHTMLString:theRumor.rawHtml baseURL:baseUrl];
+    }
+    [self removeLoadingView];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    self.isWebViewLoaded = YES;
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    self.isWebViewLoaded = YES;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSWebViewURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -307,23 +297,15 @@
 
 		}
 		if (isRumor) {
-			RumorDataSource *rumorDataSource = [[[RumorDataSource alloc] init] autorelease];
-
-			RumorViewController *rumorViewController = [[[self class] alloc] initWithDataSource:rumorDataSource];
-			rumorViewController.hasRumor = YES;
-			[[self navigationController] pushViewController:rumorViewController animated:YES];
-			[rumorDataSource requestRumor:absoluteString notifyDelegate:(NSObject<RumorDelegate> *)rumorViewController];
-
-			[rumorViewController release];
+            RumorViewController *rumorController = [[[[self class] alloc] initWithUrl:absoluteString] autorelease];
+			[[self navigationController] pushViewController:rumorController animated:YES];
         } else if (isCategory) {
-            CategoryTableViewController *categoryViewController = [[CategoryTableViewController alloc] initWithUrl:absoluteString];
-            [[self navigationController] pushViewController:categoryViewController animated:YES];
-            [categoryViewController release];
+            CategoryTableViewController *categoryController = [[[CategoryTableViewController alloc] initWithUrl:absoluteString] autorelease];
+            [[self navigationController] pushViewController:categoryController animated:YES];
         } else {
-			WebViewController *webViewController = [[WebViewController alloc] init];
-			[[self navigationController] pushViewController:webViewController animated:YES];
-			[webViewController loadRequest:request];
-			[webViewController release];
+			WebViewController *webController = [[[WebViewController alloc] init] autorelease];
+			[[self navigationController] pushViewController:webController animated:YES];
+			[webController loadRequest:request];
 		}
 		return NO;
     }

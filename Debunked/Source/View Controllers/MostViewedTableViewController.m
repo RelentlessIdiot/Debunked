@@ -16,58 +16,41 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "MostViewedTableViewController.h"
-#import "LoadingView.h"
+#import "DebunkedAppDelegate.h"
+#import "WebBrowserViewController.h"
 #import "RumorDataSource.h"
 
 
 @implementation MostViewedTableViewController
 
+@synthesize segmentedControl;
+
+- (NSString *)url
+{
+    if (segmentedControl.selectedSegmentIndex == 0) {
+        return @"http://www.snopes.com/info/whatsnew.asp";
+    } else {
+        return @"http://www.snopes.com/info/top25uls.asp";
+    }
+}
+
+- (void)dealloc
+{
+    [segmentedControl release];
+
+    [super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-	self.tableView.delegate = self;
-
-	UISegmentedControl *segmentedControl = [[[UISegmentedControl alloc] initWithItems:@[@"What's New", @"Top 25"]] autorelease];
-	segmentedControl.selectedSegmentIndex = selectedSegmentIndex;
-	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+	self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"What's New", @"Top 25"]];
+	self.segmentedControl.selectedSegmentIndex = 0;
+	self.segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+	[self.segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
 
 	self.navigationItem.titleView = segmentedControl;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	@synchronized(self) {
-		if ([[(RumorDataSource *)self.dataSource rumorNodes] count] == 0) {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-			if (self.tableView.dragging || self.tableView.decelerating) {
-				needsLoadingView = YES;
-			} else {
-				if (self.loadingView == nil) {
-					needsLoadingView = NO;
-					self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-				}
-			}
-			if ([(UISegmentedControl *)self.navigationItem.titleView selectedSegmentIndex] == 0) {
-				lastRequestId = [(RumorDataSource *)self.dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
-			} else {
-				lastRequestId = [(RumorDataSource *)self.dataSource requestTop25RumorNodesNotifyDelegate:self];
-			}
-		}
-	}
-
-	[super viewWillAppear:animated];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-	if (needsLoadingView == YES) {
-		needsLoadingView = NO;
-		if (self.loadingView == nil) {
-			self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-		}
-	}
 }
 
 - (void)handleBrowseButton
@@ -76,52 +59,12 @@
 	[appDelegate.tabBarController setSelectedIndex:2];
 	UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
 	WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
-	if (selectedSegmentIndex == 0) {
-		[webBrowser loadUrl:@"http://www.snopes.com/info/whatsnew.asp"];
-	} else {
-		[webBrowser loadUrl:@"http://www.snopes.com/info/top25uls.asp"];
-	}
+    [webBrowser loadUrl:self.url];
 }
 
 - (void)segmentAction:(id)sender
 {
-	@synchronized(self) {
-		[self.dataSource cancelRequest:lastRequestId];
-		self.loadingCell = nil;
-
-		if (self.tableView.dragging || self.tableView.decelerating) {
-			needsLoadingView = YES;
-		} else {
-			if (self.loadingView == nil) {
-				needsLoadingView = NO;
-				self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-			}
-		}
-
-		UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-		selectedSegmentIndex = segmentedControl.selectedSegmentIndex;
-		if (segmentedControl.selectedSegmentIndex == 0) {
-			lastRequestId = [(RumorDataSource *)self.dataSource requestWhatsNewRumorNodesNotifyDelegate:self];
-		} else {
-			lastRequestId = [(RumorDataSource *)self.dataSource requestTop25RumorNodesNotifyDelegate:self];
-		}
-	}
-}
-
-- (void)receiveRumorNodes:(NSArray *)theRumorNodes withResult:(NSInteger)theResult
-{
-	@synchronized(self) {
-		needsLoadingView = NO;
-		[self performSelectorOnMainThread:@selector(removeLoadingView) withObject:nil waitUntilDone:YES];
-		if (theRumorNodes != nil && [theRumorNodes count] > 0) {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-		} else {
-			self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-		}
-		[self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-	}
-	[self performSelectorOnMainThread:@selector(scrollToTop) withObject:nil waitUntilDone:NO];
-	[self.tableView performSelectorOnMainThread:@selector(setNeedsDisplay) withObject:nil waitUntilDone:NO];
+    [self reloadDataSource];
 }
 
 @end
