@@ -16,9 +16,7 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "SearchDataSource.h"
-#import "CachedDataLoader.h"
 #import "SearchConsumer.h"
-#import "SearchResultView.h"
 #import "SearchResultTableViewCell.h"
 
 

@@ -16,7 +16,6 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "CategoryDataSource.h"
-#import "CachedDataLoader.h"
 #import "CategoryConsumer.h"
 #import "TopLevelCategoryConsumer.h"
 #import "CategoryNodeTableViewCell.h"
