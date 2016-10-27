@@ -24,10 +24,7 @@
 
 @implementation CategoryTableViewController
 
-- (CategoryDataSource *)categoryDataSource
-{
-    return (CategoryDataSource *)self.dataSource;
-}
+- (CategoryDataSource *)categoryDataSource { return (CategoryDataSource *)self.dataSource; }
 
 - (void)viewDidLoad
 {
@@ -36,11 +33,6 @@
     }
 
     [super viewDidLoad];
-
-    if (ENABLE_BROWSE_BUTTON) {
-        UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
-        self.navigationItem.rightBarButtonItem = browseButtonItem;
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

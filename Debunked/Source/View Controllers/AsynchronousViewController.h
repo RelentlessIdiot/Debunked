@@ -20,7 +20,7 @@
 #import "LoadingView.h"
 
 
-@interface AsynchronousViewController: UIViewController<AsynchronousDelegate>
+@interface AsynchronousViewController: UIViewController<AsynchronousDelegate, UIActionSheetDelegate>
 {
     NSInteger lastRequestId;
     BOOL needsLoadingView;
@@ -30,10 +30,15 @@
 @property (nonatomic,assign) LoadingView *loadingView;
 @property (nonatomic,retain) NSString *url;
 @property (nonatomic,readonly) UIScrollView *scrollView;
+@property (nonatomic,readonly) BOOL canEmail;
+@property (nonatomic,readonly) BOOL canPrint;
 
 - (id)init;
 - (id)initWithUrl:(NSString *)theUrl;
-- (void)handleBrowseButton;
+- (void)handleShareButton;
+- (void)print;
+- (void)email;
+- (void)openInSafari;
 - (void)addLoadingView;
 - (void)removeLoadingView;
 - (void)receive:(id)theItem;

@@ -18,9 +18,6 @@
 #import <UIKit/UIKit.h>
 
 
-#define ENABLE_BROWSE_BUTTON NO
-
-
 @interface UIViewController (Extension)
 - (void)pushViewControllerAnimated:(UIViewController *)viewController;
 @end

@@ -23,18 +23,14 @@
 
 
 @interface RumorViewController: AsynchronousViewController<
-									UIWebViewDelegate, 
-									UIActionSheetDelegate,
-									MFMailComposeViewControllerDelegate,
-									UIPrintInteractionControllerDelegate>
+    UIWebViewDelegate,
+    MFMailComposeViewControllerDelegate,
+    UIPrintInteractionControllerDelegate>
 {
     UIWebView *webView;
     BOOL isWebViewLoaded;
 }
 
 @property (nonatomic,readonly) RumorDataSource *rumorDataSource;
-
-- (void)segmentAction:(id)sender;
-- (void)handleShareButton;
 
 @end

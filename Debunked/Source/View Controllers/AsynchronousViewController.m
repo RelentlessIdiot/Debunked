@@ -23,11 +23,9 @@
 @synthesize dataSource;
 @synthesize loadingView;
 @synthesize url;
-
-- (UIScrollView *)scrollView
-{
-    return nil;
-}
+- (UIScrollView *)scrollView { return nil; }
+- (BOOL)canEmail { return NO; }
+- (BOOL)canPrint { return NO; }
 
 - (void)dealloc
 {
@@ -47,11 +45,95 @@
     if (self = [super init]) {
         lastRequestId = 0;
         self.url = theUrl;
+
+        UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"]
+                                                                        style:UIBarButtonItemStylePlain
+                                                                       target:self
+                                                                       action:@selector(handleShareButton)];
+        self.navigationItem.rightBarButtonItem = shareButton;
+        [shareButton release];
     }
     return self;
 }
 
-- (void)handleBrowseButton
+- (void)handleShareButton
+{
+    UIActionSheet *actionSheet;
+
+    if (self.canEmail) {
+        if (self.canPrint) {
+            actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+                                                      delegate: self
+                                             cancelButtonTitle: @"Cancel"
+                                        destructiveButtonTitle: nil
+                                             otherButtonTitles: @"Open in Safari", @"Email Article", @"Print Article", nil];
+        } else {
+            actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+                                                      delegate: self
+                                             cancelButtonTitle: @"Cancel"
+                                        destructiveButtonTitle: nil
+                                             otherButtonTitles: @"Open in Safari", @"Email Article", nil];
+        }
+    } else if (self.canPrint) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+                                                  delegate: self
+                                         cancelButtonTitle: @"Cancel"
+                                    destructiveButtonTitle: nil
+                                         otherButtonTitles: @"Open in Safari", @"Print Article", nil];
+    } else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle: nil
+                                                  delegate: self
+                                         cancelButtonTitle: @"Cancel"
+                                    destructiveButtonTitle: nil
+                                         otherButtonTitles: @"Open in Safari", nil];
+    }
+
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    [actionSheet showInView:self.parentViewController.tabBarController.view];
+    [actionSheet release];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSInteger safariIndex = 0;
+    NSInteger emailIndex = 1;
+    NSInteger printIndex = 2;
+
+    if (self.canEmail) {
+        emailIndex = 1;
+        if (self.canPrint) {
+            printIndex = 2;
+        } else {
+            printIndex = -1;
+        }
+    } else {
+        emailIndex = -1;
+        if (self.canPrint) {
+            printIndex = 1;
+        } else {
+            printIndex = -1;
+        }
+    }
+    if (buttonIndex == safariIndex) {
+        [self openInSafari];
+    } else if (buttonIndex == emailIndex) {
+        [self email];
+    } else if (buttonIndex == printIndex) {
+        [self print];
+    }
+}
+
+- (void)email
+{
+
+}
+
+- (void)print
+{
+
+}
+
+- (void)openInSafari
 {
     if (self.url == nil) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.snopes.com/"]];

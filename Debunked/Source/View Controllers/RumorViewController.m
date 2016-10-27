@@ -24,14 +24,20 @@
 
 @implementation RumorViewController
 
-- (RumorDataSource *)rumorDataSource
+- (RumorDataSource *)rumorDataSource { return (RumorDataSource *)self.dataSource; }
+
+- (UIScrollView *)scrollView { return webView.scrollView; }
+
+- (BOOL)canEmail
 {
-    return (RumorDataSource *)self.dataSource;
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    return (mailClass != nil && [mailClass canSendMail]);
 }
 
-- (UIScrollView *)scrollView
+- (BOOL)canPrint
 {
-    return webView.scrollView;
+    Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
+    return (printClass != nil && [printClass isPrintingAvailable]);
 }
 
 - (void)dealloc
@@ -40,34 +46,6 @@
     [webView release];
 
     [super dealloc];
-}
-
-- (id)initWithUrl:(NSString *)theUrl
-{
-    if (self = [super initWithUrl:theUrl]) {
-        Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-        BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
-
-        Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
-        BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
-
-        NSMutableArray* buttons = [NSMutableArray array];
-
-        if (ENABLE_BROWSE_BUTTON && (canPrint || canEmail)) {
-            NSArray *segmentContent = @[[UIImage imageNamed:@"share.png"], [UIImage imageNamed:@"browse.png"]];
-            UISegmentedControl *segmentedControl = [[[UISegmentedControl alloc] initWithItems:segmentContent] autorelease];
-            segmentedControl.momentary = YES;
-            [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
-            [buttons addObject:[[[UIBarButtonItem alloc] initWithCustomView:segmentedControl] autorelease]];
-        } else if (ENABLE_BROWSE_BUTTON) {
-            [buttons addObject:[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)] autorelease]];
-        } else if (canPrint || canEmail) {
-            [buttons addObject:[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleShareButton)] autorelease]];
-        }
-
-        [self.navigationItem setRightBarButtonItems:buttons];
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -120,119 +98,46 @@
     }
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)email
 {
-	NSInteger printIndex = 1;
-	NSInteger emailIndex = 0;
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    MFMailComposeViewController *picker = [[mailClass alloc] init];
+    picker.mailComposeDelegate = self;
 
-	Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-	BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
+    [picker setSubject:self.rumorDataSource.rumor.title];
 
-	Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
-	BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
+    NSString *emailBody = @"Check out this story I found on \"Debunked: Urban Legends Revealed\":\n\n";
+    emailBody = [emailBody stringByAppendingString:self.rumorDataSource.rumor.url];
+    [picker setMessageBody:emailBody isHTML:NO];
 
-	if (canEmail) {
-		if (canPrint) {
-			printIndex = 1;
-			emailIndex = 0;
-		} else {
-			printIndex = -1;
-			emailIndex = 0;
-		}
-	} else if (canPrint) {
-		printIndex = 0;
-		emailIndex = -1;
-	}
+    [self presentViewController:picker animated:YES completion:nil];
+    [picker release];
+}
 
-	if (buttonIndex == printIndex) {
-		UIPrintInteractionController *printer = [printClass sharedPrintController];
-		Class printInfoClass = (NSClassFromString(@"UIPrintInfo"));
-		UIPrintInfo *printInfo = [printInfoClass printInfo];
-		printInfo.jobName = self.rumorDataSource.rumor.title;
-		printer.printInfo = printInfo;
-		printer.delegate = self;
+- (void)print
+{
+    Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
+    UIPrintInteractionController *printer = [printClass sharedPrintController];
+    Class printInfoClass = (NSClassFromString(@"UIPrintInfo"));
+    UIPrintInfo *printInfo = [printInfoClass printInfo];
+    printInfo.jobName = self.rumorDataSource.rumor.title;
+    printer.printInfo = printInfo;
+    printer.delegate = self;
 
-		printer.printFormatter = [webView viewPrintFormatter];
+    printer.printFormatter = [webView viewPrintFormatter];
 
-		[printer presentAnimated:YES completionHandler:nil];
-
-	} else if (buttonIndex == emailIndex) {
-		MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-		picker.mailComposeDelegate = self;
-
-		[picker setSubject:self.rumorDataSource.rumor.title];
-
-		NSString *emailBody = @"Check out this story I found on \"Debunked: Urban Legends Revealed\":\n\n";
-		emailBody = [emailBody stringByAppendingString:self.rumorDataSource.rumor.url];
-		[picker setMessageBody:emailBody isHTML:NO];
-
-		[self presentViewController:picker animated:YES completion:nil];
-		[picker release];
-	}
+    [printer presentAnimated:YES completionHandler:nil];
 }
 
 - (void)printInteractionControllerDidFinishJob:(UIPrintInteractionController *)printInteractionController
 {
-	NSURL *baseUrl = [NSURL URLWithString:self.rumorDataSource.rumor.url];
-	[webView loadHTMLString:self.rumorDataSource.rumor.rawHtml baseURL:baseUrl];
+    NSURL *baseUrl = [NSURL URLWithString:self.rumorDataSource.rumor.url];
+    [webView loadHTMLString:self.rumorDataSource.rumor.rawHtml baseURL:baseUrl];
 }
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {
-	[self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)segmentAction:(id)sender
-{
-	UISegmentedControl *segmentedControl = (UISegmentedControl *)sender;
-	if (segmentedControl.selectedSegmentIndex == 0) {
-		[self handleShareButton];
-	} else {
-		[self handleBrowseButton];
-	}
-}
-
-- (void)handleShareButton
-{
-	UIActionSheet *actionSheet;
-
-	Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-	BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
-
-	Class printClass = (NSClassFromString(@"UIPrintInteractionController"));
-	BOOL canPrint = (printClass != nil && [printClass isPrintingAvailable]);
-
-	if (canEmail) {
-		if (canPrint) {
-			actionSheet = [[UIActionSheet alloc] initWithTitle: nil
-													  delegate: self
-											 cancelButtonTitle: @"Cancel"
-										destructiveButtonTitle: nil
-											 otherButtonTitles: @"Email Article", @"Print", nil];
-		} else {
-			actionSheet = [[UIActionSheet alloc] initWithTitle: nil
-													  delegate: self
-											 cancelButtonTitle: @"Cancel"
-										destructiveButtonTitle: nil
-											 otherButtonTitles: @"Email Article", nil];
-		}
-	} else if (canPrint) {
-		actionSheet = [[UIActionSheet alloc] initWithTitle: nil
-												  delegate: self
-										 cancelButtonTitle: @"Cancel"
-									destructiveButtonTitle: nil
-										 otherButtonTitles: @"Print Article", nil];
-	} else {
-		actionSheet = [[UIActionSheet alloc] initWithTitle: nil
-												  delegate: self
-										 cancelButtonTitle: @"Cancel"
-									destructiveButtonTitle: nil
-										 otherButtonTitles: nil];
-    }
-
-	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
-	[actionSheet showInView:self.parentViewController.tabBarController.view];
-	[actionSheet release];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

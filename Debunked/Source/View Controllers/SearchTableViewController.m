@@ -32,6 +32,33 @@
     [super dealloc];
 }
 
+- (id)initWithUrl:(NSString *)theUrl
+{
+    if (self = [super initWithUrl:theUrl]) {
+        UIView *hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+        UIBarButtonItem *hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
+        self.navigationItem.backBarButtonItem = hackItem;
+        self.navigationItem.hidesBackButton = YES;
+
+        hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+        hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
+        self.navigationItem.leftBarButtonItem = hackItem;
+
+        hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+        hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
+        self.navigationItem.rightBarButtonItem = hackItem;
+
+        searchBar = [[UISearchBar alloc] init];
+        searchBar.delegate = self;
+        searchBar.showsCancelButton = NO;
+        searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
+        self.navigationItem.titleView = searchBar;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     if (self.dataSource == nil) {
@@ -39,27 +66,6 @@
     }
 
     [super viewDidLoad];
-
-	UIView *hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-	UIBarButtonItem *hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
-	self.navigationItem.backBarButtonItem = hackItem;
-	self.navigationItem.hidesBackButton = YES;
-
-	hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-	hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
-	self.navigationItem.leftBarButtonItem = hackItem;
-
-	hackView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-	hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
-	self.navigationItem.rightBarButtonItem = hackItem;
-
-	searchBar = [[UISearchBar alloc] init];
-	searchBar.delegate = self;
-	searchBar.showsCancelButton = NO;
-	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-	searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
-	self.navigationItem.titleView = searchBar;
 
 	hideButton = [[UIButton alloc] initWithFrame:self.view.bounds];
 	hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
@@ -85,7 +91,7 @@
 
 - (void)resizeHideButton
 {
-    CGRect frame = [hideButton frame];
+    CGRect frame = hideButton.frame;
     frame.size.height = MAX(self.tableView.contentSize.height, self.tableView.frame.size.height);
     [hideButton setFrame:frame];
 }
