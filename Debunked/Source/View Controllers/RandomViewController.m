@@ -20,14 +20,14 @@
 
 @implementation RandomViewController
 
-- (id)init
+- (NSString *)url
 {
-    return [self initWithUrl:@"http://www.snopes.com/info/random/random.asp"];
+    return self.rumorDataSource.rumor.url;
 }
 
 - (id)initWithUrl:(NSString *)theUrl
 {
-    if (self = [super initWithUrl:theUrl]) {
+    if (self = [super initWithUrl:nil]) {
 		UIBarButtonItem *nextButton = [[[UIBarButtonItem alloc] init] autorelease];
 		nextButton.style = UIBarButtonItemStylePlain;
 		nextButton.title = @"Random";
@@ -51,15 +51,8 @@
 {
     @synchronized(self) {
         [self.dataSource cancelRequest:lastRequestId];
-
-        if (self.url != nil) {
-            if (self.loadingView == nil) {
-                self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-            }
-
-            RumorDataSource *rumorDataSource = (RumorDataSource *)self.dataSource;
-            lastRequestId = [rumorDataSource requestRandomRumorNotifyDelegate:self];
-        }
+        [self addLoadingView];
+        lastRequestId = [self.rumorDataSource requestRandomRumorNotifyDelegate:self];
     }
 }
 

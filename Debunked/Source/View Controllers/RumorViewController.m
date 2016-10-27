@@ -16,38 +16,38 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "RumorViewController.h"
+#import "Rumor.h"
+#import "CategoryTableViewController.h"
+#import "WebViewController.h"
+#import "WebBrowserViewController.h"
 
 
 @implementation RumorViewController
 
-@synthesize rumor;
-@synthesize dataSource;
 @synthesize webView;
-@synthesize loadingView;
 @synthesize isWebViewLoaded;
-@synthesize url;
+
+- (RumorDataSource *)rumorDataSource
+{
+    return (RumorDataSource *)self.dataSource;
+}
+
+- (UIScrollView *)scrollView
+{
+    return self.webView.scrollView;
+}
 
 - (void)dealloc
 {
-    [rumor release];
     webView.delegate = nil;
     [webView release];
-    [dataSource release];
-    [url release];
 
     [super dealloc];
 }
 
-- (id)init
-{
-	return [self initWithUrl:nil];
-}
-
 - (id)initWithUrl:(NSString *)theUrl
 {
-    if (self = [super init]) {
-        self.url = theUrl;
-
+    if (self = [super initWithUrl:theUrl]) {
         Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
         BOOL canEmail = (mailClass != nil && [mailClass canSendMail]);
 
@@ -93,7 +93,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     @synchronized(self) {
-        if (!isWebViewLoaded) {
+        if (!isWebViewLoaded && !self.webView.isLoading) {
             [self reloadDataSource];
         }
     }
@@ -104,16 +104,8 @@
 - (void)reloadDataSource
 {
     @synchronized(self) {
-        [self.dataSource cancelRequest:lastRequestId];
-
-        if (self.url != nil) {
-            if (self.loadingView == nil) {
-                self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-            }
-
-            RumorDataSource *rumorDataSource = (RumorDataSource *)self.dataSource;
-            lastRequestId = [rumorDataSource requestRumor:self.url notifyDelegate:self];
-        }
+        [super reloadDataSource];
+        lastRequestId = [self.rumorDataSource requestRumor:self.url notifyDelegate:self];
     }
 }
 
@@ -145,7 +137,7 @@
 		UIPrintInteractionController *printer = [printClass sharedPrintController];
 		Class printInfoClass = (NSClassFromString(@"UIPrintInfo"));
 		UIPrintInfo *printInfo = [printInfoClass printInfo];
-		printInfo.jobName = self.rumor.title;
+		printInfo.jobName = self.rumorDataSource.rumor.title;
 		printer.printInfo = printInfo;
 		printer.delegate = self;
 
@@ -157,10 +149,10 @@
 		MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
 		picker.mailComposeDelegate = self;
 
-		[picker setSubject:self.rumor.title];
+		[picker setSubject:self.rumorDataSource.rumor.title];
 
 		NSString *emailBody = @"Check out this story I found on \"Debunked: Urban Legends Revealed\":\n\n";
-		emailBody = [emailBody stringByAppendingString:self.rumor.url];
+		emailBody = [emailBody stringByAppendingString:self.rumorDataSource.rumor.url];
 		[picker setMessageBody:emailBody isHTML:NO];
 
 		[self presentViewController:picker animated:YES completion:nil];
@@ -170,8 +162,8 @@
 
 - (void)printInteractionControllerDidFinishJob:(UIPrintInteractionController *)printInteractionController
 {
-	NSURL *baseUrl = [NSURL URLWithString:self.rumor.url];
-	[self.webView loadHTMLString:self.rumor.rawHtml baseURL:baseUrl];
+	NSURL *baseUrl = [NSURL URLWithString:self.rumorDataSource.rumor.url];
+	[self.webView loadHTMLString:self.rumorDataSource.rumor.rawHtml baseURL:baseUrl];
 }
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
@@ -191,12 +183,12 @@
 
 - (void)handleBrowseButton
 {
-    if (self.rumor != nil) {
+    if (self.rumorDataSource.rumor != nil) {
 		DebunkedAppDelegate *appDelegate = (DebunkedAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[appDelegate.tabBarController setSelectedIndex:2];
 		UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
 		WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
-		[webBrowser loadUrl:self.rumor.url];
+		[webBrowser loadUrl:self.rumorDataSource.rumor.url];
 	}
 }
 
@@ -243,12 +235,6 @@
 	[actionSheet release];
 }
 
-- (void)removeLoadingView
-{
-	[loadingView removeView];
-	loadingView = nil;
-}
-
 - (void)receive:(id)theItem
 {
 	Rumor *theRumor = (Rumor *)theItem;
@@ -259,7 +245,7 @@
         NSURL *baseUrl = [NSURL URLWithString:theRumor.url];
         [self.webView loadHTMLString:theRumor.rawHtml baseURL:baseUrl];
     }
-    [self removeLoadingView];
+    [super receive:theItem];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

@@ -19,14 +19,16 @@
 #import "DebunkedAppDelegate.h"
 #import "WebBrowserViewController.h"
 #import "RumorViewController.h"
-#import "RumorDataSource.h"
-#import "CategoryDataSource.h"
-#import "CategoryNodeView.h"
 #import "CategoryNodeTableViewCell.h"
 #import "RumorNodeTableViewCell.h"
 
 
 @implementation CategoryTableViewController
+
+- (CategoryDataSource *)categoryDataSource
+{
+    return (CategoryDataSource *)self.dataSource;
+}
 
 - (void)viewDidLoad
 {
@@ -45,7 +47,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	@synchronized(self) {
-		if (((CategoryDataSource *)self.dataSource).nodeCount == 0) {
+		if (self.categoryDataSource.nodeCount == 0) {
             [self reloadDataSource];
 		}
 	}
@@ -58,11 +60,10 @@
     @synchronized(self) {
         [super reloadDataSource];
 
-        CategoryDataSource *categoryDataSource = (CategoryDataSource *)self.dataSource;
         if (self.url == nil) {
-            lastRequestId = [categoryDataSource requestTopLevelCategoryNotifyDelegate:self];
+            lastRequestId = [self.categoryDataSource requestTopLevelCategoryNotifyDelegate:self];
         } else {
-            lastRequestId = [categoryDataSource requestCategory:self.url notifyDelegate:self];
+            lastRequestId = [self.categoryDataSource requestCategory:self.url notifyDelegate:self];
         }
     }
 }
@@ -74,11 +75,10 @@
 	UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
 	WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
     if (self.url == nil) {
-        CategoryDataSource *categoryDataSource = (CategoryDataSource *)self.dataSource;
-        if (categoryDataSource.category.url == nil) {
+        if (self.categoryDataSource.category.url == nil) {
             [webBrowser loadUrl:@"http://www.snopes.com"];
         } else {
-            [webBrowser loadUrl:categoryDataSource.category.url];
+            [webBrowser loadUrl:self.categoryDataSource.category.url];
         }
     } else {
         [webBrowser loadUrl:self.url];

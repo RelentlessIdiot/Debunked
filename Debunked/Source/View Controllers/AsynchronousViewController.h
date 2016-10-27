@@ -16,12 +16,27 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "AsynchronousTableViewController.h"
-#import "CategoryDataSource.h"
+#import "AsynchronousDataSource.h"
+#import "LoadingView.h"
 
 
-@interface CategoryTableViewController: AsynchronousTableViewController<UIScrollViewDelegate>
+@interface AsynchronousViewController: UIViewController<AsynchronousDelegate>
+{
+    NSInteger lastRequestId;
+    BOOL needsLoadingView;
+}
 
-@property (nonatomic,readonly) CategoryDataSource *categoryDataSource;
+@property (nonatomic,retain) AsynchronousDataSource *dataSource;
+@property (nonatomic,assign) LoadingView *loadingView;
+@property (nonatomic,retain) NSString *url;
+@property (nonatomic,readonly) UIScrollView *scrollView;
+
+- (id)init;
+- (id)initWithUrl:(NSString *)theUrl;
+- (void)addLoadingView;
+- (void)removeLoadingView;
+- (void)receive:(id)theItem;
+- (void)reloadDataSource;
+- (void)scrollToTop;
 
 @end

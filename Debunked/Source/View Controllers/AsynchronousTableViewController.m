@@ -20,29 +20,20 @@
 
 @implementation AsynchronousTableViewController
 
-@synthesize dataSource;
-@synthesize loadingView;
 @synthesize tableView;
-@synthesize url;
+
+- (UIScrollView *)scrollView
+{
+    return tableView;
+}
 
 - (void)dealloc
 {
     tableView.delegate = nil;
     tableView.dataSource = nil;
     [tableView release];
-    [dataSource release];
-    [url release];
 
     [super dealloc];
-}
-
-- (id)initWithUrl:(NSString *)theUrl
-{
-    if (self = [super init]) {
-        lastRequestId = 0;
-        self.url = theUrl;
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -53,7 +44,7 @@
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.separatorInset = UIEdgeInsetsZero;
     self.tableView.delegate = self;
-    self.tableView.dataSource = dataSource;
+    self.tableView.dataSource = self.dataSource;
 
     [self.view addSubview:self.tableView];
 }
@@ -75,31 +66,10 @@
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
-- (void)removeLoadingView
-{
-    needsLoadingView = NO;
-    [loadingView removeView];
-    loadingView = nil;
-}
-
-- (void)reloadDataSource
-{
-    @synchronized(self) {
-        [self.dataSource cancelRequest:lastRequestId];
-
-        if (self.tableView.dragging || self.tableView.decelerating) {
-            needsLoadingView = YES;
-        } else if (self.loadingView == nil) {
-            needsLoadingView = NO;
-            self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-        }
-    }
-}
-
 - (void)receive:(id)theItem
 {
     @synchronized(self) {
-        [self removeLoadingView];
+        [super receive:theItem];
         if (self.dataSource != nil && [self.dataSource tableView:self.tableView numberOfRowsInSection:0]) {
             self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         } else {
@@ -108,16 +78,6 @@
         [self.tableView reloadData];
         [self scrollToTop];
         [self.tableView setNeedsDisplay];
-    }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    if (needsLoadingView == YES) {
-        needsLoadingView = NO;
-        if (self.loadingView == nil) {
-            self.loadingView = [LoadingView loadingViewInView:self.view withBorder:NO];
-        }
     }
 }
 
@@ -137,15 +97,10 @@
     @synchronized(self) {
         NSIndexPath *oldIndexPath = [theTableView indexPathForSelectedRow];
         if (oldIndexPath != nil && ![theIndexPath isEqual:oldIndexPath]) {
-            [dataSource cancelRequest:lastRequestId];
+            [self.dataSource cancelRequest:lastRequestId];
         }
     }
     return theIndexPath;
-}
-
-- (void)scrollToTop
-{
-	[tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 }
 
 @end

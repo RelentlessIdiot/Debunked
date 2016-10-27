@@ -16,11 +16,9 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "Rumor.h"
 #import "RumorViewController.h"
-#import "RumorDataSource.h"
 
 
-@interface RandomViewController : RumorViewController
+@interface RandomViewController: RumorViewController
 
 @end

@@ -103,6 +103,7 @@
 		DAEAC6F81DC1604A001F7FFB /* RumorConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6F11DC1604A001F7FFB /* RumorConsumer.m */; };
 		DAEAC6F91DC1604A001F7FFB /* SearchConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6F31DC1604A001F7FFB /* SearchConsumer.m */; };
 		DAEAC6FA1DC1604A001F7FFB /* TopLevelCategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6F51DC1604A001F7FFB /* TopLevelCategoryConsumer.m */; };
+		DAEAC6FD1DC17CB0001F7FFB /* AsynchronousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6FC1DC17CB0001F7FFB /* AsynchronousViewController.m */; };
 		DAEDF51716FDB73D0092021B /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DAEDF51516FDB73D0092021B /* Default@2x~ipad.png */; };
 		DAEDF51816FDB73D0092021B /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DAEDF51616FDB73D0092021B /* Default~ipad.png */; };
 		DAEDF51B16FDB93F0092021B /* Default-LandscapeLeft@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DAEDF51916FDB93F0092021B /* Default-LandscapeLeft@2x~ipad.png */; };
@@ -267,6 +268,8 @@
 		DAEAC6F31DC1604A001F7FFB /* SearchConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchConsumer.m; sourceTree = "<group>"; };
 		DAEAC6F41DC1604A001F7FFB /* TopLevelCategoryConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopLevelCategoryConsumer.h; sourceTree = "<group>"; };
 		DAEAC6F51DC1604A001F7FFB /* TopLevelCategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopLevelCategoryConsumer.m; sourceTree = "<group>"; };
+		DAEAC6FB1DC17CB0001F7FFB /* AsynchronousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousViewController.h; sourceTree = "<group>"; };
+		DAEAC6FC1DC17CB0001F7FFB /* AsynchronousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousViewController.m; sourceTree = "<group>"; };
 		DAEDF51516FDB73D0092021B /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~ipad.png"; sourceTree = "<group>"; };
 		DAEDF51616FDB73D0092021B /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad.png"; sourceTree = "<group>"; };
 		DAEDF51916FDB93F0092021B /* Default-LandscapeLeft@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-LandscapeLeft@2x~ipad.png"; sourceTree = "<group>"; };
@@ -492,6 +495,8 @@
 		DAA2125E16FD83A800F2CAC0 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DAEAC6FB1DC17CB0001F7FFB /* AsynchronousViewController.h */,
+				DAEAC6FC1DC17CB0001F7FFB /* AsynchronousViewController.m */,
 				DAA2125F16FD83A800F2CAC0 /* AsynchronousTableViewController.h */,
 				DAA2126016FD83A800F2CAC0 /* AsynchronousTableViewController.m */,
 				DAA2126116FD83A800F2CAC0 /* CategoryTableViewController.h */,
@@ -774,6 +779,7 @@
 				DAA2128616FD83A800F2CAC0 /* DebunkedAppDelegate.m in Sources */,
 				DA146F321DBFD39A006BAC25 /* AsynchronousDataSource.m in Sources */,
 				DA146F821DBFE9B8006BAC25 /* RumorNodeTableViewCell.m in Sources */,
+				DAEAC6FD1DC17CB0001F7FFB /* AsynchronousViewController.m in Sources */,
 				DA146F361DBFD39A006BAC25 /* RumorDataSource.m in Sources */,
 				DAEAC6FA1DC1604A001F7FFB /* TopLevelCategoryConsumer.m in Sources */,
 				DA146F5C1DBFE921006BAC25 /* SBJsonWriter.m in Sources */,
