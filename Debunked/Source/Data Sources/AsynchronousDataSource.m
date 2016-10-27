@@ -68,7 +68,7 @@
     return [self request:theUrl
            consumerClass:theConsumerClass
           notifyDelegate:theDelegate
-          withExpiration:(60 * 60 * 24 * 7)]; // 1 week
+          withExpiration:(60 * 20)]; // 20 minutes
 }
 
 - (NSInteger)request:(NSString *)theUrl

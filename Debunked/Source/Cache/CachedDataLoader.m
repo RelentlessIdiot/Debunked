@@ -133,7 +133,7 @@ static CachedDataLoader *sharedInstance = nil;
 - (BOOL)isRefreshResponse:(NSData *)data
 {
 	if([data length] < 1024) {
-		NSString *stringData = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+		NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		[stringData autorelease];
 		NSString *refreshPrefix = @"<meta http-equiv=\"refresh\" content=\"0; url=";
 		if ([[stringData lowercaseString] hasPrefix:refreshPrefix]) {
@@ -145,7 +145,7 @@ static CachedDataLoader *sharedInstance = nil;
 
 - (void)resolveRefreshResponse:(NSURLResponse *)response withClient:(DataConsumer *)client withData:(NSData *)data withExpiration:(NSInteger)expiration
 {
-	NSString *stringData = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+	NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	[stringData autorelease];
 	NSString *refreshPrefix = @"<meta http-equiv=\"refresh\" content=\"0; url=";
 	
