@@ -96,6 +96,8 @@
 		DAEAC6F91DC1604A001F7FFB /* SearchConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6F31DC1604A001F7FFB /* SearchConsumer.m */; };
 		DAEAC6FA1DC1604A001F7FFB /* TopLevelCategoryConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6F51DC1604A001F7FFB /* TopLevelCategoryConsumer.m */; };
 		DAEAC6FD1DC17CB0001F7FFB /* AsynchronousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6FC1DC17CB0001F7FFB /* AsynchronousViewController.m */; };
+		DAEAC7001DC26A48001F7FFB /* CGSize+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC6FF1DC26A48001F7FFB /* CGSize+Ext.m */; };
+		DAEAC7061DC2700F001F7FFB /* UIImage+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = DAEAC7051DC2700F001F7FFB /* UIImage+Ext.m */; };
 		DAEDF51716FDB73D0092021B /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DAEDF51516FDB73D0092021B /* Default@2x~ipad.png */; };
 		DAEDF51816FDB73D0092021B /* Default~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DAEDF51616FDB73D0092021B /* Default~ipad.png */; };
 		DAEDF51B16FDB93F0092021B /* Default-LandscapeLeft@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DAEDF51916FDB93F0092021B /* Default-LandscapeLeft@2x~ipad.png */; };
@@ -252,6 +254,10 @@
 		DAEAC6F51DC1604A001F7FFB /* TopLevelCategoryConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopLevelCategoryConsumer.m; sourceTree = "<group>"; };
 		DAEAC6FB1DC17CB0001F7FFB /* AsynchronousViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynchronousViewController.h; sourceTree = "<group>"; };
 		DAEAC6FC1DC17CB0001F7FFB /* AsynchronousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynchronousViewController.m; sourceTree = "<group>"; };
+		DAEAC6FE1DC26A48001F7FFB /* CGSize+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CGSize+Ext.h"; sourceTree = "<group>"; };
+		DAEAC6FF1DC26A48001F7FFB /* CGSize+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CGSize+Ext.m"; sourceTree = "<group>"; };
+		DAEAC7041DC2700F001F7FFB /* UIImage+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Ext.h"; sourceTree = "<group>"; };
+		DAEAC7051DC2700F001F7FFB /* UIImage+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Ext.m"; sourceTree = "<group>"; };
 		DAEDF51516FDB73D0092021B /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~ipad.png"; sourceTree = "<group>"; };
 		DAEDF51616FDB73D0092021B /* Default~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~ipad.png"; sourceTree = "<group>"; };
 		DAEDF51916FDB93F0092021B /* Default-LandscapeLeft@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-LandscapeLeft@2x~ipad.png"; sourceTree = "<group>"; };
@@ -432,6 +438,10 @@
 				DAA211FE16FD83A800F2CAC0 /* Blacklist.m */,
 				DAA2123016FD83A800F2CAC0 /* DebunkedAppDelegate.h */,
 				DAA2123116FD83A800F2CAC0 /* DebunkedAppDelegate.m */,
+				DAEAC6FE1DC26A48001F7FFB /* CGSize+Ext.h */,
+				DAEAC6FF1DC26A48001F7FFB /* CGSize+Ext.m */,
+				DAEAC7041DC2700F001F7FFB /* UIImage+Ext.h */,
+				DAEAC7051DC2700F001F7FFB /* UIImage+Ext.m */,
 				DA146F5D1DBFE951006BAC25 /* Cache */,
 				DAA2120316FD83A800F2CAC0 /* Data Model */,
 				DAEAC6EB1DC1604A001F7FFB /* Data Consumers */,
@@ -759,6 +769,7 @@
 				DA146F6B1DBFE951006BAC25 /* NSWebViewURLRequest.m in Sources */,
 				DA146F341DBFD39A006BAC25 /* CategoryDataSource.m in Sources */,
 				DA146F681DBFE951006BAC25 /* CachedDataLoader.m in Sources */,
+				DAEAC7001DC26A48001F7FFB /* CGSize+Ext.m in Sources */,
 				DAA2129B16FD83A800F2CAC0 /* AsynchronousTableViewController.m in Sources */,
 				DA146F541DBFE921006BAC25 /* TFHpple.m in Sources */,
 				DAA2129C16FD83A800F2CAC0 /* CategoryTableViewController.m in Sources */,
@@ -768,6 +779,7 @@
 				DA146F381DBFD39A006BAC25 /* SearchDataSource.m in Sources */,
 				DAA2129E16FD83A800F2CAC0 /* RandomViewController.m in Sources */,
 				DAA212A016FD83A800F2CAC0 /* RumorViewController.m in Sources */,
+				DAEAC7061DC2700F001F7FFB /* UIImage+Ext.m in Sources */,
 				DA146F571DBFE921006BAC25 /* NSObject+SBJSON.m in Sources */,
 				DAEAC6F91DC1604A001F7FFB /* SearchConsumer.m in Sources */,
 				DA146F801DBFE9B8006BAC25 /* CategoryNodeView.m in Sources */,

@@ -16,6 +16,8 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "RumorNodeView.h"
+#import "CGSize+Ext.h"
+#import "UIImage+Ext.h"
 
 
 #define PADDING 6
@@ -151,8 +153,15 @@
 
     [text drawInRect:textRect];
 
-	if (self.nodeImage != nil) {
-        [self.nodeImage drawInRect:imageRect];
+    if (self.nodeImage != nil) {
+        CGSize imageSize = self.nodeImage.size;
+        CGSize imageRectSize = CGSizeScaledToFitExactly(imageRect.size, imageSize);
+        UIImage *image = [self.nodeImage crop:CGRectMake((imageSize.width - imageRectSize.width) / 2.0f,
+                                                         (imageSize.height - imageRectSize.height) / 2.0f,
+                                                         imageRectSize.width,
+                                                         imageRectSize.height)];
+        [image drawInRect:imageRect];
+
 	} else if (rumorNode.imageUrl != nil && ![@"" isEqual:rumorNode.imageUrl]) {
 		// Draw a placeholder image
         UIImage* placeholderImage = [UIImage imageNamed:@"placeholder.png"];
