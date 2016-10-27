@@ -30,7 +30,7 @@ static NSMutableArray *blacklist = nil;
 			NSString *blacklistPath = [[NSBundle mainBundle] pathForResource:@"Blacklist" ofType:@"txt"];
 			NSArray *lines = [[NSString stringWithContentsOfFile:blacklistPath encoding:NSUTF8StringEncoding error:nil] componentsSeparatedByString:@"\n"];
 			for (NSString *line in lines) {
-				line = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+				line = [line stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
 				if (![line isEqual:@""] && ![line hasPrefix:@"#"]) {
 					[blacklist addObject:[line lowercaseString]];
 				}

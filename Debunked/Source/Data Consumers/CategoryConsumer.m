@@ -34,24 +34,16 @@
 	
 	TFHpple *parser = nil;
 	@try {
-		NSString* stringData = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"<NOBR>" withString:@""];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"<nobr>" withString:@""];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"</NOBR>" withString:@""];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"</nobr>" withString:@""];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"&NBSP;" withString:@" "];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"&NBSP" withString:@" "];
-		stringData = [stringData stringByReplacingOccurrencesOfString:@"&nbsp" withString:@" "];
-		data = [stringData dataUsingEncoding:NSUTF8StringEncoding];
-		
 		parser = [[TFHpple alloc] initWithHTMLData:data];
 
-        TFHppleElement *labelEl = [parser at:@"//h1[@class=\"page-title\"]"];
-        TFHppleElement *descriptionEl = [parser at:@"//div[@class=\"category-description\"]"];
+        TFHppleElement *labelEl = [parser at:@"//h1[@itemprop=\"headline\"]"];
+        if (labelEl == nil) {
+            labelEl = [parser at:@"//h1[contains(@class, \"page-title\")]"];
+        }
+        NSString *label = [labelEl.textContent stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
 
-        NSString *description = [descriptionEl textContent];
-        NSString *label = [labelEl textContent];
+        TFHppleElement *descriptionEl = [parser at:@"//div[contains(@class, \"category-description\")]"];
+        NSString *description = [descriptionEl.textContent stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
 
         Category *category = [[Category alloc] initWithUrl:[[response URL] absoluteString]
                                                  withLabel:label
@@ -82,24 +74,24 @@
     TFHpple *parser = nil;
     @try {
         parser = [[TFHpple alloc] initWithHTMLData:data];
-        NSArray *posts = [parser search: @"//ul[@class=\"post-list\"]/li"];
+        NSArray *posts = [parser search: @"//ul[contains(@class, \"post-list\")]/li"];
 
         for (int i = 0; i < [posts count]; i++) {
             TFHppleElement *post = [posts objectAtIndex:i];
             TFHpple *postParser = nil;
             @try {
                 postParser = [[TFHpple alloc] initWithHTMLData: [post.outerHtml dataUsingEncoding: NSUTF8StringEncoding]];
-                TFHppleElement *link = [postParser at: @"//h4[@class=\"title\"]/a"];
-                TFHppleElement *img = [postParser at: @"//div[@class=\"post-img\"]/img"];
-                TFHppleElement *syn = [postParser at: @"//p[@class=\"body\"]/span[@class=\"label\"]"];
+                TFHppleElement *link = [postParser at: @"//h4[contains(@class, \"title\")]/a"];
+                TFHppleElement *img = [postParser at: @"//div[contains(@class, \"post-img\")]/img"];
+                TFHppleElement *syn = [postParser at: @"//p[contains(@class, \"body\")]/span[contains(@class, \"label\")]"];
                 if (syn == nil) {
-                    syn = [postParser at: @"//p[@class=\"body\"]"];
+                    syn = [postParser at: @"//p[contains(@class, \"body\")]"];
                 }
                 if (link && img && syn) {
                     NSString *nodeUrl = [self resolveUrl:[link objectForKey:@"href"]];
                     NSString *nodeImageUrl = [self resolveUrl:[img objectForKey:@"src"]];
-                    NSString *nodeSynopsis = [[syn content] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                    NSString *nodeLabel = [[link textContent] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                    NSString *nodeSynopsis = [syn.content stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+                    NSString *nodeLabel = [link.textContent stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
 
                     if (![Blacklist isBlacklisted:nodeUrl]) {
                         RumorNode *rumorNode = [[RumorNode alloc] initWithUrl:nodeUrl

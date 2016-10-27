@@ -39,10 +39,10 @@
 		NSMutableArray *categoryNodes = [NSMutableArray array];
 		
 		@try {
-			for (int i = 0; i < [links count]; i+=1) {
+			for (int i = 0; i < links.count; i += 1) {
 				TFHppleElement *link = [links objectAtIndex:i];
 				NSString *href = [self resolveUrl:[link objectForKey:@"href"]];
-				NSString *label = [link textContent];
+				NSString *label = [link.textContent stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
 
 				if (![Blacklist isBlacklisted:href]) {
 					CategoryNode *categoryNode = [[CategoryNode alloc] initWithUrl:href

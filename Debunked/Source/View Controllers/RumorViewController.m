@@ -98,6 +98,20 @@
     [super viewWillAppear:animated];
 }
 
+- (void)receive:(id)theItem
+{
+    Rumor *theRumor = (Rumor *)theItem;
+    if (theRumor == nil) {
+        [webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@""]];
+    } else {
+        [webView loadHTMLString:theRumor.rawHtml baseURL:[NSURL URLWithString:theRumor.url]];
+    }
+    if (theRumor.title != nil && ![@"" isEqualToString:theRumor.title]) {
+        self.title = theRumor.title;
+    }
+    [super receive:theItem];
+}
+
 - (void)reloadDataSource
 {
     @synchronized(self) {
@@ -219,17 +233,6 @@
 	actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
 	[actionSheet showInView:self.parentViewController.tabBarController.view];
 	[actionSheet release];
-}
-
-- (void)receive:(id)theItem
-{
-	Rumor *theRumor = (Rumor *)theItem;
-    if (theRumor == nil) {
-        [webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@""]];
-    } else {
-        [webView loadHTMLString:theRumor.rawHtml baseURL:[NSURL URLWithString:theRumor.url]];
-    }
-    [super receive:theItem];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView

@@ -42,39 +42,39 @@
 			NSString *rumorSynopsis = nil;
 			NSString *rumorLabel = nil;
 			NSString *rumorHeadline = nil;
-			NSMutableArray *children = [NSMutableArray arrayWithArray:[resultEl children]];
+			NSMutableArray *children = [NSMutableArray arrayWithArray:resultEl.children];
 			while([children count] > 0) {
 				TFHppleElement *el = [children objectAtIndex:0];
 				[children removeObjectAtIndex:0];
-				NSUInteger childCount = [[el children] count];
-				if ([@"a" isEqual:[el tagName]] && [el objectForKey:@"href"] != nil) {
+				NSUInteger childCount = el.children.count;
+				if ([@"a" isEqual:el.tagName] && [el objectForKey:@"href"] != nil) {
 					rumorUrl = [el objectForKey:@"href"];
-					rumorLabel = [el content];
+					rumorLabel = el.content;
 					if ([rumorLabel hasPrefix:@"snopes.com"]) {
 						rumorLabel = [rumorLabel substringFromIndex:[@"snopes.com" length]];
 					}
 					rumorLabel = [rumorLabel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@": "]];
-				} else if ([@"text" isEqual:[el tagName]]) {
+				} else if ([@"text" isEqual:el.tagName]) {
 					// Dump the first text node
 					if(rumorSynopsis == nil) {
 						rumorSynopsis = @"";
 					} else {
-						rumorSynopsis = [rumorSynopsis stringByAppendingString:[el textContent]];
+						rumorSynopsis = [rumorSynopsis stringByAppendingString:el.textContent];
 					}
-				} else if ([@"i" isEqual:[el tagName]]) {
+				} else if ([@"i" isEqual:el.tagName]) {
 					// Do nothing
-				} else if ([@"b" isEqual:[el tagName]] && childCount == 1 && [@"font" isEqual:[[[el children] objectAtIndex:0] tagName]]) {
-					rumorHeadline = [[[el children] objectAtIndex:0] content];
+				} else if ([@"b" isEqual:el.tagName] && childCount == 1 && [@"font" isEqual:[[el.children objectAtIndex:0] tagName]]) {
+					rumorHeadline = [[el.children objectAtIndex:0] content];
 				} else {
 					if (childCount > 0) {
 						for (int i = 0; i < childCount; i++) {
-							[children insertObject:[[el children] objectAtIndex:i] atIndex:i];
+							[children insertObject:[el.children objectAtIndex:i] atIndex:i];
 						}
 					} else {
 						if(rumorSynopsis == nil) {
 							rumorSynopsis = @"";
 						}
-						rumorSynopsis = [rumorSynopsis stringByAppendingString:[el textContent]];
+						rumorSynopsis = [rumorSynopsis stringByAppendingString:el.textContent];
 					}
 				}
 			}

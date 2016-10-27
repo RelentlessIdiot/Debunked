@@ -23,26 +23,12 @@
 @synthesize veracity;
 @synthesize url;
 @synthesize title;
-@synthesize claim;
-@synthesize origin;
-@synthesize sightings;
-@synthesize lastUpdated;
-@synthesize examples;
-@synthesize variations;
-@synthesize sources;
 @synthesize rawHtml;
 
 - (void)dealloc {
 	[veracity release];
 	[url release];
 	[title release];
-	[claim release];
-	[origin release];
-	[sightings release];
-	[lastUpdated release];
-	[examples release];
-	[variations release];
-	[sources release];
 	[rawHtml release];
 	
 	[super dealloc];

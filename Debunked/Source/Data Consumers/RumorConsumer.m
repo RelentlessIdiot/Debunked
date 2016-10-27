@@ -37,35 +37,29 @@
 	@try {
         parser = [[TFHpple alloc] initWithHTMLData:data];
 
-		TFHppleElement *labelEl = [parser at:@"//article/div[@class=\"top-meta\"]/h1[@class=\"page-title\"]"];
-        NSString *label = labelEl.textContent;
+        TFHppleElement *titleEl = [parser at:@"//article//h1[@itemprop=\"headline\"]"];
+        if (titleEl == nil) {
+            titleEl = [parser at:@"//article//h1[contains(@class, \"page-title\")]"];
+        }
+        NSString *title = [titleEl.textContent stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
 
-        TFHppleElement *rumorBodyEl = [parser at:@"//article"];
-        NSString *rumorBody = [rumorBodyEl outerHtml];
-
-        TFHppleElement *headEl = [parser at:@"//head"];
-
-		NSString *html = @"<!DOCTYPE html><html>";
-		html = [html stringByAppendingString:headEl.outerHtml];
-        html = [html stringByAppendingString:@"<body class=\"Safari page-article mobile iPhone retina\">"
-                @"<div class=​\"main-container\">​"
-                @"<div class=​\"content-wrapper-main\">​"
-                @"<div class=​\"container-wrapper container-wrapper-main\" style=​\"overflow:​ visible;​\">​"
-                @"<div id=​\"main-content-well\" class=​\"wordpress\">​"
-                @"<div class=​\"content-wrapper\">​"];
-        html = [html stringByAppendingString:rumorBody];
-        html = [html stringByAppendingString:@"</div>"
-                @"</div>"
-                @"</div>"
-                @"</div>"
-                @"</div>"
-                @"</body>"];
-		html = [html stringByAppendingString:@"</html>"];
+        TFHppleElement *veracityEl = [parser at:@"//article//span[@itemprop=\"reviewRating\"]"];
+        if (veracityEl == nil) {
+            veracityEl = [parser at:@"//article//div[contains(@class, \"claim-old\")]"];
+            if (veracityEl == nil) {
+                veracityEl = [parser at:@"//article//div[contains(@class, \"claim-new\")]"];
+                if (veracityEl == nil) {
+                    veracityEl = [parser at:@"//article//div[contains(@class, \"claim\")]"];
+                }
+            }
+        }
+        NSString *veracity = [veracityEl.textContent stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
 
 		Rumor *rumor = [[[Rumor alloc] init] autorelease];
-		rumor.rawHtml = html;
+        rumor.rawHtml = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 		rumor.url = [[response URL] absoluteString];
-		rumor.title = label;
+		rumor.title = title;
+        rumor.veracity = veracity;
 
         [self.dataSource receiveRequest:self.requestId withItem:rumor withResult:0];
 	}

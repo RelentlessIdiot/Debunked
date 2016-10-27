@@ -54,6 +54,15 @@
 	[super viewWillAppear:animated];
 }
 
+- (void)receive:(id)theItem
+{
+    Category *theCategory = (Category *)theItem;
+    if (theCategory.label != nil && ![@"" isEqualToString:theCategory.label]) {
+        self.title = theCategory.label;
+    }
+    [super receive:theItem];
+}
+
 - (void)reloadDataSource
 {
     @synchronized(self) {

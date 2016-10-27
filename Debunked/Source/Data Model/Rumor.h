@@ -23,13 +23,6 @@
 @property (nonatomic,retain) NSString *veracity;
 @property (nonatomic,retain) NSString *url;
 @property (nonatomic,retain) NSString *title;
-@property (nonatomic,retain) NSString *claim;
-@property (nonatomic,retain) NSString *origin;
-@property (nonatomic,retain) NSString *sightings;
-@property (nonatomic,retain) NSString *lastUpdated;
-@property (nonatomic,retain) NSArray *examples;
-@property (nonatomic,retain) NSArray *variations;
-@property (nonatomic,retain) NSArray *sources;
 @property (nonatomic,retain) NSString *rawHtml;
 
 @end
