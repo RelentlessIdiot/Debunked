@@ -31,19 +31,8 @@
 #define SYNOPSIS_FONT_SIZE 12
 #define SYNOPSIS_MIN_FONT_SIZE 10
 
+
 @implementation RumorNodeView
-
-@synthesize rumorNode;
-@synthesize nodeImage;
-@synthesize selected;
-
-- (void)dealloc
-{
-    [rumorNode release];
-    [nodeImage release];
-
-    [super dealloc];
-}
 
 + (UIEdgeInsets) padding
 {
@@ -56,6 +45,25 @@
     CGFloat minDimension = MIN(screenSize.width, screenSize.height);
     CGFloat imageDimension = MIN(minDimension / 4.0f, 150.0f);
     return CGSizeMake(imageDimension, imageDimension);
+}
+
++ (NSInteger)preferredHeight
+{
+    CGSize imageSize = self.imageSize;
+    UIEdgeInsets padding = self.padding;
+    return padding.top + imageSize.height + padding.bottom;
+}
+
+@synthesize rumorNode;
+@synthesize nodeImage;
+@synthesize selected;
+
+- (void)dealloc
+{
+    [rumorNode release];
+    [nodeImage release];
+
+    [super dealloc];
 }
 
 - (RumorNode *)rumorNode
@@ -78,24 +86,11 @@
 	}
 }
 
-+ (NSInteger)preferredHeight
-{
-    CGSize imageSize = self.imageSize;
-    UIEdgeInsets padding = self.padding;
-	return padding.top + imageSize.height + padding.bottom;
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithRumorNode:nil withFrame:frame];
-}
-
-- (id)initWithRumorNode:(RumorNode *)theRumorNode withFrame:(CGRect)frame
-{
     if (self = [super initWithFrame:frame]) {
-        self.rumorNode = theRumorNode;
 		self.backgroundColor = [UIColor whiteColor];
-		self.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+		self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     return self;
 }
@@ -129,12 +124,12 @@
         contentHeight);
 
     NSAttributedString *label = [[[NSAttributedString alloc] initWithString: rumorNode.label
-                                                                attributes: @{NSFontAttributeName: labelFont,
-                                                                              NSForegroundColorAttributeName: labelTextColor}] autorelease];
+                                                                 attributes: @{NSFontAttributeName: labelFont,
+                                                                               NSForegroundColorAttributeName: labelTextColor}] autorelease];
 
     NSAttributedString *newlineCharacter = [[[NSAttributedString alloc] initWithString: @"\n"
-                                                                           attributes: @{NSFontAttributeName: synopsisFont,
-                                                                                         NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
+                                                                            attributes: @{NSFontAttributeName: synopsisFont,
+                                                                                          NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
 
     NSString *synopsisString;
     if (rumorNode.synopsis != nil && ![rumorNode.synopsis isEqual:@""]) {
@@ -146,8 +141,8 @@
     }
 
     NSAttributedString *synopsis = [[[NSAttributedString alloc] initWithString: synopsisString
-                                                                   attributes: @{NSFontAttributeName: synopsisFont,
-                                                                                 NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
+                                                                    attributes: @{NSFontAttributeName: synopsisFont,
+                                                                                  NSForegroundColorAttributeName: synopsisTextColor}] autorelease];
 
     NSMutableAttributedString *text = [[[NSMutableAttributedString alloc] init] autorelease];
     [text appendAttributedString:label];
@@ -180,7 +175,6 @@
 	} else {
 		return nil;
 	}
-	
 }
 
 - (void)renderImage:(UIImage *)image

@@ -33,6 +33,11 @@
 
 @implementation SearchResultView
 
++ (NSInteger)preferredHeight
+{
+    return PREFERRED_HEIGHT;
+}
+
 @synthesize searchResult;
 @synthesize selected;
 
@@ -56,22 +61,11 @@
 	}
 }
 
-+ (NSInteger)preferredHeight
-{
-	return PREFERRED_HEIGHT;
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithSearchResult:nil withFrame:frame];
-}
-
-- (id)initWithSearchResult:(SearchResult *)theSearchResult withFrame:(CGRect)frame
-{
     if (self = [super initWithFrame:frame]) {
-        self.searchResult = theSearchResult;
 		self.backgroundColor = [UIColor whiteColor];
-		self.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+		self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     return self;
 }
@@ -119,8 +113,8 @@
 
     if (searchResult.rumorHeadline != nil && ![searchResult.rumorHeadline isEqual:@""]) {
         NSAttributedString *headline = [[[NSAttributedString alloc] initWithString: searchResult.rumorHeadline
-                                                                     attributes: @{NSFontAttributeName: rumorHeadlineFont,
-                                                                                   NSForegroundColorAttributeName: rumorHeadlineTextColor}] autorelease];
+                                                                        attributes: @{NSFontAttributeName: rumorHeadlineFont,
+                                                                                      NSForegroundColorAttributeName: rumorHeadlineTextColor}] autorelease];
         [text appendAttributedString:headline];
         [text appendAttributedString:newlineCharacter];
     }

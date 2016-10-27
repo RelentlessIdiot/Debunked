@@ -18,12 +18,12 @@
 #import <UIKit/UIKit.h>
 #import "SearchResult.h"
 
+
 @interface SearchResultView : UIView 
 
 @property (nonatomic,retain) SearchResult *searchResult;
 @property (nonatomic,getter=isSelected) BOOL selected;
 
 + (NSInteger)preferredHeight;
-- (id)initWithSearchResult:(SearchResult *)theSearchResult withFrame:(CGRect)frame;
 
 @end

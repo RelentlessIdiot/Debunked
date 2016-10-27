@@ -28,7 +28,6 @@
 @property(nonatomic,getter=isSelected) BOOL selected;
 
 + (NSInteger)preferredHeight;
-- (id)initWithCategoryNode:(CategoryNode *)theCategoryNode withFrame:(CGRect)frame;
 
 - (NSWebViewURLRequest *)request;
 - (void)renderImage:(UIImage *)image;

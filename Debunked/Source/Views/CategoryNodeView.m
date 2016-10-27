@@ -43,6 +43,11 @@
 
 @implementation CategoryNodeView
 
++ (NSInteger)preferredHeight
+{
+    return PREFERRED_HEIGHT;
+}
+
 @synthesize categoryNode;
 @synthesize nodeImage;
 @synthesize selected;
@@ -75,27 +80,14 @@
 	}
 }
 
-+ (NSInteger)preferredHeight
-{
-	return PREFERRED_HEIGHT;
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
-    return [self initWithCategoryNode:nil withFrame:frame];
-}
-
-
-- (id)initWithCategoryNode:(CategoryNode *)theCategoryNode withFrame:(CGRect)frame
-{
     if (self = [super initWithFrame:frame]) {
-        self.categoryNode = theCategoryNode;
 		self.backgroundColor = [UIColor whiteColor];
-		self.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
+		self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     return self;
 }
-
 
 - (void)drawRect:(CGRect)rect
 {
@@ -155,7 +147,6 @@
 		UIImage* placeholderImage = [UIImage imageNamed:@"placeholder.png"];
 		[placeholderImage drawAtPoint:point];
 	}
-
 }
 
 - (NSWebViewURLRequest *)request

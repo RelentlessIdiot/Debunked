@@ -21,7 +21,7 @@
 #import "NSWebViewURLRequest.h"
 
 
-@interface RumorNodeView : UIView<ImageConsumer> 
+@interface RumorNodeView: UIView<ImageConsumer>
 
 @property (nonatomic,retain) RumorNode *rumorNode;
 @property (nonatomic,retain) UIImage *nodeImage;
@@ -29,9 +29,7 @@
 
 + (CGSize) imageSize;
 + (UIEdgeInsets) padding;
-
 + (NSInteger)preferredHeight;
-- (id)initWithRumorNode:(RumorNode *)theRumorNode withFrame:(CGRect)frame;
 
 - (NSWebViewURLRequest *)request;
 - (void)renderImage:(UIImage *)image;
