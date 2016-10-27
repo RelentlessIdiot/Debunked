@@ -51,6 +51,15 @@
     return self;
 }
 
+- (void)handleBrowseButton
+{
+    if (self.url == nil) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.snopes.com/"]];
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.url]];
+    }
+}
+
 - (void)addLoadingView
 {
     if (self.scrollView.dragging || self.scrollView.decelerating) {

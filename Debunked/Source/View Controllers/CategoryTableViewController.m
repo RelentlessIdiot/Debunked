@@ -17,7 +17,6 @@
 
 #import "CategoryTableViewController.h"
 #import "DebunkedAppDelegate.h"
-#import "WebBrowserViewController.h"
 #import "RumorViewController.h"
 #import "CategoryNodeTableViewCell.h"
 #import "RumorNodeTableViewCell.h"
@@ -38,7 +37,7 @@
 
     [super viewDidLoad];
 
-    if (ENABLE_BROWSE_TAB) {
+    if (ENABLE_BROWSE_BUTTON) {
         UIBarButtonItem *browseButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)];
         self.navigationItem.rightBarButtonItem = browseButtonItem;
     }
@@ -65,23 +64,6 @@
         } else {
             lastRequestId = [self.categoryDataSource requestCategory:self.url notifyDelegate:self];
         }
-    }
-}
-
-- (void)handleBrowseButton
-{
-	DebunkedAppDelegate *appDelegate = (DebunkedAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate.tabBarController setSelectedIndex:2];
-	UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
-	WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
-    if (self.url == nil) {
-        if (self.categoryDataSource.category.url == nil) {
-            [webBrowser loadUrl:@"http://www.snopes.com"];
-        } else {
-            [webBrowser loadUrl:self.categoryDataSource.category.url];
-        }
-    } else {
-        [webBrowser loadUrl:self.url];
     }
 }
 

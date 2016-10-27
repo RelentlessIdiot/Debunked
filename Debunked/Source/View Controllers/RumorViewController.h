@@ -18,7 +18,6 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-#import "DebunkedAppDelegate.h"
 #import "AsynchronousViewController.h"
 #import "RumorDataSource.h"
 
@@ -28,13 +27,14 @@
 									UIActionSheetDelegate,
 									MFMailComposeViewControllerDelegate,
 									UIPrintInteractionControllerDelegate>
+{
+    UIWebView *webView;
+    BOOL isWebViewLoaded;
+}
 
-@property (nonatomic,retain) UIWebView *webView;
-@property (nonatomic,assign) BOOL isWebViewLoaded;
 @property (nonatomic,readonly) RumorDataSource *rumorDataSource;
 
 - (void)segmentAction:(id)sender;
-- (void)handleBrowseButton;
 - (void)handleShareButton;
 
 @end

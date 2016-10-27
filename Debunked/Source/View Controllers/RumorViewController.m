@@ -16,16 +16,13 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "RumorViewController.h"
+#import "DebunkedAppDelegate.h"
 #import "Rumor.h"
 #import "CategoryTableViewController.h"
-#import "WebViewController.h"
-#import "WebBrowserViewController.h"
+#import "NSWebViewURLRequest.h"
 
 
 @implementation RumorViewController
-
-@synthesize webView;
-@synthesize isWebViewLoaded;
 
 - (RumorDataSource *)rumorDataSource
 {
@@ -34,7 +31,7 @@
 
 - (UIScrollView *)scrollView
 {
-    return self.webView.scrollView;
+    return webView.scrollView;
 }
 
 - (void)dealloc
@@ -56,13 +53,13 @@
 
         NSMutableArray* buttons = [NSMutableArray array];
 
-        if (ENABLE_BROWSE_TAB && (canPrint || canEmail)) {
+        if (ENABLE_BROWSE_BUTTON && (canPrint || canEmail)) {
             NSArray *segmentContent = @[[UIImage imageNamed:@"share.png"], [UIImage imageNamed:@"browse.png"]];
             UISegmentedControl *segmentedControl = [[[UISegmentedControl alloc] initWithItems:segmentContent] autorelease];
             segmentedControl.momentary = YES;
             [segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
             [buttons addObject:[[[UIBarButtonItem alloc] initWithCustomView:segmentedControl] autorelease]];
-        } else if (ENABLE_BROWSE_TAB) {
+        } else if (ENABLE_BROWSE_BUTTON) {
             [buttons addObject:[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"browse.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleBrowseButton)] autorelease]];
         } else if (canPrint || canEmail) {
             [buttons addObject:[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"share.png"] style:UIBarButtonItemStylePlain target:self action:@selector(handleShareButton)] autorelease]];
@@ -81,19 +78,19 @@
 
     [super viewDidLoad];
 
-    self.webView = [[[UIWebView alloc] initWithFrame:self.view.bounds] autorelease];
-    self.webView.delegate = self;
-    self.webView.scalesPageToFit = YES;
-    self.webView.dataDetectorTypes = UIDataDetectorTypeNone;
-    self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.webView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.webView];
+    webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    webView.delegate = self;
+    webView.scalesPageToFit = YES;
+    webView.dataDetectorTypes = UIDataDetectorTypeNone;
+    webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    webView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:webView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     @synchronized(self) {
-        if (!isWebViewLoaded && !self.webView.isLoading) {
+        if (!isWebViewLoaded && !webView.isLoading) {
             [self reloadDataSource];
         }
     }
@@ -141,7 +138,7 @@
 		printer.printInfo = printInfo;
 		printer.delegate = self;
 
-		printer.printFormatter = [self.webView viewPrintFormatter];
+		printer.printFormatter = [webView viewPrintFormatter];
 
 		[printer presentAnimated:YES completionHandler:nil];
 
@@ -163,7 +160,7 @@
 - (void)printInteractionControllerDidFinishJob:(UIPrintInteractionController *)printInteractionController
 {
 	NSURL *baseUrl = [NSURL URLWithString:self.rumorDataSource.rumor.url];
-	[self.webView loadHTMLString:self.rumorDataSource.rumor.rawHtml baseURL:baseUrl];
+	[webView loadHTMLString:self.rumorDataSource.rumor.rawHtml baseURL:baseUrl];
 }
 
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
@@ -178,17 +175,6 @@
 		[self handleShareButton];
 	} else {
 		[self handleBrowseButton];
-	}
-}
-
-- (void)handleBrowseButton
-{
-    if (self.rumorDataSource.rumor != nil) {
-		DebunkedAppDelegate *appDelegate = (DebunkedAppDelegate *)[[UIApplication sharedApplication] delegate];
-		[appDelegate.tabBarController setSelectedIndex:2];
-		UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
-		WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
-		[webBrowser loadUrl:self.rumorDataSource.rumor.url];
 	}
 }
 
@@ -239,23 +225,21 @@
 {
 	Rumor *theRumor = (Rumor *)theItem;
     if (theRumor == nil) {
-        NSURL *baseUrl = [NSURL URLWithString:@""];
-        [self.webView loadHTMLString:@"" baseURL:baseUrl];
+        [webView loadHTMLString:@"" baseURL:[NSURL URLWithString:@""]];
     } else {
-        NSURL *baseUrl = [NSURL URLWithString:theRumor.url];
-        [self.webView loadHTMLString:theRumor.rawHtml baseURL:baseUrl];
+        [webView loadHTMLString:theRumor.rawHtml baseURL:[NSURL URLWithString:theRumor.url]];
     }
     [super receive:theItem];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    self.isWebViewLoaded = YES;
+    isWebViewLoaded = YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    self.isWebViewLoaded = YES;
+    isWebViewLoaded = YES;
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSWebViewURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
@@ -272,11 +256,16 @@
 				[absoluteString hasPrefix:@"https://snopes.com"])
             {
 				NSString *path = [[request URL] path];
-				if (![path hasPrefix:@"/sources/"] && ![path hasPrefix:@"sources/"] &&
-					([path hasSuffix:@"asp"] || [path hasSuffix:@"htm"] || [path hasSuffix:@"html"])) {
-
+				if (![path hasPrefix:@"/sources/"] &&
+                    ![path hasPrefix:@"sources/"] &&
+					([path hasSuffix:@"asp"] || [path hasSuffix:@"htm"] || [path hasSuffix:@"html"]))
+                {
 					isRumor = YES;
-                } else if ([path hasPrefix:@"/category/"] || [path hasPrefix:@"category/"]) {
+                } else if ([path hasPrefix:@"/category/"] ||
+                           [path hasPrefix:@"category/"] ||
+                           [path hasPrefix:@"/tag/"] ||
+                           [path hasPrefix:@"tag/"])
+                {
                     isCategory = YES;
                 }
 			}
@@ -289,9 +278,7 @@
             CategoryTableViewController *categoryController = [[[CategoryTableViewController alloc] initWithUrl:absoluteString] autorelease];
             [[self navigationController] pushViewController:categoryController animated:YES];
         } else {
-			WebViewController *webController = [[[WebViewController alloc] init] autorelease];
-			[[self navigationController] pushViewController:webController animated:YES];
-			[webController loadRequest:request];
+            [[UIApplication sharedApplication] openURL:request.URL];
 		}
 		return NO;
     }

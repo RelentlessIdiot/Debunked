@@ -20,10 +20,10 @@
 
 
 @interface MostViewedTableViewController: CategoryTableViewController
+{
+    UISegmentedControl *segmentedControl;
+}
 
-@property (nonatomic,retain) UISegmentedControl *segmentedControl;
-
-- (void)handleBrowseButton;
 - (void)segmentAction:(id)sender;
 
 @end

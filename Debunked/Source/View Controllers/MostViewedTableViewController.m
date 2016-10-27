@@ -17,13 +17,10 @@
 
 #import "MostViewedTableViewController.h"
 #import "DebunkedAppDelegate.h"
-#import "WebBrowserViewController.h"
 #import "RumorDataSource.h"
 
 
 @implementation MostViewedTableViewController
-
-@synthesize segmentedControl;
 
 - (NSString *)url
 {
@@ -45,21 +42,12 @@
 {
     [super viewDidLoad];
 
-	self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"What's New", @"Top 25"]];
-	self.segmentedControl.selectedSegmentIndex = 0;
-	self.segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	[self.segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+	segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"What's New", @"Top 25"]];
+	segmentedControl.selectedSegmentIndex = 0;
+	segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+	[segmentedControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
 
 	self.navigationItem.titleView = segmentedControl;
-}
-
-- (void)handleBrowseButton
-{
-	DebunkedAppDelegate *appDelegate = (DebunkedAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate.tabBarController setSelectedIndex:2];
-	UINavigationController *navController = (UINavigationController *)[[appDelegate.tabBarController viewControllers] objectAtIndex:2];
-	WebBrowserViewController *webBrowser = (WebBrowserViewController *)[navController topViewController];
-    [webBrowser loadUrl:self.url];
 }
 
 - (void)segmentAction:(id)sender

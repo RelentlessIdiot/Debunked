@@ -18,9 +18,16 @@
 #import "DebunkedAppDelegate.h"
 #import "MostViewedTableViewController.h"
 #import "CategoryTableViewController.h"
-#import "WebBrowserViewController.h"
 #import "SearchTableViewController.h"
 #import "RandomViewController.h"
+
+
+@implementation UIViewController (Extension)
+- (void)pushViewControllerAnimated:(UIViewController *)viewController
+{
+    [self.navigationController pushViewController:viewController animated:YES];
+}
+@end
 
 
 @implementation DebunkedAppDelegate
@@ -81,19 +88,6 @@
 	localNavigationController.tabBarItem.title = @"Categories";
 	[localViewControllers addObject:localNavigationController];
 	[localNavigationController release];
-	
-	
-	//======== Browse =========
-    if (ENABLE_BROWSE_TAB) {
-        localViewController = [[WebBrowserViewController alloc] initWithUrl:@"http://www.snopes.com"];
-        localNavigationController = [[UINavigationController alloc] initWithRootViewController:localViewController];
-        [localViewController release];
-
-        localNavigationController.tabBarItem.image = [UIImage imageNamed:@"browse_tabitem.png"];
-        localNavigationController.tabBarItem.title = @"Browse";
-        [localViewControllers addObject:localNavigationController];
-        [localNavigationController release];
-    }
 	
 	
 	//======== Search =========

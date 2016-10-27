@@ -33,6 +33,7 @@
 
 - (id)init;
 - (id)initWithUrl:(NSString *)theUrl;
+- (void)handleBrowseButton;
 - (void)addLoadingView;
 - (void)removeLoadingView;
 - (void)receive:(id)theItem;

@@ -16,15 +16,13 @@
 //  along with Debunked.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "SearchTableViewController.h"
+#import "DebunkedAppDelegate.h"
 #import "RumorViewController.h"
 #import "SearchResultTableViewCell.h"
 #import "SearchDataSource.h"
 
 
 @implementation SearchTableViewController
-
-@synthesize searchBar;
-@synthesize hideButton;
 
 - (void)dealloc
 {
@@ -55,19 +53,19 @@
 	hackItem = [[[UIBarButtonItem alloc] initWithCustomView:hackView] autorelease];
 	self.navigationItem.rightBarButtonItem = hackItem;
 
-	self.searchBar = [[[UISearchBar alloc] init] autorelease];
-	self.searchBar.delegate = self;
-	self.searchBar.showsCancelButton = NO;
-	self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	self.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
-	self.searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
+	searchBar = [[UISearchBar alloc] init];
+	searchBar.delegate = self;
+	searchBar.showsCancelButton = NO;
+	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	searchBar.autocorrectionType = UITextAutocorrectionTypeDefault;
 	self.navigationItem.titleView = searchBar;
 
-	self.hideButton = [[[UIButton alloc] initWithFrame:self.view.bounds] autorelease];
-	self.hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-	self.hideButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-	self.hideButton.hidden = YES;
-	[self.hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+	hideButton = [[UIButton alloc] initWithFrame:self.view.bounds];
+	hideButton.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+	hideButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	hideButton.hidden = YES;
+	[hideButton addTarget: self action:@selector(hideButtonClicked) forControlEvents:UIControlEventTouchUpInside];
 	[self.view addSubview:hideButton];
 }
 

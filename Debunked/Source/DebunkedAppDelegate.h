@@ -18,18 +18,11 @@
 #import <UIKit/UIKit.h>
 
 
-#define ENABLE_BROWSE_TAB NO
+#define ENABLE_BROWSE_BUTTON NO
 
 
 @interface UIViewController (Extension)
 - (void)pushViewControllerAnimated:(UIViewController *)viewController;
-@end
-
-@implementation UIViewController (Extension)
-- (void)pushViewControllerAnimated:(UIViewController *)viewController
-{
-    [self.navigationController pushViewController:viewController animated:YES];
-}
 @end
 
 

@@ -20,9 +20,10 @@
 
 
 @interface SearchTableViewController: AsynchronousTableViewController<UISearchBarDelegate>
-
-@property (nonatomic,retain) UISearchBar *searchBar;
-@property (nonatomic,retain) UIButton *hideButton;
+{
+    UISearchBar *searchBar;
+    UIButton *hideButton;
+}
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar;
